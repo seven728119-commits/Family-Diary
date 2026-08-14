@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7efe9" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="旅宿收藏" />
+  <title>桐House一家・家庭旅行手帳</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
+
+    :root{
+      --bg:#fbf5ef;
+      --paper:#fffdf8;
+      --paper-2:#fff8f2;
+      --surface:rgba(255,253,248,.88);
+      --surface-solid:#fffdf8;
+      --ink:#5a4741;
+      --muted:#98837b;
+      --line:#eadbd3;
+      --accent:#d6907f;
+      --accent-2:#efb4a5;
+      --accent-soft:#f8ded4;
+      --sage:#9eaf97;
+      --sage-soft:#e6eee2;
+      --yellow:#f4d796;
+      --yellow-soft:#fff4cf;
+      --brown:#7b6259;
+      --shadow:0 16px 40px rgba(115,81,69,.10);
+      --radius:26px;
+      --safe-bottom:env(safe-area-inset-bottom, 0px);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        linear-gradient(rgba(214,144,127,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(214,144,127,.035) 1px, transparent 1px),
+        radial-gradient(circle at 12% 0%, rgba(255,255,255,.95), transparent 30%),
+        radial-gradient(circle at 100% 8%, rgba(239,180,165,.20), transparent 28%),
+        var(--bg);
+      background-size:28px 28px,28px 28px,auto,auto,auto;
+      font-family:"Zen Maru Gothic","PingFang TC","Microsoft JhengHei",sans-serif;
+      min-height:100vh;
+      padding-bottom:calc(104px + var(--safe-bottom));
+      letter-spacing:.015em;
+      font-weight:500;
+    }
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    .app{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+    .brand small{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+    .brand h1{font-size:clamp(28px,6.5vw,42px);margin:0;font-weight:900;letter-spacing:.015em;text-shadow:0 2px 0 rgba(255,255,255,.8)}
+    .icon-btn{
+      border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.7);backdrop-filter:blur(16px);
+      width:44px;height:44px;border-radius:16px;box-shadow:0 8px 24px rgba(60,40,30,.08);font-size:20px
+    }
+    .hero{
+      background:linear-gradient(145deg, rgba(255,255,255,.92), rgba(244,222,211,.82));
+      border:1px solid rgba(255,255,255,.75);border-radius:30px;padding:24px;box-shadow:var(--shadow);
+      overflow:hidden;position:relative;margin-bottom:18px
+    }
+    .hero:after{content:"";position:absolute;right:-35px;top:-55px;width:170px;height:170px;border-radius:50%;background:rgba(183,119,100,.09)}
+    .eyebrow{font-size:12px;letter-spacing:.14em;color:var(--accent);font-weight:800}
+    .hero h2{margin:7px 0 8px;font-size:clamp(24px,6vw,38px);line-height:1.25;letter-spacing:.01em;font-weight:900}
+    .hero p{margin:0;color:var(--muted);line-height:1.6;max-width:650px}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px;position:relative;z-index:1}
+    .hero-stat{background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:14px}
+    .hero-stat span{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}
+    .hero-stat strong{font-size:clamp(18px,4.2vw,26px);letter-spacing:-.03em}
+    .quick-add{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--ink);color:#fff;
+      border-radius:24px;padding:16px 18px;margin-bottom:18px;box-shadow:0 15px 30px rgba(47,43,42,.18)
+    }
+    .quick-add b{font-size:16px}.quick-add span{display:block;font-size:12px;color:#d9d0cc;margin-top:3px}
+    .add-btn{border:0;background:#fff;color:var(--ink);padding:11px 16px;border-radius:15px;font-weight:800;white-space:nowrap}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:24px 2px 12px}
+    .section-head h3{margin:0;font-size:20px;font-weight:900;letter-spacing:.02em}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+    .segmented{display:flex;background:#eee6e2;padding:4px;border-radius:14px;gap:4px}
+    .segmented button{border:0;background:transparent;border-radius:10px;padding:8px 10px;color:var(--muted);font-weight:700;font-size:12px}
+    .segmented button.active{background:#fff;color:var(--ink);box-shadow:0 3px 12px rgba(50,40,35,.08)}
+    .summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .summary-card{
+      background:var(--surface);border:1px solid rgba(255,255,255,.75);border-radius:22px;padding:17px;
+      backdrop-filter:blur(18px);box-shadow:0 8px 30px rgba(75,52,43,.06)
+    }
+    .summary-card.wide{grid-column:1/-1}
+    .summary-card .label{font-size:12px;color:var(--muted);margin-bottom:8px}
+    .summary-card .value{font-weight:850;font-size:23px;letter-spacing:-.035em}
+    .summary-card .sub{font-size:12px;color:var(--muted);margin-top:6px}
+    .bar-list{display:flex;flex-direction:column;gap:11px;margin-top:12px}
+    .bar-row{display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:center;font-size:12px}
+    .bar-track{height:9px;background:#eee7e3;border-radius:999px;overflow:hidden}
+    .bar-fill{height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:999px}
+    .filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+    .field{
+      width:100%;border:1px solid var(--line);background:rgba(255,255,255,.78);border-radius:16px;
+      padding:12px 13px;color:var(--ink);outline:none
+    }
+    .field:focus{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(183,119,100,.08)}
+    .records{display:flex;flex-direction:column;gap:12px}
+    .record{
+      position:relative;background:var(--surface-solid);border:1px solid #f0e6e1;border-radius:22px;padding:16px;
+      box-shadow:0 8px 28px rgba(75,52,43,.06);overflow:hidden
+    }
+    .record:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(var(--accent-2),var(--accent))}
+    .record-top{display:flex;justify-content:space-between;gap:12px}
+    .record h4{margin:0 0 6px;font-size:18px;font-weight:900;letter-spacing:.01em}.place{color:var(--muted);font-size:13px}
+    .price{font-weight:900;font-size:18px;white-space:nowrap}
+    .meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+    .chip{background:#f6efeb;color:#6f625d;border-radius:999px;padding:6px 9px;font-size:12px}
+    .memo{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);font-size:13px;line-height:1.6;color:#675e5a}
+    .record-actions{display:flex;gap:8px;margin-top:12px}
+    .ghost{border:0;background:#f7f1ee;border-radius:12px;padding:8px 11px;color:#665a56;font-weight:700;font-size:12px}
+    .empty{text-align:center;color:var(--muted);padding:38px 16px;background:rgba(255,255,255,.45);border:1px dashed var(--line);border-radius:22px}
+    .empty .emoji{font-size:40px;display:block;margin-bottom:10px}
+    .bottom-nav{
+      position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + var(--safe-bottom));z-index:20;
+      width:min(calc(100% - 24px),560px);background:rgba(42,38,37,.92);backdrop-filter:blur(18px);
+      border-radius:20px;padding:8px;display:grid;grid-template-columns:repeat(3,1fr);box-shadow:0 16px 42px rgba(36,30,28,.24)
+    }
+    .bottom-nav button{border:0;background:transparent;color:#c8bfbb;padding:9px 8px;border-radius:14px;font-size:12px;font-weight:800}
+    .bottom-nav button.active{background:#fff;color:var(--ink)}
+    .bottom-nav .nav-icon{display:block;font-size:19px;margin-bottom:3px}
+    dialog{
+      border:0;padding:0;border-radius:28px;width:min(92vw,560px);background:#fffaf7;color:var(--ink);
+      box-shadow:0 30px 90px rgba(42,30,25,.28);max-height:90vh
+    }
+    dialog::backdrop{background:rgba(45,37,34,.38);backdrop-filter:blur(3px)}
+    .modal{padding:22px;max-height:90vh;overflow:auto}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .modal-head h3{margin:0;font-size:22px}
+    .close{border:0;background:#f3ebe7;width:38px;height:38px;border-radius:13px;font-size:18px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    .form-group.full{grid-column:1/-1}
+    .form-group label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px 2px;font-weight:700}
+    textarea.field{min-height:88px;resize:vertical}
+    .save{width:100%;border:0;background:var(--ink);color:#fff;border-radius:16px;padding:14px;font-weight:850;margin-top:16px}
+    .danger{color:#a65454}
+    .toast{
+      position:fixed;left:50%;bottom:calc(100px + var(--safe-bottom));transform:translate(-50%,20px);background:#2f2b2a;color:#fff;
+      padding:11px 16px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:50
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .tools{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .tool-btn{border:1px solid var(--line);background:#fff;border-radius:17px;padding:13px;font-weight:800}
+    .hidden{display:none!important}
+
+    .upcoming-wrap{display:grid;gap:12px}
+    .upcoming-card{
+      background:linear-gradient(145deg,#fffdfb,#f7e9e2);border:1px solid #f0e1da;border-radius:24px;
+      padding:17px;box-shadow:0 8px 28px rgba(75,52,43,.07);position:relative;overflow:hidden
+    }
+    .upcoming-card:after{content:"✦";position:absolute;right:16px;top:12px;color:#d5a995;font-size:24px}
+    .upcoming-card .days{font-size:28px;font-weight:900;letter-spacing:-.04em;color:var(--accent)}
+    .upcoming-card .u-title{font-size:17px;font-weight:850;margin:4px 0}
+    .upcoming-card .u-meta{font-size:12px;color:var(--muted);line-height:1.6}
+    .status-pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:800}
+    .status-planned{background:#fff0d7;color:#91651f}
+    .status-stayed{background:#e8f1eb;color:#557461}
+    .group-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .group-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}
+    .group-card b{display:block;font-size:15px;margin-bottom:5px}
+    .group-card span{font-size:12px;color:var(--muted)}
+    .mini-note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:7px}
+    .check-row{display:flex;align-items:center;gap:10px;background:#f8f2ef;border-radius:14px;padding:11px 12px}
+    .check-row input{width:19px;height:19px;accent-color:var(--accent)}
+    .next-banner{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 18px;
+      background:linear-gradient(135deg,#5d5551,#2f2b2a);color:white;border-radius:24px;padding:18px;
+      box-shadow:0 14px 30px rgba(47,43,42,.16)
+    }
+    .next-banner .small{font-size:11px;color:#d9d0cc;letter-spacing:.08em}
+    .next-banner .name{font-weight:850;margin-top:4px}
+    .next-banner .count{font-size:22px;font-weight:900;white-space:nowrap}
+
+
+    .brand h1::after{content:" ♡";color:var(--accent-2);font-size:.68em;vertical-align:8%}
+    .hero{border-radius:34px}
+    .hero .eyebrow{font-weight:900;letter-spacing:.16em}
+    .hero-stat,.summary-card,.record,.upcoming-card,.group-card{transition:transform .2s ease,box-shadow .2s ease}
+    @media(hover:hover){
+      .record:hover,.upcoming-card:hover,.group-card:hover{transform:translateY(-2px)}
+    }
+    .add-btn,.save,.tool-btn,.ghost,.segmented button{font-weight:900}
+
+
+    /* === 桐House一家旅行手帳 v4 === */
+    .app{max-width:1080px}
+    .topbar{
+      margin:4px 2px 18px;
+      align-items:flex-start;
+    }
+    .brand small{
+      color:var(--accent);
+      font-size:11px;
+      font-weight:600;
+      letter-spacing:.16em;
+      margin-bottom:8px;
+    }
+    .brand h1{
+      font-size:clamp(27px,6.7vw,42px);
+      font-weight:600;
+      letter-spacing:.025em;
+      line-height:1.12;
+      color:#75584f;
+      text-shadow:none;
+    }
+    .brand h1::after{
+      content:"";
+      display:inline-block;
+      width:11px;height:11px;
+      background:var(--accent-2);
+      border-radius:50% 50% 50% 0;
+      transform:rotate(-45deg);
+      margin-left:9px;
+      vertical-align:10%;
+      opacity:.9;
+    }
+    .icon-btn{
+      background:#fffaf5;
+      border:1px solid var(--line);
+      color:var(--brown);
+      box-shadow:0 8px 20px rgba(115,81,69,.08);
+    }
+
+    .hero{
+      background:
+        linear-gradient(rgba(214,144,127,.055) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(214,144,127,.04) 1px,transparent 1px),
+        #fffdf8;
+      background-size:24px 24px;
+      border:1px solid #eadbd3;
+      border-radius:30px;
+      padding:28px 24px 24px;
+      box-shadow:0 18px 38px rgba(115,81,69,.10);
+      overflow:visible;
+      position:relative;
+      transform:rotate(-.15deg);
+    }
+    .hero::before{
+      content:"TRAVEL NOTE";
+      position:absolute;
+      top:-13px;
+      left:22px;
+      background:var(--accent-soft);
+      color:#a76e60;
+      border-radius:6px;
+      padding:5px 15px;
+      font-size:10px;
+      font-weight:600;
+      letter-spacing:.15em;
+      transform:rotate(-2deg);
+      box-shadow:0 3px 8px rgba(115,81,69,.08);
+    }
+    .hero::after{
+      content:"✿";
+      position:absolute;
+      right:18px;
+      top:14px;
+      width:auto;height:auto;
+      background:none;
+      color:#d99b89;
+      font-size:36px;
+      opacity:.55;
+    }
+    .hero .eyebrow{
+      margin-top:2px;
+      color:var(--sage);
+      font-weight:600;
+      letter-spacing:.14em;
+    }
+    .hero h2{
+      margin-top:8px;
+      font-size:clamp(26px,6vw,39px);
+      line-height:1.32;
+      font-weight:600;
+      letter-spacing:.025em;
+      color:#684f47;
+    }
+    .hero p{
+      font-size:14px;
+      color:#8b756d;
+      line-height:1.9;
+    }
+    .hero-stats{
+      margin-top:22px;
+      gap:11px;
+    }
+    .hero-stat{
+      background:#fffaf5;
+      border:1px dashed #e8c8bc;
+      border-radius:20px 18px 22px 17px;
+      box-shadow:none;
+      position:relative;
+    }
+    .hero-stat:nth-child(2){background:#f6f9f2;border-color:#cfdcc8}
+    .hero-stat:nth-child(3){background:#fff8df;border-color:#ead9a7}
+    .hero-stat span{font-size:11px}
+    .hero-stat strong{font-weight:600;color:#76584e}
+
+    .next-banner{
+      margin-top:22px;
+      background:#fff8df;
+      color:#684f47;
+      border:1px solid #ead7a1;
+      border-radius:22px 28px 20px 26px;
+      box-shadow:0 10px 25px rgba(115,81,69,.08);
+      position:relative;
+      transform:rotate(.25deg);
+    }
+    .next-banner::before{
+      content:"NEXT";
+      position:absolute;
+      top:-11px;right:18px;
+      background:#f0c97c;
+      color:#7a604f;
+      padding:3px 10px;
+      border-radius:5px;
+      font-size:10px;
+      letter-spacing:.12em;
+      transform:rotate(3deg);
+    }
+    .next-banner .small{color:#a18472}
+    .next-banner .mini-note{color:#9a7f70!important}
+    .next-banner .count{
+      color:#bf7665;
+      font-weight:600;
+      font-size:20px;
+    }
+
+    .quick-add{
+      background:#d99886;
+      border-radius:20px 26px 22px 18px;
+      box-shadow:0 12px 26px rgba(173,106,87,.18);
+      transform:rotate(-.15deg);
+    }
+    .quick-add span{color:#fff3ef}
+    .add-btn{
+      background:#fffaf6;
+      color:#986557;
+      border-radius:14px 17px 13px 18px;
+      font-weight:600;
+    }
+
+    .section-head{
+      margin-top:30px;
+      position:relative;
+    }
+    .section-head h3{
+      font-size:21px;
+      font-weight:600;
+      color:#75584f;
+      display:inline-block;
+      position:relative;
+    }
+    .section-head h3::after{
+      content:"";
+      position:absolute;
+      left:0;right:0;bottom:-4px;
+      height:5px;
+      background:rgba(239,180,165,.36);
+      border-radius:99px;
+      transform:rotate(-1deg);
+      z-index:-1;
+    }
+    .section-head p{font-size:12px;line-height:1.6}
+
+    .segmented{
+      background:#f3e7e1;
+      border:1px solid #eadbd3;
+    }
+    .segmented button{
+      font-weight:600;
+      font-family:inherit;
+    }
+    .segmented button.active{
+      background:#fffaf6;
+      color:#9d685b;
+    }
+
+    .summary-card{
+      background:#fffdf8;
+      border:1px solid #eadfd8;
+      border-radius:22px 26px 20px 25px;
+      box-shadow:0 8px 22px rgba(115,81,69,.06);
+      position:relative;
+    }
+    .summary-card:nth-child(2n){transform:rotate(.12deg)}
+    .summary-card:nth-child(3n){background:#fafcf7}
+    .summary-card .label{font-size:11px}
+    .summary-card .value{font-weight:600;color:#72564d}
+
+    .bar-track{background:#f2e8e3}
+    .bar-fill{background:linear-gradient(90deg,#f0baa9,#d58b78)}
+
+    .upcoming-card{
+      background:#fffdf8;
+      border:1px solid #eadbd3;
+      border-radius:22px 28px 21px 25px;
+      box-shadow:0 9px 24px rgba(115,81,69,.07);
+    }
+    .upcoming-card::before{
+      content:"";
+      position:absolute;
+      width:62px;height:17px;
+      left:22px;top:-8px;
+      background:rgba(230,205,185,.75);
+      transform:rotate(-3deg);
+      border-radius:2px;
+    }
+    .upcoming-card:after{
+      content:"♡";
+      color:#d79a8a;
+      font-size:28px;
+    }
+    .upcoming-card .days{
+      font-weight:600;
+      color:#ca7f6c;
+    }
+
+    .group-card{
+      background:#fffaf5;
+      border:1px dashed #e1c8bc;
+      border-radius:20px 24px 19px 26px;
+      box-shadow:none;
+    }
+    .group-card:nth-child(2n){background:#f7faf5;border-color:#d4dfcf}
+    .group-card b{font-weight:600}
+
+    .record{
+      background:#fffdf8;
+      border:1px solid #eadbd3;
+      border-radius:24px 20px 27px 21px;
+      box-shadow:0 9px 24px rgba(115,81,69,.06);
+    }
+    .record:before{
+      width:4px;
+      background:#e9a999;
+    }
+    .record h4{
+      font-weight:600;
+      letter-spacing:.015em;
+      color:#6e534a;
+    }
+    .chip{
+      background:#f8ece6;
+      color:#826961;
+    }
+    .status-planned{background:#fff0c7;color:#8f6b32}
+    .status-stayed{background:#e9f1e5;color:#61725c}
+
+    .field{
+      background:#fffdf9;
+      border:1px solid #e7d8d0;
+      border-radius:15px 19px 14px 18px;
+      color:#654f47;
+      font-family:inherit;
+    }
+    .field::placeholder{color:#b8a49b}
+    .field:focus{border-color:#dfa08e;box-shadow:0 0 0 4px rgba(214,144,127,.09)}
+
+    .bottom-nav{
+      background:rgba(100,78,70,.94);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:24px 20px 26px 22px;
+    }
+    .bottom-nav button{
+      font-family:inherit;
+      font-weight:600;
+    }
+    .bottom-nav button.active{
+      background:#fff8f3;
+      color:#9c6558;
+    }
+
+    dialog{
+      background:#fffaf6;
+      border-radius:26px 30px 24px 29px;
+    }
+    .modal-head h3{font-weight:600;color:#75584f}
+    .save{
+      background:#d6907f;
+      border-radius:16px 20px 15px 19px;
+      font-family:inherit;
+      font-weight:600;
+      box-shadow:0 8px 18px rgba(173,106,87,.16);
+    }
+    .ghost,.tool-btn,.close{font-family:inherit}
+    .empty{
+      background:#fffdf8;
+      border:1px dashed #dfc9bd;
+      border-radius:22px 28px 21px 26px;
+    }
+
+    /* scrapbook stickers */
+    .journal-stickers{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin:12px 0 2px;
+    }
+    .journal-sticker{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      padding:6px 10px;
+      border-radius:8px 12px 8px 12px;
+      font-size:11px;
+      font-weight:600;
+      transform:rotate(-1deg);
+      border:1px solid rgba(120,90,80,.08);
+    }
+    .journal-sticker:nth-child(1){background:#f9dfd6;color:#9d6659}
+    .journal-sticker:nth-child(2){background:#e7efdf;color:#6e8066;transform:rotate(1.2deg)}
+    .journal-sticker:nth-child(3){background:#fff0bd;color:#8c6c34;transform:rotate(-.4deg)}
+
+    @media(max-width:430px){
+      .hero{padding:27px 19px 21px}
+      .brand h1{font-size:29px}
+      .next-banner{align-items:flex-start}
+      .next-banner .count{font-size:18px}
+    }
+
+
+    /* === v5 真正一本家庭手帳 === */
+    .year-cover{
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,.75), transparent 25%),
+        linear-gradient(145deg,#f3c7b9,#e8aa98);
+      color:#fffaf5;
+      border-radius:32px 28px 34px 26px;
+      padding:25px 23px 22px;
+      margin:18px 0 22px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 18px 38px rgba(159,96,78,.18);
+      transform:rotate(.15deg);
+    }
+    .year-cover::before{
+      content:"OUR FAMILY JOURNAL";
+      position:absolute;
+      right:-28px;top:20px;
+      background:rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.28);
+      padding:7px 28px;
+      transform:rotate(8deg);
+      font-size:10px;
+      letter-spacing:.14em;
+      border-radius:999px;
+    }
+    .year-cover .year{font-size:13px;letter-spacing:.18em;opacity:.9}
+    .year-cover h2{
+      margin:8px 0 6px;
+      font-size:clamp(27px,7vw,42px);
+      line-height:1.22;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+    .year-cover p{margin:0;font-size:13px;line-height:1.8;opacity:.92;max-width:620px}
+    .cover-stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+    .cover-stat{
+      background:rgba(255,255,255,.20);
+      border:1px solid rgba(255,255,255,.30);
+      padding:8px 11px;
+      border-radius:13px;
+      font-size:11px;
+      backdrop-filter:blur(8px);
+    }
+
+    .memory-highlight{
+      display:grid;
+      grid-template-columns:112px 1fr;
+      gap:16px;
+      align-items:center;
+      background:#fffdf8;
+      border:1px solid #eadbd3;
+      border-radius:26px 20px 29px 22px;
+      padding:16px;
+      margin-bottom:20px;
+      box-shadow:0 10px 26px rgba(115,81,69,.07);
+    }
+    .polaroid{
+      background:#fff;
+      padding:8px 8px 22px;
+      box-shadow:0 7px 18px rgba(83,61,53,.13);
+      transform:rotate(-2deg);
+      border-radius:3px;
+    }
+    .polaroid img,.photo-placeholder{
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#f5e8e0;
+      color:#bc8b7d;
+      font-size:28px;
+      border-radius:2px;
+    }
+    .memory-highlight small{color:var(--accent);font-size:10px;letter-spacing:.15em}
+    .memory-highlight h3{margin:5px 0 5px;font-size:18px;font-weight:700;color:#6f534a}
+    .memory-highlight p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}
+
+    .footprint-board{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+    .footprint-card{
+      background:#fffdf8;
+      border:1px dashed #dcc8be;
+      border-radius:19px 24px 18px 25px;
+      padding:14px;
+      position:relative;
+    }
+    .footprint-card:nth-child(2n){background:#f8fbf5;border-color:#cfdcc9}
+    .footprint-card b{display:block;font-size:15px;color:#6f554d}
+    .footprint-card span{font-size:11px;color:var(--muted)}
+    .footprint-card .stamp{
+      position:absolute;right:11px;top:10px;
+      width:34px;height:34px;border:1.5px solid #d99d8d;
+      border-radius:50%;
+      display:grid;place-items:center;
+      color:#d58f7d;font-size:15px;
+      transform:rotate(8deg);
+      opacity:.65;
+    }
+
+    .timeline{position:relative;padding-left:21px}
+    .timeline::before{
+      content:"";
+      position:absolute;left:8px;top:8px;bottom:8px;
+      width:2px;
+      background:repeating-linear-gradient(to bottom,#d9b7aa 0 6px,transparent 6px 11px);
+    }
+    .timeline-item{position:relative;margin-bottom:15px}
+    .timeline-item::before{
+      content:"";
+      position:absolute;left:-18px;top:16px;
+      width:10px;height:10px;border-radius:50%;
+      background:#e4a18f;
+      border:3px solid #fbf5ef;
+      box-shadow:0 0 0 1px #e1b8aa;
+    }
+    .timeline-card{
+      display:grid;
+      grid-template-columns:78px 1fr;
+      gap:13px;
+      background:#fffdf8;
+      border:1px solid #eadbd3;
+      border-radius:21px 25px 20px 27px;
+      padding:12px;
+    }
+    .timeline-thumb{
+      width:78px;height:78px;object-fit:cover;
+      border-radius:9px;
+      background:#f4e5dd;
+      display:grid;place-items:center;
+      color:#c08e80;
+      font-size:22px;
+    }
+    .timeline-card h4{margin:2px 0 4px;font-size:15px;font-weight:700;color:#6e534b}
+    .timeline-card .line{font-size:11px;color:var(--muted);line-height:1.55}
+    .timeline-card .quote{
+      margin-top:6px;
+      font-size:12px;
+      color:#8d665d;
+      line-height:1.55;
+      font-weight:500;
+    }
+
+    .sticker-picker{display:flex;gap:8px;flex-wrap:wrap}
+    .sticker-option input{display:none}
+    .sticker-option span{
+      display:inline-flex;align-items:center;gap:4px;
+      border:1px solid #e7d8d0;
+      background:#fffdf9;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:12px;
+      cursor:pointer;
+    }
+    .sticker-option input:checked + span{
+      background:#f7ddd4;
+      border-color:#dda08f;
+      color:#9d6557;
+    }
+    .photo-box{
+      border:1px dashed #d9bfb4;
+      background:#fffaf6;
+      border-radius:18px;
+      padding:12px;
+    }
+    .photo-preview{
+      width:100%;
+      max-height:210px;
+      object-fit:cover;
+      border-radius:14px;
+      display:none;
+      margin-top:10px;
+    }
+    .photo-help{font-size:11px;color:var(--muted);line-height:1.6;margin-top:7px}
+
+    .record-photo{
+      width:100%;
+      aspect-ratio:16/10;
+      object-fit:cover;
+      border-radius:15px 18px 14px 19px;
+      margin-bottom:12px;
+      background:#f3e6de;
+    }
+    .record-memory{
+      margin:10px 0 0;
+      padding:9px 11px;
+      background:#fff7df;
+      border-radius:12px 15px 11px 16px;
+      color:#866650;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .section-divider{
+      display:flex;align-items:center;gap:8px;
+      color:#b18477;font-size:11px;
+      margin:28px 3px 8px;
+    }
+    .section-divider::before,.section-divider::after{
+      content:"";height:1px;background:#ead8cf;flex:1;
+    }
+
+    @media(max-width:560px){
+      .memory-highlight{grid-template-columns:92px 1fr}
+      .timeline-card{grid-template-columns:68px 1fr}
+      .timeline-thumb{width:68px;height:68px}
+      .year-cover{padding:23px 19px 20px}
+    }
+
+    @media(min-width:760px){
+      .summary-grid{grid-template-columns:repeat(4,1fr)}
+      .summary-card.wide{grid-column:span 2}
+      .filters{grid-template-columns:2fr 1fr 1fr}
+      .records{display:grid;grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:430px){
+      .hero{padding:20px}
+      .hero-stats{grid-template-columns:1fr 1fr}
+      .hero-stat:first-child{grid-column:1/-1}
+      .filters{grid-template-columns:1fr}
+      .form-grid{grid-template-columns:1fr}
+      .form-group.full{grid-column:auto}
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="topbar">
+      <div class="brand">
+        <small>OUR LITTLE TRAVEL JOURNAL</small>
+        <h1>桐House一家旅行手帳</h1>
+      </div>
+      <button class="icon-btn" id="openTools" aria-label="資料工具">⋯</button>
+    </div>
+
+    <section class="year-cover">
+      <div class="year" id="journalYear">2026 FAMILY JOURNAL</div>
+      <h2>桐House一家<br>旅行手帳</h2>
+      <p>一家人一起走過的城市、住過的飯店，還有那些想起來就會微笑的小事情。</p>
+      <div class="cover-stats">
+        <span class="cover-stat" id="coverNights">今年 0 晚</span>
+        <span class="cover-stat" id="coverCities">走過 0 個城市</span>
+        <span class="cover-stat" id="coverGroups">0 個旅宿品牌</span>
+      </div>
+    </section>
+
+    <section class="memory-highlight" id="memoryHighlight">
+      <div class="polaroid"><div class="photo-placeholder" id="highlightPhoto">♡</div></div>
+      <div>
+        <small>THIS YEAR'S MEMORY</small>
+        <h3 id="highlightTitle">今年的旅行回憶，等你慢慢收藏</h3>
+        <p id="highlightText">新增住宿照片與一句回憶後，這裡會像手帳首頁一樣顯示最最近的一頁。</p>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="eyebrow">TONG HOUSE TRAVEL NOTE</div>
+      <h2>一家人的旅行，<br>一頁一頁慢慢收藏 ♡</h2>
+      <p>住過的飯店、期待中的旅程、一起笑過的小事情，都收進我們家的旅行手帳裡。</p>
+      <div class="journal-stickers">
+        <span class="journal-sticker">✈ 一起出發</span>
+        <span class="journal-sticker">⌂ 住過的地方</span>
+        <span class="journal-sticker">♡ 家庭回憶</span>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><span>今年住宿花費</span><strong id="heroYearAmount">$0</strong></div>
+        <div class="hero-stat"><span>今年入住</span><strong id="heroYearCount">0 次</strong></div>
+        <div class="hero-stat"><span>累積收藏</span><strong id="heroTotalCount">0 間</strong></div>
+      </div>
+    </section>
+
+    <section class="next-banner" id="nextBanner">
+      <div>
+        <div class="small">NEXT FAMILY STAY</div>
+        <div class="name" id="nextStayName">還沒有已安排的住宿</div>
+        <div class="mini-note" id="nextStayMeta" style="color:#d9d0cc">新增一趟期待中的飯店吧 ♡</div>
+      </div>
+      <div class="count" id="nextStayCount">—</div>
+    </section>
+
+    <section class="quick-add">
+      <div><b>記下一趟旅宿</b><span>已入住、已安排都可以一起記 ✨</span></div>
+      <button class="add-btn" id="openAdd">＋ 新增</button>
+    </section>
+
+    <section id="dashboardView">
+      <div class="section-head">
+        <div><h3>旅宿小帳本</h3><p>看看我們一年一年住過多少美好地方</p></div>
+        <div class="segmented" id="statMode">
+          <button data-mode="year" class="active">年</button>
+          <button data-mode="quarter">季</button>
+          <button data-mode="month">月</button>
+        </div>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="label">目前區間總金額</div>
+          <div class="value" id="periodAmount">$0</div>
+          <div class="sub" id="periodLabel">—</div>
+        </div>
+        <div class="summary-card">
+          <div class="label">入住次數</div>
+          <div class="value" id="periodCount">0</div>
+          <div class="sub">筆住宿紀錄</div>
+        </div>
+        <div class="summary-card">
+          <div class="label">平均每晚</div>
+          <div class="value" id="avgNight">$0</div>
+          <div class="sub" id="nightCount">共 0 晚</div>
+        </div>
+        <div class="summary-card">
+          <div class="label">最常入住城市</div>
+          <div class="value" id="topCity">—</div>
+          <div class="sub">依目前區間計算</div>
+        </div>
+        <div class="summary-card wide">
+          <div class="label">區間比較</div>
+          <div class="bar-list" id="barList"></div>
+        </div>
+        <div class="summary-card wide">
+          <div class="label">收藏亮點</div>
+          <div class="value" id="favoriteHotel" style="font-size:19px">尚未有紀錄</div>
+          <div class="sub" id="favoriteHotelSub">開始新增第一間飯店吧</div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="upcomingView">
+      <div class="section-head">
+        <div><h3>下一頁的期待</h3><p>已安排好的飯店，先寫進手帳等著出發</p></div>
+      </div>
+      <div class="upcoming-wrap" id="upcomingList"></div>
+    </section>
+
+    <section id="groupsView">
+      <div class="section-head">
+        <div><h3>住過的旅宿家族</h3><p>萬豪、寒舍…看看足跡慢慢累積在哪些品牌</p></div>
+      </div>
+      <div class="group-grid" id="groupGrid"></div>
+    </section>
+
+
+    <div class="section-divider">OUR FOOTPRINTS</div>
+    <section id="footprintView">
+      <div class="section-head">
+        <div><h3>一家人的足跡版圖</h3><p>用城市與國家慢慢拼出我們家的旅行地圖</p></div>
+      </div>
+      <div class="footprint-board" id="footprintBoard"></div>
+    </section>
+
+    <div class="section-divider">MEMORY TIMELINE</div>
+    <section id="timelineView">
+      <div class="section-head">
+        <div><h3>旅行手帳時間軸</h3><p>一站一頁，翻回每一次一家人住過的地方</p></div>
+      </div>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <section id="recordsView">
+      <div class="section-head">
+        <div><h3>我們住過的每一站</h3><p>翻一翻一家人的住宿回憶</p></div>
+      </div>
+      <div class="filters">
+        <input class="field" id="searchInput" placeholder="搜尋飯店、城市、備註…" />
+        <select class="field" id="yearFilter"><option value="">全部年份</option></select>
+        <select class="field" id="sortFilter">
+          <option value="dateDesc">日期：新 → 舊</option>
+          <option value="dateAsc">日期：舊 → 新</option>
+          <option value="priceDesc">金額：高 → 低</option>
+          <option value="priceAsc">金額：低 → 高</option>
+        </select>
+      </div>
+      <div class="records" id="records"></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button data-tab="dashboard" class="active"><span class="nav-icon">◫</span>總覽</button>
+    <button data-tab="add"><span class="nav-icon">＋</span>新增</button>
+    <button data-tab="records"><span class="nav-icon">♡</span>收藏</button>
+  </nav>
+
+  <dialog id="recordDialog">
+    <form class="modal" id="recordForm">
+      <div class="modal-head">
+        <h3 id="formTitle">新增住宿</h3>
+        <button type="button" class="close" data-close="recordDialog">×</button>
+      </div>
+      <input type="hidden" id="recordId" />
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>飯店名稱 *</label>
+          <input class="field" id="hotel" required placeholder="例如：大溪笠復威斯汀度假酒店" />
+        </div>
+        <div class="form-group">
+          <label>住宿狀態 *</label>
+          <select class="field" id="status">
+            <option value="planned">✨ 已安排，期待入住</option>
+            <option value="stayed">♡ 已入住，收藏回憶</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>國家 / 地區</label>
+          <input class="field" id="country" placeholder="例如：台灣、日本" />
+        </div>
+        <div class="form-group">
+          <label>城市 / 地區</label>
+          <input class="field" id="city" placeholder="例如：桃園大溪" />
+        </div>
+        <div class="form-group">
+          <label>旅宿集團</label>
+          <select class="field" id="hotelGroup">
+            <option value="">獨立飯店 / 未分類</option>
+            <option>萬豪 Marriott</option>
+            <option>寒舍集團</option>
+            <option>晶華國際酒店集團</option>
+            <option>雲朗觀光</option>
+            <option>國泰飯店觀光事業</option>
+            <option>IHG 洲際酒店集團</option>
+            <option>Hilton 希爾頓</option>
+            <option>Hyatt 凱悅</option>
+            <option>Accor 雅高</option>
+            <option value="__custom">＋ 自訂集團</option>
+          </select>
+        </div>
+        <div class="form-group full hidden" id="customGroupWrap">
+          <label>自訂旅宿集團</label>
+          <input class="field" id="customGroup" placeholder="輸入集團名稱" />
+        </div>
+        <div class="form-group">
+          <label>入住日期 *</label>
+          <input class="field" id="checkin" type="date" required />
+        </div>
+        <div class="form-group">
+          <label>退房日期 *</label>
+          <input class="field" id="checkout" type="date" required />
+        </div>
+        <div class="form-group">
+          <label>總金額 (TWD) *</label>
+          <input class="field" id="price" inputmode="numeric" type="number" min="0" step="1" required placeholder="12000" />
+        </div>
+        <div class="form-group">
+          <label>房型</label>
+          <input class="field" id="room" placeholder="例如：豪華客房" />
+        </div>
+        <div class="form-group">
+          <label>訂房方式</label>
+          <select class="field" id="booking">
+            <option value="">未填</option>
+            <option>飯店官網</option><option>Agoda</option><option>Booking.com</option><option>旅行社</option><option>住宿券</option><option>信用卡禮遇</option><option>其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>這次心情</label>
+          <select class="field" id="rating">
+            <option value="">未評分</option>
+            <option value="5">😍 超喜歡</option>
+            <option value="4">😊 很不錯</option>
+            <option value="3">🙂 還可以</option>
+            <option value="2">😐 普通</option>
+            <option value="1">🥲 不會再住</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>這趟和誰一起</label>
+          <select class="field" id="companions">
+            <option value="">未填</option>
+            <option>一家人</option>
+            <option>夫妻 / 伴侶</option>
+            <option>親子</option>
+            <option>家族旅行</option>
+            <option>朋友</option>
+            <option>自己旅行</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>訂房是否已付款</label>
+          <select class="field" id="payment">
+            <option value="">未填</option>
+            <option>已付款</option>
+            <option>到店付款</option>
+            <option>部分付款 / 訂金</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <div class="check-row">
+            <input type="checkbox" id="wantReturn" />
+            <label for="wantReturn" style="margin:0;color:var(--ink)">♡ 這間值得再住一次</label>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>這一頁的照片</label>
+          <div class="photo-box">
+            <input class="field" id="photoInput" type="file" accept="image/*" />
+            <img id="photoPreview" class="photo-preview" alt="住宿照片預覽" />
+            <div class="photo-help">照片會自動縮小後存在這台裝置中，適合放飯店、房間或一家人的旅行風景。</div>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>一句回憶</label>
+          <input class="field" id="memoryLine" maxlength="80" placeholder="例如：桐桐最喜歡房間裡的大浴缸 ♡" />
+        </div>
+        <div class="form-group full">
+          <label>這趟旅行貼紙</label>
+          <div class="sticker-picker">
+            <label class="sticker-option"><input type="checkbox" value="親子" name="stickers"><span>🧸 親子</span></label>
+            <label class="sticker-option"><input type="checkbox" value="泳池" name="stickers"><span>🏊 泳池</span></label>
+            <label class="sticker-option"><input type="checkbox" value="早餐" name="stickers"><span>🥐 早餐</span></label>
+            <label class="sticker-option"><input type="checkbox" value="慶生" name="stickers"><span>🎂 慶生</span></label>
+            <label class="sticker-option"><input type="checkbox" value="度假" name="stickers"><span>🌿 度假</span></label>
+            <label class="sticker-option"><input type="checkbox" value="購物" name="stickers"><span>🛍️ 購物</span></label>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>小記</label>
+          <textarea class="field" id="memo" placeholder="早餐很好吃、親子設施很多、下次想再住…"></textarea>
+        </div>
+      </div>
+      <button class="save" type="submit">儲存這次住宿 ✨</button>
+    </form>
+  </dialog>
+
+  <dialog id="toolsDialog">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>資料工具</h3>
+        <button class="close" data-close="toolsDialog">×</button>
+      </div>
+      <p style="color:var(--muted);font-size:13px;line-height:1.6">資料目前只存在這台裝置的瀏覽器。建議偶爾匯出備份，換手機時也能匯入。</p>
+      <div class="tools">
+        <button class="tool-btn" id="exportBtn">⇩ 匯出備份</button>
+        <button class="tool-btn" id="importBtn">⇧ 匯入備份</button>
+      </div>
+      <input id="importFile" type="file" accept="application/json" class="hidden" />
+      <button class="tool-btn danger" id="clearBtn" style="width:100%;margin-top:10px">清除全部紀錄</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+const KEY='hotel_memories_v1';
+let records=JSON.parse(localStorage.getItem(KEY)||'[]');
+let statMode='year';
+const todayISO=()=>new Date().toISOString().slice(0,10);
+
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0}).format(Number(n||0));
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function nights(a,b){ const d=(new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/86400000; return Math.max(1,Math.round(d)||1); }
+
+async function compressImage(file,maxSize=900,quality=.76){
+  if(!file) return '';
+  return await new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=reject;
+    reader.onload=()=>{
+      const img=new Image();
+      img.onerror=reject;
+      img.onload=()=>{
+        let w=img.width,h=img.height;
+        const scale=Math.min(1,maxSize/Math.max(w,h));
+        w=Math.round(w*scale); h=Math.round(h*scale);
+        const c=document.createElement('canvas'); c.width=w;c.height=h;
+        const ctx=c.getContext('2d'); ctx.drawImage(img,0,0,w,h);
+        resolve(c.toDataURL('image/jpeg',quality));
+      };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function selectedStickers(){
+  return [...document.querySelectorAll('input[name="stickers"]:checked')].map(x=>x.value);
+}
+function setSelectedStickers(arr=[]){
+  document.querySelectorAll('input[name="stickers"]').forEach(x=>x.checked=arr.includes(x.value));
+}
+function stickerEmoji(name){
+  return {親子:'🧸',泳池:'🏊',早餐:'🥐',慶生:'🎂',度假:'🌿',購物:'🛍️'}[name]||'♡';
+}
+
+function save(){localStorage.setItem(KEY,JSON.stringify(records));renderAll()}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+
+function sampleIfEmpty(){
+  if(records.length) return;
+  // Keep first use clean; no sample data persisted.
+}
+
+function getYear(d){return Number((d||'').slice(0,4))}
+function getMonth(d){return Number((d||'').slice(5,7))}
+function getQuarter(d){return Math.ceil(getMonth(d)/3)}
+function periodKey(r,mode){
+  const y=getYear(r.checkin), m=getMonth(r.checkin);
+  if(mode==='year') return String(y);
+  if(mode==='quarter') return `${y} Q${Math.ceil(m/3)}`;
+  return `${y}-${String(m).padStart(2,'0')}`;
+}
+function latestPeriod(mode){
+  const now=new Date(), y=now.getFullYear(), m=now.getMonth()+1;
+  if(mode==='year') return String(y);
+  if(mode==='quarter') return `${y} Q${Math.ceil(m/3)}`;
+  return `${y}-${String(m).padStart(2,'0')}`;
+}
+function labelPeriod(key,mode){
+  if(mode==='year') return `${key} 年`;
+  if(mode==='quarter'){const [y,q]=key.split(' ');return `${y} 年 · 第 ${q.slice(1)} 季`;}
+  const [y,m]=key.split('-');return `${y} 年 ${Number(m)} 月`;
+}
+
+
+function normalizeRecords(){
+  records=records.map(r=>({
+    status:r.status || (r.checkin && r.checkin>todayISO()?'planned':'stayed'),
+    country:r.country||'',
+    hotelGroup:r.hotelGroup||'',
+    companions:r.companions||'',
+    payment:r.payment||'',
+    wantReturn:!!r.wantReturn,
+    photo:r.photo||'',
+    memoryLine:r.memoryLine||'',
+    stickers:Array.isArray(r.stickers)?r.stickers:[],
+    ...r
+  }));
+}
+function diffDays(dateStr){
+  const a=new Date(todayISO()+'T12:00:00'), b=new Date(dateStr+'T12:00:00');
+  return Math.ceil((b-a)/86400000);
+}
+function renderUpcoming(){
+  const upcoming=records.filter(r=>r.status==='planned' && r.checkin>=todayISO()).sort((a,b)=>a.checkin.localeCompare(b.checkin));
+  if(upcoming.length){
+    const n=upcoming[0], d=diffDays(n.checkin);
+    $('nextStayName').textContent=n.hotel;
+    $('nextStayMeta').textContent=`${n.country? n.country+' · ':''}${n.city||'旅途中'} · ${n.checkin}${n.payment?' · '+n.payment:''}`;
+    $('nextStayCount').textContent=d===0?'今天入住':`倒數 ${d} 天`;
+    $('nextBanner').style.display='flex';
+  }else{
+    $('nextStayName').textContent='還沒有已安排的住宿';
+    $('nextStayMeta').textContent='新增一趟期待中的飯店吧 ♡';
+    $('nextStayCount').textContent='—';
+  }
+  $('upcomingList').innerHTML=upcoming.length?upcoming.slice(0,6).map(r=>{
+    const d=diffDays(r.checkin);
+    return `<article class="upcoming-card">
+      <span class="status-pill status-planned">✨ 已安排</span>
+      <div class="days">${d===0?'今天':d===1?'明天':`還有 ${d} 天`}</div>
+      <div class="u-title">${esc(r.hotel)}</div>
+      <div class="u-meta">${esc([r.country,r.city].filter(Boolean).join(' · ')||'未填地點')}<br>${esc(r.checkin)} → ${esc(r.checkout)} · ${nights(r.checkin,r.checkout)} 晚${r.hotelGroup?` · ${esc(r.hotelGroup)}`:''}${r.payment?` · ${esc(r.payment)}`:''}</div>
+    </article>`;
+  }).join(''):`<div class="empty"><span class="emoji">🧳</span>目前沒有已安排的住宿<br>下一趟旅行決定後，就把期待先放進來吧。</div>`;
+}
+function renderGroups(){
+  const groups={};
+  records.filter(r=>r.hotelGroup).forEach(r=>{
+    groups[r.hotelGroup]??={count:0,amount:0,planned:0};
+    groups[r.hotelGroup].count++;
+    groups[r.hotelGroup].amount+=Number(r.price||0);
+    if(r.status==='planned') groups[r.hotelGroup].planned++;
+  });
+  const arr=Object.entries(groups).sort((a,b)=>b[1].count-a[1].count);
+  $('groupGrid').innerHTML=arr.length?arr.slice(0,8).map(([g,v])=>`
+    <div class="group-card">
+      <b>${esc(g)}</b>
+      <span>${v.count} 次足跡 · ${money(v.amount)}</span>
+      ${v.planned?`<div class="mini-note">✨ 還有 ${v.planned} 趟已安排</div>`:''}
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1"><span class="emoji">🏨</span>新增集團分類後，這裡會慢慢變成你們家的旅宿版圖。</div>`;
+}
+
+
+function renderJournal(){
+  const y=new Date().getFullYear();
+  $('journalYear').textContent=`${y} FAMILY JOURNAL`;
+  const stayed=records.filter(r=>r.status==='stayed' && getYear(r.checkin)===y);
+  const nightsCount=stayed.reduce((a,r)=>a+nights(r.checkin,r.checkout),0);
+  const cities=new Set(stayed.map(r=>r.city).filter(Boolean));
+  const groups=new Set(stayed.map(r=>r.hotelGroup).filter(Boolean));
+  $('coverNights').textContent=`今年 ${nightsCount} 晚`;
+  $('coverCities').textContent=`走過 ${cities.size} 個城市`;
+  $('coverGroups').textContent=`${groups.size} 個旅宿品牌`;
+
+  const memory=[...stayed].filter(r=>r.photo||r.memoryLine).sort((a,b)=>b.checkin.localeCompare(a.checkin))[0];
+  const hp=$('highlightPhoto');
+  if(memory){
+    if(memory.photo){
+      hp.outerHTML=`<img id="highlightPhoto" src="${memory.photo}" alt="${esc(memory.hotel)}">`;
+    }else{
+      if(hp.tagName==='IMG') hp.outerHTML='<div class="photo-placeholder" id="highlightPhoto">♡</div>';
+    }
+    $('highlightTitle').textContent=memory.hotel;
+    $('highlightText').textContent=memory.memoryLine || `${memory.city||'這趟旅行'}，成為今年手帳裡的一頁。`;
+  }else{
+    if(hp && hp.tagName==='IMG') hp.outerHTML='<div class="photo-placeholder" id="highlightPhoto">♡</div>';
+    $('highlightTitle').textContent='今年的旅行回憶，等你慢慢收藏';
+    $('highlightText').textContent='新增住宿照片與一句回憶後，這裡會像手帳首頁一樣顯示最近的一頁。';
+  }
+
+  const fp={};
+  records.filter(r=>r.status==='stayed').forEach(r=>{
+    const key=[r.country,r.city].filter(Boolean).join(' · ') || '未分類足跡';
+    fp[key]=(fp[key]||0)+1;
+  });
+  const fpArr=Object.entries(fp).sort((a,b)=>b[1]-a[1]);
+  $('footprintBoard').innerHTML=fpArr.length?fpArr.slice(0,10).map(([k,v],i)=>`
+    <div class="footprint-card">
+      <b>${esc(k)}</b>
+      <span>${v} 次住宿足跡</span>
+      <div class="stamp">${i%3===0?'✈':i%3===1?'⌂':'♡'}</div>
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1">旅行開始後，這裡會慢慢長出一家人的足跡版圖。</div>`;
+
+  const tl=[...records].filter(r=>r.status==='stayed').sort((a,b)=>b.checkin.localeCompare(a.checkin)).slice(0,12);
+  $('timeline').innerHTML=tl.length?tl.map(r=>`
+    <div class="timeline-item">
+      <div class="timeline-card">
+        ${r.photo?`<img class="timeline-thumb" src="${r.photo}" alt="${esc(r.hotel)}">`:`<div class="timeline-thumb">⌂</div>`}
+        <div>
+          <h4>${esc(r.hotel)}</h4>
+          <div class="line">${esc(r.checkin)} · ${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}</div>
+          ${r.memoryLine?`<div class="quote">「${esc(r.memoryLine)}」</div>`:''}
+          ${r.stickers?.length?`<div class="meta" style="margin-top:7px">${r.stickers.map(x=>`<span class="chip">${stickerEmoji(x)} ${esc(x)}</span>`).join('')}</div>`:''}
+        </div>
+      </div>
+    </div>`).join(''):`<div class="empty">還沒有可以翻閱的旅行頁面，先新增第一趟住宿吧 ♡</div>`;
+}
+
+function renderHero(){
+  const y=new Date().getFullYear();
+  const yr=records.filter(r=>getYear(r.checkin)===y && r.status==='stayed');
+  $('heroYearAmount').textContent=money(yr.reduce((a,r)=>a+Number(r.price||0),0));
+  $('heroYearCount').textContent=`${yr.length} 次`;
+  $('heroTotalCount').textContent=`${records.filter(r=>r.status==='stayed').length} 間`;
+}
+
+function renderStats(){
+  const groups={};
+  records.filter(r=>r.status==='stayed').forEach(r=>{
+    const k=periodKey(r,statMode);
+    (groups[k]??=[]).push(r);
+  });
+  let current=latestPeriod(statMode);
+  if(!groups[current] && records.length){
+    current=Object.keys(groups).sort().slice(-1)[0];
+  }
+  const arr=groups[current]||[];
+  const amount=arr.reduce((a,r)=>a+Number(r.price||0),0);
+  const totalNights=arr.reduce((a,r)=>a+nights(r.checkin,r.checkout),0);
+  $('periodAmount').textContent=money(amount);
+  $('periodLabel').textContent=labelPeriod(current,statMode);
+  $('periodCount').textContent=arr.length;
+  $('avgNight').textContent=money(totalNights?amount/totalNights:0);
+  $('nightCount').textContent=`共 ${totalNights} 晚`;
+
+  const cities={};
+  arr.forEach(r=>{ if(r.city) cities[r.city]=(cities[r.city]||0)+1; });
+  $('topCity').textContent=Object.entries(cities).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
+
+  const hotelCounts={};
+  records.filter(r=>r.status==='stayed').forEach(r=>hotelCounts[r.hotel]=(hotelCounts[r.hotel]||0)+1);
+  const favorite=Object.entries(hotelCounts).sort((a,b)=>b[1]-a[1])[0];
+  $('favoriteHotel').textContent=favorite?.[0]||'尚未有紀錄';
+  $('favoriteHotelSub').textContent=favorite?`累積入住 ${favorite[1]} 次`:'開始新增第一間飯店吧';
+
+  const entries=Object.entries(groups).map(([k,v])=>[k,v.reduce((a,r)=>a+Number(r.price||0),0)]).sort((a,b)=>a[0].localeCompare(b[0])).slice(-6);
+  const max=Math.max(...entries.map(e=>e[1]),1);
+  $('barList').innerHTML=entries.length?entries.map(([k,v])=>`
+    <div class="bar-row">
+      <span>${esc(statMode==='month'?k.slice(2):k)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(4,v/max*100)}%"></div></div>
+      <b>${money(v)}</b>
+    </div>`).join(''):`<div style="color:var(--muted);font-size:13px">有住宿紀錄後，這裡會自動長出漂亮的花費比較圖。</div>`;
+}
+
+function renderYearFilter(){
+  const cur=$('yearFilter').value;
+  const years=[...new Set(records.map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  $('yearFilter').innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  $('yearFilter').value=cur;
+}
+
+function renderRecords(){
+  let list=[...records];
+  const q=$('searchInput').value.trim().toLowerCase();
+  const yf=$('yearFilter').value;
+  if(q) list=list.filter(r=>[r.hotel,r.country,r.city,r.hotelGroup,r.room,r.memoryLine,r.memo,r.booking,r.companions,r.payment,(r.stickers||[]).join(' ')].join(' ').toLowerCase().includes(q));
+  if(yf) list=list.filter(r=>String(getYear(r.checkin))===yf);
+  const sort=$('sortFilter').value;
+  list.sort((a,b)=>{
+    if(sort==='dateAsc') return a.checkin.localeCompare(b.checkin);
+    if(sort==='priceDesc') return Number(b.price)-Number(a.price);
+    if(sort==='priceAsc') return Number(a.price)-Number(b.price);
+    return b.checkin.localeCompare(a.checkin);
+  });
+  if(!list.length){
+    $('records').innerHTML=`<div class="empty"><span class="emoji">🛎️</span>${records.length?'找不到符合條件的住宿':'還沒有住宿紀錄<br>新增第一間你喜歡的飯店吧！'}</div>`;
+    return;
+  }
+  $('records').innerHTML=list.map(r=>{
+    const n=nights(r.checkin,r.checkout), per=Math.round(Number(r.price||0)/n);
+    const rating={5:'😍 超喜歡',4:'😊 很不錯',3:'🙂 還可以',2:'😐 普通',1:'🥲 不會再住'}[r.rating]||'';
+    return `<article class="record">
+      ${r.photo?`<img class="record-photo" src="${r.photo}" alt="${esc(r.hotel)}">`:''}
+      <div class="record-top">
+        <div><h4>${esc(r.hotel)}</h4><div class="place">${esc([r.country,r.city].filter(Boolean).join(' · ')||'未填地區')} · ${esc(r.checkin)} → ${esc(r.checkout)}</div></div>
+        <div class="price">${money(r.price)}</div>
+      </div>
+      <div class="meta">
+        <span class="status-pill ${r.status==='planned'?'status-planned':'status-stayed'}">${r.status==='planned'?'✨ 已安排':'♡ 已入住'}</span>
+        <span class="chip">${n} 晚 · 平均 ${money(per)}/晚</span>
+        ${r.hotelGroup?`<span class="chip">🏨 ${esc(r.hotelGroup)}</span>`:''}
+        ${r.wantReturn?`<span class="chip">♡ 值得再住</span>`:''}
+        ${r.room?`<span class="chip">${esc(r.room)}</span>`:''}
+        ${r.booking?`<span class="chip">${esc(r.booking)}</span>`:''}
+        ${r.companions?`<span class="chip">👨‍👩‍👧 ${esc(r.companions)}</span>`:''}
+        ${r.payment?`<span class="chip">${esc(r.payment)}</span>`:''}
+        ${rating?`<span class="chip">${rating}</span>`:''}
+      </div>
+      ${r.memoryLine?`<div class="record-memory">「${esc(r.memoryLine)}」</div>`:''}
+      ${r.stickers?.length?`<div class="meta">${r.stickers.map(x=>`<span class="chip">${stickerEmoji(x)} ${esc(x)}</span>`).join('')}</div>`:''}
+      ${r.memo?`<div class="memo">${esc(r.memo)}</div>`:''}
+      <div class="record-actions">
+        <button class="ghost" onclick="editRecord('${r.id}')">編輯</button>
+        <button class="ghost danger" onclick="deleteRecord('${r.id}')">刪除</button>
+      </div>
+    </article>`
+  }).join('');
+}
+
+function renderAll(){renderJournal();renderHero();renderYearFilter();renderStats();renderUpcoming();renderGroups();renderRecords()}
+
+function openForm(r=null){
+  $('formTitle').textContent=r?'編輯住宿':'新增住宿';
+  $('recordId').value=r?.id||'';
+  $('hotel').value=r?.hotel||'';
+  $('status').value=r?.status||(r?.checkin && r.checkin>todayISO()?'planned':'stayed');
+  $('country').value=r?.country||'';
+  const known=[...$('hotelGroup').options].map(o=>o.value).filter(v=>v&&v!=='__custom');
+  if(r?.hotelGroup && !known.includes(r.hotelGroup)){ $('hotelGroup').value='__custom'; $('customGroup').value=r.hotelGroup; $('customGroupWrap').classList.remove('hidden'); }
+  else { $('hotelGroup').value=r?.hotelGroup||''; $('customGroup').value=''; $('customGroupWrap').classList.add('hidden'); }
+  $('city').value=r?.city||'';
+  $('checkin').value=r?.checkin||new Date().toISOString().slice(0,10);
+  $('checkout').value=r?.checkout||'';
+  $('price').value=r?.price||'';
+  $('room').value=r?.room||'';
+  $('booking').value=r?.booking||'';
+  $('rating').value=r?.rating||'';
+  $('companions').value=r?.companions||'';
+  $('payment').value=r?.payment||'';
+  $('wantReturn').checked=!!r?.wantReturn;
+  $('memo').value=r?.memo||'';
+  $('memoryLine').value=r?.memoryLine||'';
+  setSelectedStickers(r?.stickers||[]);
+  window.__currentPhoto=r?.photo||'';
+  const prev=$('photoPreview');
+  if(window.__currentPhoto){prev.src=window.__currentPhoto;prev.style.display='block';}
+  else{prev.removeAttribute('src');prev.style.display='none';}
+  $('photoInput').value='';
+  $('recordDialog').showModal();
+  setTimeout(()=>$('hotel').focus(),100);
+}
+window.editRecord=id=>openForm(records.find(r=>r.id===id));
+window.deleteRecord=id=>{
+  const r=records.find(x=>x.id===id);
+  if(confirm(`要刪除「${r?.hotel||'這筆住宿'}」嗎？`)){
+    records=records.filter(x=>x.id!==id); save(); toast('已刪除住宿紀錄');
+  }
+}
+
+
+$('photoInput').addEventListener('change',async e=>{
+  const f=e.target.files?.[0]; if(!f)return;
+  try{
+    window.__currentPhoto=await compressImage(f);
+    $('photoPreview').src=window.__currentPhoto;
+    $('photoPreview').style.display='block';
+    toast('照片已放進這一頁 ♡');
+  }catch{
+    toast('照片讀取失敗，請換一張再試');
+  }
+});
+
+$('recordForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const checkin=$('checkin').value, checkout=$('checkout').value;
+  if(checkout && checkin && checkout<=checkin){toast('退房日期要晚於入住日期');return}
+  const data={
+    id:$('recordId').value||crypto.randomUUID(),
+    hotel:$('hotel').value.trim(), status:$('status').value, country:$('country').value.trim(), city:$('city').value.trim(),
+    hotelGroup:$('hotelGroup').value==='__custom'?$('customGroup').value.trim():$('hotelGroup').value,
+    checkin, checkout, price:Number($('price').value||0),
+    room:$('room').value.trim(), booking:$('booking').value,
+    rating:$('rating').value, companions:$('companions').value, payment:$('payment').value,
+    wantReturn:$('wantReturn').checked, photo:window.__currentPhoto||'', memoryLine:$('memoryLine').value.trim(), stickers:selectedStickers(), memo:$('memo').value.trim(),
+    updatedAt:new Date().toISOString()
+  };
+  const i=records.findIndex(r=>r.id===data.id);
+  if(i>=0) records[i]=data; else records.push(data);
+  save(); $('recordDialog').close(); toast(i>=0?'住宿紀錄已更新 ♡':'收藏成功，旅途又多一頁 ✨');
+});
+
+$('openAdd').onclick=()=>openForm();
+$('openTools').onclick=()=>$('toolsDialog').showModal();
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
+$('searchInput').addEventListener('input',renderRecords);
+$('yearFilter').addEventListener('change',renderRecords);
+$('sortFilter').addEventListener('change',renderRecords);
+$('statMode').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  statMode=b.dataset.mode;
+  [...$('statMode').children].forEach(x=>x.classList.toggle('active',x===b));
+  renderStats();
+});
+
+document.querySelector('.bottom-nav').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  if(b.dataset.tab==='add'){openForm();return}
+  document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.toggle('active',x===b));
+  if(b.dataset.tab==='dashboard') $('dashboardView').scrollIntoView({behavior:'smooth',block:'start'});
+  if(b.dataset.tab==='records') $('recordsView').scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+
+$('hotelGroup').addEventListener('change',()=>{
+  $('customGroupWrap').classList.toggle('hidden',$('hotelGroup').value!=='__custom');
+  if($('hotelGroup').value==='__custom') setTimeout(()=>$('customGroup').focus(),80);
+});
+
+$('exportBtn').onclick=()=>{
+  const blob=new Blob([JSON.stringify({app:'桐House一家家庭旅行手帳',version:1,exportedAt:new Date().toISOString(),records},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`旅宿收藏備份_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);
+  toast('備份檔已匯出');
+}
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{
+  const file=e.target.files?.[0]; if(!file)return;
+  try{
+    const data=JSON.parse(await file.text());
+    const incoming=Array.isArray(data)?data:data.records;
+    if(!Array.isArray(incoming)) throw new Error();
+    if(confirm(`找到 ${incoming.length} 筆紀錄，要匯入並取代目前資料嗎？`)){
+      records=incoming;save();$('toolsDialog').close();toast('資料匯入完成 ✨');
+    }
+  }catch{toast('這個備份檔格式不正確')}
+  e.target.value='';
+}
+$('clearBtn').onclick=()=>{
+  if(confirm('確定要清除全部住宿紀錄？這個動作無法復原。')){
+    records=[];save();$('toolsDialog').close();toast('全部紀錄已清除');
+  }
+}
+
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+sampleIfEmpty();normalizeRecords();renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "桐House一家・家庭旅行手帳",
+  "short_name": "桐House一家",
+  "description": "像一本真正家庭手帳的旅宿 PWA：照片、回憶、足跡、飯店、花費與已安排旅程。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f3ef",
+  "theme_color": "#f7efe9",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
