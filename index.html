@@ -745,6 +745,122 @@
       .year-cover{padding:23px 19px 20px}
     }
 
+
+    .date-range-btn{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      text-align:left;
+      cursor:pointer;
+      min-height:48px;
+    }
+    .date-range-icon{font-size:18px}
+    .date-range-summary{
+      margin-top:7px;
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+    .date-picker-note{
+      font-size:12px;
+      color:var(--muted);
+      margin:-4px 0 14px;
+      background:#fff7df;
+      border-radius:12px;
+      padding:9px 11px;
+    }
+    .calendar-head{
+      display:grid;
+      grid-template-columns:42px 1fr 42px;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+    }
+    .calendar-title{
+      text-align:center;
+      font-weight:700;
+      color:#6f534a;
+      font-size:16px;
+    }
+    .calendar-nav{
+      border:1px solid var(--line);
+      background:#fffdf9;
+      width:42px;height:42px;
+      border-radius:14px;
+      font-size:24px;
+      color:#8e675b;
+    }
+    .calendar-week,.calendar-grid{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:5px;
+    }
+    .calendar-week{
+      margin-bottom:5px;
+    }
+    .calendar-week span{
+      text-align:center;
+      font-size:10px;
+      color:var(--muted);
+      padding:4px 0;
+    }
+    .calendar-day{
+      border:0;
+      background:#fffdf9;
+      border-radius:12px;
+      aspect-ratio:1/1;
+      min-height:38px;
+      color:#644f47;
+      font-family:inherit;
+      font-size:12px;
+      position:relative;
+    }
+    .calendar-day:hover{background:#f8ece6}
+    .calendar-day.muted{opacity:.28}
+    .calendar-day.today::after{
+      content:"";
+      position:absolute;
+      width:4px;height:4px;
+      border-radius:50%;
+      background:#d6907f;
+      bottom:4px;left:50%;
+      transform:translateX(-50%);
+    }
+    .calendar-day.selected{
+      background:#d6907f;
+      color:white;
+      font-weight:700;
+    }
+    .calendar-day.in-range{
+      background:#f6ded5;
+      color:#8e6256;
+      border-radius:8px;
+    }
+    .calendar-day.range-start{border-radius:14px 6px 6px 14px}
+    .calendar-day.range-end{border-radius:6px 14px 14px 6px}
+    .range-preview{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:10px;
+      align-items:center;
+      background:#fffaf5;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      margin-top:14px;
+    }
+    .range-preview small{
+      display:block;
+      font-size:10px;
+      color:var(--muted);
+      margin-bottom:3px;
+    }
+    .range-preview b{
+      font-size:13px;
+      color:#6d534a;
+    }
+    .range-arrow{color:#d39a89}
+
     @media(min-width:760px){
       .summary-grid{grid-template-columns:repeat(4,1fr)}
       .summary-card.wide{grid-column:span 2}
@@ -966,13 +1082,15 @@
           <label>自訂旅宿集團</label>
           <input class="field" id="customGroup" placeholder="輸入集團名稱" />
         </div>
-        <div class="form-group">
-          <label>入住日期 *</label>
-          <input class="field" id="checkin" type="date" required />
-        </div>
-        <div class="form-group">
-          <label>退房日期 *</label>
-          <input class="field" id="checkout" type="date" required />
+        <div class="form-group full">
+          <label>住宿日期區間 *</label>
+          <button type="button" class="field date-range-btn" id="dateRangeBtn">
+            <span id="dateRangeText">選擇入住 ～ 退房日期</span>
+            <span class="date-range-icon">📅</span>
+          </button>
+          <input id="checkin" type="hidden" required />
+          <input id="checkout" type="hidden" required />
+          <div class="date-range-summary" id="dateRangeSummary">尚未選擇住宿日期</div>
         </div>
         <div class="form-group">
           <label>總金額 (TWD) *</label>
@@ -986,7 +1104,41 @@
           <label>訂房方式</label>
           <select class="field" id="booking">
             <option value="">未填</option>
-            <option>飯店官網</option><option>Agoda</option><option>Booking.com</option><option>旅行社</option><option>住宿券</option><option>信用卡禮遇</option><option>其他</option>
+            <optgroup label="飯店 / 直接訂房">
+              <option>飯店官網</option>
+              <option>飯店電話 / 現場訂房</option>
+              <option>飯店會員 App</option>
+            </optgroup>
+            <optgroup label="國際訂房平台">
+              <option>Agoda</option>
+              <option>Booking.com</option>
+              <option>Trip.com</option>
+              <option>Expedia</option>
+              <option>Hotels.com</option>
+              <option>Traveloka</option>
+            </optgroup>
+            <optgroup label="台灣常用旅遊平台">
+              <option>Klook</option>
+              <option>KKday</option>
+              <option>易遊網 ezTravel</option>
+              <option>雄獅旅遊</option>
+              <option>可樂旅遊</option>
+              <option>東南旅遊</option>
+            </optgroup>
+            <optgroup label="日本旅遊平台">
+              <option>樂天旅遊 Rakuten Travel</option>
+              <option>Jalan じゃらん</option>
+              <option>一休.com</option>
+            </optgroup>
+            <optgroup label="票券 / 特殊方案">
+              <option>住宿券</option>
+              <option>信用卡禮遇</option>
+              <option>FHR / THC</option>
+              <option>點數 / 會員兌換</option>
+              <option>旅行社套裝行程</option>
+              <option>團購 / 優惠券</option>
+              <option>其他</option>
+            </optgroup>
           </select>
         </div>
         <div class="form-group">
@@ -1057,6 +1209,37 @@
       </div>
       <button class="save" type="submit">儲存這次住宿 ✨</button>
     </form>
+  </dialog>
+
+
+  <dialog id="dateDialog">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>選擇住宿日期</h3>
+        <button class="close" data-close="dateDialog">×</button>
+      </div>
+
+      <div class="date-picker-note">先選入住日，再選退房日 ♡</div>
+
+      <div class="calendar-head">
+        <button type="button" class="calendar-nav" id="prevMonth">‹</button>
+        <div class="calendar-title" id="calendarTitle"></div>
+        <button type="button" class="calendar-nav" id="nextMonth">›</button>
+      </div>
+
+      <div class="calendar-week">
+        <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+
+      <div class="range-preview">
+        <div><small>入住</small><b id="previewCheckin">—</b></div>
+        <div class="range-arrow">→</div>
+        <div><small>退房</small><b id="previewCheckout">—</b></div>
+      </div>
+
+      <button class="save" type="button" id="confirmDateRange">套用住宿日期</button>
+    </div>
   </dialog>
 
   <dialog id="toolsDialog">
@@ -1367,6 +1550,96 @@ function renderRecords(){
 
 function renderAll(){renderJournal();renderHero();renderYearFilter();renderStats();renderUpcoming();renderGroups();renderRecords()}
 
+
+let calendarCursor = new Date();
+let tempCheckin = '';
+let tempCheckout = '';
+
+function isoFromParts(y,m,d){
+  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+function prettyDate(iso){
+  if(!iso) return '—';
+  const [y,m,d]=iso.split('-');
+  return `${y}/${Number(m)}/${Number(d)}`;
+}
+function updateDateRangeUI(){
+  const a=$('checkin').value, b=$('checkout').value;
+  if(a && b){
+    $('dateRangeText').textContent=`${prettyDate(a)} ～ ${prettyDate(b)}`;
+    $('dateRangeSummary').textContent=`共 ${nights(a,b)} 晚`;
+  }else if(a){
+    $('dateRangeText').textContent=`入住 ${prettyDate(a)} · 請選退房日`;
+    $('dateRangeSummary').textContent='尚未完成日期區間';
+  }else{
+    $('dateRangeText').textContent='選擇入住 ～ 退房日期';
+    $('dateRangeSummary').textContent='尚未選擇住宿日期';
+  }
+}
+function openDatePicker(){
+  tempCheckin=$('checkin').value||'';
+  tempCheckout=$('checkout').value||'';
+  const base=tempCheckin?new Date(tempCheckin+'T12:00:00'):new Date();
+  calendarCursor=new Date(base.getFullYear(),base.getMonth(),1);
+  updateRangePreview();
+  renderCalendar();
+  $('dateDialog').showModal();
+}
+function updateRangePreview(){
+  $('previewCheckin').textContent=prettyDate(tempCheckin);
+  $('previewCheckout').textContent=prettyDate(tempCheckout);
+  $('confirmDateRange').disabled=!(tempCheckin&&tempCheckout);
+  $('confirmDateRange').style.opacity=(tempCheckin&&tempCheckout)?'1':'.45';
+}
+function renderCalendar(){
+  const y=calendarCursor.getFullYear();
+  const m=calendarCursor.getMonth();
+  $('calendarTitle').textContent=`${y} 年 ${m+1} 月`;
+  const first=new Date(y,m,1);
+  const startDay=first.getDay();
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const prevDays=new Date(y,m,0).getDate();
+  const today=todayISO();
+
+  const cells=[];
+  for(let i=0;i<42;i++){
+    let cy=y, cm=m, day, muted=false;
+    if(i<startDay){
+      day=prevDays-startDay+i+1; cm=m-1; muted=true;
+    }else if(i>=startDay+daysInMonth){
+      day=i-(startDay+daysInMonth)+1; cm=m+1; muted=true;
+    }else{
+      day=i-startDay+1;
+    }
+    if(cm<0){cm=11;cy=y-1}
+    if(cm>11){cm=0;cy=y+1}
+    const iso=isoFromParts(cy,cm+1,day);
+    let cls='calendar-day';
+    if(muted) cls+=' muted';
+    if(iso===today) cls+=' today';
+    if(tempCheckin && tempCheckout && iso>tempCheckin && iso<tempCheckout) cls+=' in-range';
+    if(iso===tempCheckin) cls+=' selected range-start';
+    if(iso===tempCheckout) cls+=' selected range-end';
+    cells.push(`<button type="button" class="${cls}" data-date="${iso}">${day}</button>`);
+  }
+  $('calendarGrid').innerHTML=cells.join('');
+}
+function chooseDate(iso){
+  if(!tempCheckin || (tempCheckin && tempCheckout)){
+    tempCheckin=iso;
+    tempCheckout='';
+  }else{
+    if(iso<=tempCheckin){
+      tempCheckin=iso;
+      tempCheckout='';
+    }else{
+      tempCheckout=iso;
+    }
+  }
+  updateRangePreview();
+  renderCalendar();
+}
+
 function openForm(r=null){
   $('formTitle').textContent=r?'編輯住宿':'新增住宿';
   $('recordId').value=r?.id||'';
@@ -1379,6 +1652,7 @@ function openForm(r=null){
   $('city').value=r?.city||'';
   $('checkin').value=r?.checkin||new Date().toISOString().slice(0,10);
   $('checkout').value=r?.checkout||'';
+  updateDateRangeUI();
   $('price').value=r?.price||'';
   $('room').value=r?.room||'';
   $('booking').value=r?.booking||'';
@@ -1462,6 +1736,30 @@ document.querySelector('.bottom-nav').addEventListener('click',e=>{
 $('hotelGroup').addEventListener('change',()=>{
   $('customGroupWrap').classList.toggle('hidden',$('hotelGroup').value!=='__custom');
   if($('hotelGroup').value==='__custom') setTimeout(()=>$('customGroup').focus(),80);
+});
+
+
+$('dateRangeBtn').addEventListener('click',openDatePicker);
+$('calendarGrid').addEventListener('click',e=>{
+  const b=e.target.closest('[data-date]');
+  if(!b)return;
+  chooseDate(b.dataset.date);
+});
+$('prevMonth').addEventListener('click',()=>{
+  calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);
+  renderCalendar();
+});
+$('nextMonth').addEventListener('click',()=>{
+  calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);
+  renderCalendar();
+});
+$('confirmDateRange').addEventListener('click',()=>{
+  if(!(tempCheckin&&tempCheckout)) return;
+  $('checkin').value=tempCheckin;
+  $('checkout').value=tempCheckout;
+  updateDateRangeUI();
+  $('dateDialog').close();
+  toast(`住宿日期已選好 · ${nights(tempCheckin,tempCheckout)} 晚 ♡`);
 });
 
 $('exportBtn').onclick=()=>{
