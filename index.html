@@ -903,7 +903,7 @@
       .form-group.full{grid-column:auto}
     }
   
-    /* v6.8.1 · rating, review reminder, insights, cute quick row */
+    /* v6.8.2 · rating, review reminder, insights, cute quick row */
     #dashboardView,#recordsView{scroll-margin-top:18px}
     .filters{grid-template-columns:repeat(5,minmax(0,1fr))}
     .review-reminder{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:14px 15px;background:linear-gradient(135deg,#fff4dc,#fffaf5);border:1px dashed #e8c98f;border-radius:22px 18px 24px 19px;box-shadow:0 8px 20px rgba(116,83,50,.06)}
@@ -922,7 +922,7 @@
     @keyframes jumpGlow{0%,100%{filter:none}35%{filter:drop-shadow(0 0 12px rgba(217,150,127,.35));transform:translateY(-2px)}}
     @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters #searchInput{grid-column:1/-1}}
 
-    /* === v6.8.1 年度回顧 / 最愛避雷 / 平均住宿預算 === */
+    /* === v6.8.2 年度回顧 / 最愛避雷 / 平均住宿預算 === */
     .memory-insight-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:24px}
     .year-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:12px}
     .year-review-card{background:#fffdf9;border:1px solid #eadbd2;border-radius:24px 20px 25px 21px;padding:15px;box-shadow:0 8px 22px rgba(114,86,77,.05)}
@@ -944,7 +944,7 @@
     @media(max-width:520px){.budget-grid{grid-template-columns:1fr}.memory-insight-head{align-items:flex-start;flex-direction:column}.memory-insight-head .mini-stat-filter{width:100%}.memory-insight-head select{width:100%}}
 
 
-    /* v6.8.1 · next-trip focus + handier quick navigation */
+    /* v6.8.2 · next-trip focus + handier quick navigation */
     html{scroll-padding-top:18px}
     .next-banner.next-trip-card{
       display:block!important;padding:0;overflow:hidden;transform:none;
@@ -998,7 +998,7 @@
 
 
 /* =========================================================
-   v6.8.1 · visual polish / spacing normalization
+   v6.8.2 · visual polish / spacing normalization
    Keep the whole app feeling like one family travel journal.
    ========================================================= */
 :root{
@@ -1173,7 +1173,7 @@ textarea.field{min-height:94px}
 @media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
 
 
-/* v6.8.1 · warm journal, less dashboard */
+/* v6.8.2 · warm journal, less dashboard */
 .yearbook-card{border:1px solid var(--line);background:linear-gradient(180deg,#fffdfa,#fff7f1);border-radius:28px;padding:22px 20px;box-shadow:0 14px 30px rgba(90,64,53,.07)}
 .yearbook-kicker{font-size:10px;font-weight:900;letter-spacing:.18em;color:#b68d7e;margin-bottom:6px}
 .yearbook-title{font-size:25px;font-weight:900;color:#755a51;margin-bottom:10px}
@@ -1198,7 +1198,7 @@ textarea.field{min-height:94px}
 @media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
 
 
-/* v6.8.1 · annual memories */
+/* v6.8.2 · annual memories */
 .memory-yearbook{overflow:hidden}
 .yearbook-glance{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:-3px 0 18px;color:#9a7d72;font-size:12px;font-weight:800}
 .yearbook-glance i{font-style:normal;opacity:.45}
@@ -1223,6 +1223,18 @@ textarea.field{min-height:94px}
 .year-note-foot button{border:0;background:#8d6d62;color:#fff;border-radius:999px;padding:7px 11px;font-size:10px;font-weight:800}
 .year-closing{margin-top:18px;padding:17px 15px 4px;text-align:center;border-top:1px dashed #e8d8d0;font-size:12px;line-height:1.9;color:#8b7168;font-weight:700}
 @media(max-width:430px){.year-memory-feature{grid-template-columns:92px 1fr}.feature-photo,.feature-photo img{min-height:112px}.feature-copy h4,.year-memory-soft h4{font-size:15px}}
+
+
+/* v6.8.2 iPhone native file picker */
+.file-pick-btn{display:flex!important;align-items:center;justify-content:center;cursor:pointer;-webkit-user-select:none;user-select:none}
+.native-file-input{
+  position:fixed!important;
+  left:-10000px!important;
+  top:auto!important;
+  width:1px!important;height:1px!important;
+  opacity:.01!important;
+  pointer-events:none!important;
+}
 
 </style>
 </head>
@@ -1722,17 +1734,17 @@ textarea.field{min-height:94px}
 <p style="color:var(--muted);font-size:13px;line-height:1.6">「搬出手札」會把住宿紀錄、日期、金額、評分、備註、貼紙與照片全部打包成一個 iPhone 可辨識的 JSON 完整搬家檔。AirDrop 到新 iPhone 後，在新手機的桐House按「搬入手札」選取它即可。</p>
 <div class="tools">
 <button class="tool-btn" id="exportBtn">📤 搬出手札</button>
-<button class="tool-btn" id="moveInBtn">📥 搬入手札</button>
+<label class="tool-btn file-pick-btn" for="moveInFile" id="moveInBtn">📥 搬入手札</label>
 <button class="tool-btn" id="shareBackupBtn">↗ LINE 快速分享（不含照片）</button>
-<button class="tool-btn" id="importBtn">⇧ 舊備份匯入</button>
+<label class="tool-btn file-pick-btn" for="importFile" id="importBtn">⇧ 舊備份匯入</label>
 <div style="margin-top:12px;padding:12px;border-radius:16px;background:#fff8f3;border:1px dashed #e6d2c7">
   <div style="font-size:12px;font-weight:800;margin-bottom:7px">📋 LINE 備份碼還原</div>
   <textarea id="backupCodeInput" rows="3" placeholder="把 LINE 裡收到的 THB1:... 備份碼貼到這裡" style="width:100%;resize:vertical;border:1px solid #ead8cf;border-radius:12px;padding:10px;font:inherit;font-size:12px;background:white"></textarea>
   <button class="tool-btn" id="restoreCodeBtn" style="margin-top:8px">貼上備份碼還原</button>
 </div>
 </div>
-<input accept="application/json,.json,text/json" class="hidden" id="importFile" type="file">
-<input accept="application/json,.json,text/json" class="hidden" id="moveInFile" type="file">
+<input accept=".json,.tonghouse,application/json,text/json,text/plain" class="native-file-input" id="importFile" type="file">
+<input accept=".json,.tonghouse,application/json,text/json,text/plain" class="native-file-input" id="moveInFile" type="file">
 <button class="tool-btn danger" id="clearBtn" style="width:100%;margin-top:10px">清除全部紀錄</button>
 </input></div>
 </dialog>
@@ -2524,14 +2536,34 @@ $('exportBtn').onclick=async()=>{
   toast('完整搬家檔已下載，可用 AirDrop 傳送');
 }
 
-$('moveInBtn').onclick=()=>$('moveInFile').click();
+
+function readPickedFile(file){
+  return new Promise((resolve,reject)=>{
+    if(file && typeof file.text==='function'){
+      file.text().then(resolve).catch(()=>readByReader());
+    }else readByReader();
+    function readByReader(){
+      try{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(String(reader.result||''));
+        reader.onerror=()=>reject(reader.error||new Error('read-failed'));
+        reader.readAsText(file,'utf-8');
+      }catch(e){reject(e)}
+    }
+  });
+}
+function parseTongHouseBackup(text){
+  let data=JSON.parse(String(text||'').replace(/^\uFEFF/,'').trim());
+  const incoming=Array.isArray(data)?data:(Array.isArray(data?.records)?data.records:null);
+  if(!incoming) throw new Error('invalid-records');
+  return {data,incoming};
+}
+
 $('moveInFile').onchange=async e=>{
   const f=e.target.files?.[0];
   if(!f) return;
   try{
-    const data=JSON.parse(await f.text());
-    const incoming=Array.isArray(data)?data:data?.records;
-    if(!Array.isArray(incoming)) throw new Error('invalid');
+    const {data,incoming}=parseTongHouseBackup(await readPickedFile(f));
     if(!Array.isArray(data) && data?.app && data.app!=='桐House一家家庭旅行手帳') throw new Error('wrong-app');
     const photos=data?.photoCount ?? incoming.filter(r=>!!r.photo).length;
     const exportedAt=data?.exportedAt?new Date(data.exportedAt).toLocaleString('zh-TW'):'未知日期';
@@ -2546,8 +2578,9 @@ $('moveInFile').onchange=async e=>{
       `合併時相同 ID 的住宿會以搬入檔版本更新，不會重複建立。`
     );
     if(!choice){e.target.value='';return;}
-    const byId=new Map(records.map(r=>[r.id,r]));
-    incoming.forEach(r=>byId.set(r.id,r));
+    const recordKey=r=>r?.id||[r?.hotel,r?.checkin,r?.checkout,r?.city].map(x=>String(x||'').trim()).join('|');
+    const byId=new Map(records.map(r=>[recordKey(r),r]));
+    incoming.forEach(r=>byId.set(recordKey(r),r));
     records=[...byId.values()];
     normalizeRecords();
     localStorage.setItem(KEY,JSON.stringify(records));
@@ -2555,19 +2588,16 @@ $('moveInFile').onchange=async e=>{
     $('toolsDialog').close();
     toast(`搬家完成 ♡ 現在共有 ${records.length} 筆住宿`);
   }catch(err){
-    toast('這個檔案不是有效的桐House搬家備份');
+    toast('搬入失敗：請選擇桐House完整搬家 JSON 檔');
   }finally{
     e.target.value='';
   }
 }
 
-$('importBtn').onclick=()=>$('importFile').click();
 $('importFile').onchange=async e=>{
   const file=e.target.files?.[0]; if(!file)return;
   try{
-    const data=JSON.parse(await file.text());
-    const incoming=Array.isArray(data)?data:data.records;
-    if(!Array.isArray(incoming)) throw new Error();
+    const {data,incoming}=parseTongHouseBackup(await readPickedFile(file));
     if(confirm(`找到 ${incoming.length} 筆紀錄，要匯入並取代目前資料嗎？`)){
       records=incoming;save();$('toolsDialog').close();toast('資料匯入完成 ✨');
     }
@@ -2619,7 +2649,7 @@ $('clearBtn').onclick=()=>{
   }
 }
 
-// v6.8.1 one-click backup receiver.
+// v6.8.2 one-click backup receiver.
 // The exported HTML opens this same deployed app and transfers the complete
 // backup (including compressed photos) via postMessage, avoiding URL-size limits.
 window.addEventListener('message',e=>{
@@ -2665,7 +2695,7 @@ function announceBackupReceiver(){
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
 
 // =========================================================
-// v6.8.1 · unified statistics + warm journal logic
+// v6.8.2 · unified statistics + warm journal logic
 // =========================================================
 function cleanText(v){return String(v||'').trim()}
 function stayedRecords(){return records.filter(r=>stayHasEnded(r) || r.status==='stayed')}
@@ -3044,7 +3074,7 @@ renderUpcoming=function(){
 
 
 // =========================================================
-// v6.8.1 · annual review = memories, not a score dashboard
+// v6.8.2 · annual review = memories, not a score dashboard
 // =========================================================
 function annualNoteKey(year){return `tonghouse_year_note_${year||'all'}`}
 function memoryReason(r,positive=true){
@@ -3168,7 +3198,7 @@ renderAnnualInsights=function(){
 
 
 // =========================================================
-// v6.8.1.1 · data recovery guard
+// v6.8.2.1 · data recovery guard
 // Never create demo data while an older TongHouse dataset exists.
 // =========================================================
 function tonghouseLooksLikeRecords(value){
@@ -3208,7 +3238,7 @@ function recoverTongHouseData(){
 const tonghouseRecovery=recoverTongHouseData();
 
 
-// v6.8.1.1 production guard: an empty journal stays empty; it must never overwrite
+// v6.8.2.1 production guard: an empty journal stays empty; it must never overwrite
 // or disguise a storage/read problem with sample records.
 sampleIfEmpty=function(){};
 
