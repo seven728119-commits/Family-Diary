@@ -903,7 +903,7 @@
       .form-group.full{grid-column:auto}
     }
   
-    /* v6.4 · rating, review reminder, insights, cute quick row */
+    /* v6.5 · rating, review reminder, insights, cute quick row */
     #dashboardView,#recordsView{scroll-margin-top:18px}
     .filters{grid-template-columns:repeat(5,minmax(0,1fr))}
     .review-reminder{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:14px 15px;background:linear-gradient(135deg,#fff4dc,#fffaf5);border:1px dashed #e8c98f;border-radius:22px 18px 24px 19px;box-shadow:0 8px 20px rgba(116,83,50,.06)}
@@ -922,7 +922,7 @@
     @keyframes jumpGlow{0%,100%{filter:none}35%{filter:drop-shadow(0 0 12px rgba(217,150,127,.35));transform:translateY(-2px)}}
     @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters #searchInput{grid-column:1/-1}}
 
-    /* === v6.4 年度回顧 / 最愛避雷 / 平均住宿預算 === */
+    /* === v6.5 年度回顧 / 最愛避雷 / 平均住宿預算 === */
     .memory-insight-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:24px}
     .year-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:12px}
     .year-review-card{background:#fffdf9;border:1px solid #eadbd2;border-radius:24px 20px 25px 21px;padding:15px;box-shadow:0 8px 22px rgba(114,86,77,.05)}
@@ -944,7 +944,7 @@
     @media(max-width:520px){.budget-grid{grid-template-columns:1fr}.memory-insight-head{align-items:flex-start;flex-direction:column}.memory-insight-head .mini-stat-filter{width:100%}.memory-insight-head select{width:100%}}
 
 
-    /* v6.4 · next-trip focus + handier quick navigation */
+    /* v6.5 · next-trip focus + handier quick navigation */
     html{scroll-padding-top:18px}
     .next-banner.next-trip-card{
       display:block!important;padding:0;overflow:hidden;transform:none;
@@ -996,6 +996,161 @@
       .next-trip-count-row .count{font-size:21px}
     }
 
+
+/* =========================================================
+   v6.5 · visual polish / spacing normalization
+   Keep the whole app feeling like one family travel journal.
+   ========================================================= */
+:root{
+  --ui-gap-xs:8px;
+  --ui-gap-sm:12px;
+  --ui-gap-md:18px;
+  --ui-gap-lg:26px;
+  --ui-gap-xl:34px;
+  --ui-radius-sm:14px;
+  --ui-radius-md:18px;
+  --ui-radius-lg:24px;
+  --ui-radius-xl:30px;
+}
+
+/* Page rhythm */
+body{padding-bottom:calc(104px + var(--safe-bottom))}
+.app{padding-bottom:8px}
+.topbar{margin-bottom:18px}
+.year-cover{margin-bottom:22px}
+main.app>section{margin-top:0}
+main.app>section+section{margin-top:26px}
+.section-head{margin-bottom:13px;gap:12px}
+.section-head h3{margin:0 0 4px;line-height:1.25}
+.section-head p{margin:0;line-height:1.55}
+.mini-note{margin-top:5px}
+
+/* Hero / cover consistency */
+.year-cover,.hero,.memory-highlight,.memory-insight-section{
+  border-radius:var(--ui-radius-xl);
+}
+.year-cover{padding:25px 22px}
+.cover-stats{gap:8px;margin-top:17px}
+.cover-stat{padding:7px 10px}
+
+/* Next trip */
+.next-banner.next-trip-card{margin:0;border-radius:var(--ui-radius-xl)}
+.next-trip-visual{min-height:158px;padding:20px}
+.next-trip-body{padding:17px 18px 18px}
+.next-trip-count-row{align-items:flex-start}
+.next-trip-count-row .count{line-height:1.15}
+.next-trip-date{margin-top:8px}
+.next-trip-actions:has(.primary.hidden):has(.secondary.hidden){display:none}
+.next-trip-actions{margin-top:14px}
+.next-trip-actions button{min-height:42px}
+
+/* Upcoming / reminders */
+.upcoming-wrap{gap:11px}
+.upcoming-card{padding:16px 17px;border-radius:22px}
+.review-reminder{margin:0;padding:14px 15px}
+.review-reminder button{min-height:40px}
+
+/* Card systems */
+.summary-grid,.group-grid,.year-review-grid,.budget-grid,.budget-detail,.love-avoid-grid{
+  gap:11px;
+}
+.summary-card,.group-card,.record,.budget-card,.year-review-card,.love-avoid-card{
+  border-radius:20px;
+}
+.summary-card,.group-card,.budget-card,.year-review-card,.love-avoid-card{
+  padding:15px;
+}
+.record{padding:16px}
+.record-actions{gap:8px;margin-top:11px}
+.chips{gap:6px}
+.chip,.status-pill{line-height:1.2}
+
+/* Filters & controls */
+.filters{gap:9px;margin-bottom:14px}
+.field,.filters input,.filters select,.mini-stat-filter select{
+  min-height:44px;
+  border-radius:14px;
+}
+.segmented{gap:5px;padding:5px;border-radius:16px}
+.segmented button{min-height:38px}
+.ghost,.tool-btn,.save,.add-btn{
+  min-height:44px;
+}
+.tool-btn{display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.35}
+.tools{gap:9px}
+
+/* Dialog and form density */
+dialog{border-radius:26px}
+.modal{padding:20px 18px 22px}
+.modal-head{margin-bottom:15px}
+.modal-head h3{font-size:21px}
+.form-grid{gap:12px 10px}
+.form-group label{margin-bottom:6px}
+textarea.field{min-height:94px}
+.save{margin-top:18px}
+
+/* Insight / ranking blocks */
+.memory-insight-section{padding:18px}
+.memory-insight-head{margin-bottom:13px}
+.rank-list,.budget-list{gap:8px}
+.rank-row,.budget-line{padding:10px 11px;border-radius:14px}
+
+/* Timeline / memories */
+.memory-highlight{gap:16px;padding:18px}
+.timeline{gap:13px}
+.timeline-item{padding-bottom:13px}
+.polaroid{flex:0 0 auto}
+
+/* Bottom navigation */
+.bottom-nav{
+  width:min(calc(100% - 20px),430px);
+  bottom:calc(10px + var(--safe-bottom));
+  padding:6px;
+  gap:4px;
+  border-radius:24px;
+}
+.bottom-nav button{
+  min-height:56px;
+  padding:8px 4px 7px;
+  border-radius:17px;
+  line-height:1.1;
+}
+.bottom-nav .nav-icon{margin-bottom:5px}
+.bottom-nav .nav-add .nav-icon{width:29px;height:29px}
+.toast{bottom:calc(92px + var(--safe-bottom))}
+
+/* Empty states */
+.empty{
+  padding:30px 16px;
+  border-radius:20px;
+  line-height:1.65;
+}
+.empty .emoji{font-size:34px;margin-bottom:8px}
+
+/* Mobile refinement */
+@media(max-width:520px){
+  main.app>section+section{margin-top:23px}
+  .year-cover{padding:22px 18px}
+  .next-trip-visual{min-height:145px;padding:18px}
+  .next-trip-body{padding:15px 16px 16px}
+  .memory-highlight{padding:16px;gap:13px}
+  .memory-insight-section{padding:16px}
+  .summary-card,.group-card,.budget-card,.year-review-card,.love-avoid-card{padding:14px}
+  .record{padding:15px}
+  .review-reminder{align-items:flex-start}
+  .review-reminder button{align-self:center}
+}
+@media(max-width:390px){
+  .app{padding-left:14px;padding-right:14px}
+  .brand h1{font-size:27px}
+  .year-cover h2{font-size:30px}
+  .bottom-nav{width:calc(100% - 16px)}
+  .bottom-nav button{font-size:10.5px}
+  .bottom-nav .nav-icon{font-size:17px}
+  .review-reminder{gap:9px;padding:12px}
+  .review-reminder-icon{width:38px;height:38px}
+}
+
 </style>
 </head>
 <body>
@@ -1031,7 +1186,7 @@
     </div>
   </div>
   <div class="next-trip-actions">
-    <button class="primary" id="nextTripPrimary" type="button">＋ 寫下下一趟</button>
+    <button class="primary hidden" id="nextTripPrimary" type="button">查看旅程</button>
     <button class="secondary hidden" id="nextTripEdit" type="button">查看</button>
   </div>
 </div>
@@ -2376,7 +2531,7 @@ $('clearBtn').onclick=()=>{
   }
 }
 
-// v6.4 one-click backup receiver.
+// v6.5 one-click backup receiver.
 // The exported HTML opens this same deployed app and transfers the complete
 // backup (including compressed photos) via postMessage, avoiding URL-size limits.
 window.addEventListener('message',e=>{
