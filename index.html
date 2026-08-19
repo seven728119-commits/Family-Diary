@@ -903,7 +903,7 @@
       .form-group.full{grid-column:auto}
     }
   
-    /* v6.8 · rating, review reminder, insights, cute quick row */
+    /* v6.8.1 · rating, review reminder, insights, cute quick row */
     #dashboardView,#recordsView{scroll-margin-top:18px}
     .filters{grid-template-columns:repeat(5,minmax(0,1fr))}
     .review-reminder{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:14px 15px;background:linear-gradient(135deg,#fff4dc,#fffaf5);border:1px dashed #e8c98f;border-radius:22px 18px 24px 19px;box-shadow:0 8px 20px rgba(116,83,50,.06)}
@@ -922,7 +922,7 @@
     @keyframes jumpGlow{0%,100%{filter:none}35%{filter:drop-shadow(0 0 12px rgba(217,150,127,.35));transform:translateY(-2px)}}
     @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters #searchInput{grid-column:1/-1}}
 
-    /* === v6.8 年度回顧 / 最愛避雷 / 平均住宿預算 === */
+    /* === v6.8.1 年度回顧 / 最愛避雷 / 平均住宿預算 === */
     .memory-insight-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:24px}
     .year-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:12px}
     .year-review-card{background:#fffdf9;border:1px solid #eadbd2;border-radius:24px 20px 25px 21px;padding:15px;box-shadow:0 8px 22px rgba(114,86,77,.05)}
@@ -944,7 +944,7 @@
     @media(max-width:520px){.budget-grid{grid-template-columns:1fr}.memory-insight-head{align-items:flex-start;flex-direction:column}.memory-insight-head .mini-stat-filter{width:100%}.memory-insight-head select{width:100%}}
 
 
-    /* v6.8 · next-trip focus + handier quick navigation */
+    /* v6.8.1 · next-trip focus + handier quick navigation */
     html{scroll-padding-top:18px}
     .next-banner.next-trip-card{
       display:block!important;padding:0;overflow:hidden;transform:none;
@@ -998,7 +998,7 @@
 
 
 /* =========================================================
-   v6.8 · visual polish / spacing normalization
+   v6.8.1 · visual polish / spacing normalization
    Keep the whole app feeling like one family travel journal.
    ========================================================= */
 :root{
@@ -1173,7 +1173,7 @@ textarea.field{min-height:94px}
 @media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
 
 
-/* v6.8 · warm journal, less dashboard */
+/* v6.8.1 · warm journal, less dashboard */
 .yearbook-card{border:1px solid var(--line);background:linear-gradient(180deg,#fffdfa,#fff7f1);border-radius:28px;padding:22px 20px;box-shadow:0 14px 30px rgba(90,64,53,.07)}
 .yearbook-kicker{font-size:10px;font-weight:900;letter-spacing:.18em;color:#b68d7e;margin-bottom:6px}
 .yearbook-title{font-size:25px;font-weight:900;color:#755a51;margin-bottom:10px}
@@ -1198,7 +1198,7 @@ textarea.field{min-height:94px}
 @media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
 
 
-/* v6.8 · annual memories */
+/* v6.8.1 · annual memories */
 .memory-yearbook{overflow:hidden}
 .yearbook-glance{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:-3px 0 18px;color:#9a7d72;font-size:12px;font-weight:800}
 .yearbook-glance i{font-style:normal;opacity:.45}
@@ -2619,7 +2619,7 @@ $('clearBtn').onclick=()=>{
   }
 }
 
-// v6.8 one-click backup receiver.
+// v6.8.1 one-click backup receiver.
 // The exported HTML opens this same deployed app and transfers the complete
 // backup (including compressed photos) via postMessage, avoiding URL-size limits.
 window.addEventListener('message',e=>{
@@ -2665,7 +2665,7 @@ function announceBackupReceiver(){
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
 
 // =========================================================
-// v6.8 · unified statistics + warm journal logic
+// v6.8.1 · unified statistics + warm journal logic
 // =========================================================
 function cleanText(v){return String(v||'').trim()}
 function stayedRecords(){return records.filter(r=>stayHasEnded(r) || r.status==='stayed')}
@@ -3044,7 +3044,7 @@ renderUpcoming=function(){
 
 
 // =========================================================
-// v6.8 · annual review = memories, not a score dashboard
+// v6.8.1 · annual review = memories, not a score dashboard
 // =========================================================
 function annualNoteKey(year){return `tonghouse_year_note_${year||'all'}`}
 function memoryReason(r,positive=true){
@@ -3166,7 +3166,58 @@ renderAnnualInsights=function(){
   $('yearClosing').textContent=closing;
 };
 
+
+// =========================================================
+// v6.8.1.1 · data recovery guard
+// Never create demo data while an older TongHouse dataset exists.
+// =========================================================
+function tonghouseLooksLikeRecords(value){
+  try{
+    const x=JSON.parse(value);
+    if(Array.isArray(x)) return x.some(r=>r && typeof r==='object' && (r.hotel||r.checkin||r.checkout));
+    if(x && Array.isArray(x.records)) return x.records.some(r=>r && typeof r==='object' && (r.hotel||r.checkin||r.checkout));
+  }catch(e){}
+  return false;
+}
+function recoverTongHouseData(){
+  const canonical='hotel_memories_v1';
+  const current=localStorage.getItem(canonical);
+  if(tonghouseLooksLikeRecords(current)) return {recovered:false,key:canonical};
+
+  // Search every localStorage entry on the same origin. This catches earlier
+  // TongHouse builds even if a storage key was accidentally renamed.
+  const candidates=[];
+  for(let i=0;i<localStorage.length;i++){
+    const key=localStorage.key(i);
+    if(!key || key===canonical) continue;
+    const value=localStorage.getItem(key);
+    if(!tonghouseLooksLikeRecords(value)) continue;
+    try{
+      const parsed=JSON.parse(value);
+      const arr=Array.isArray(parsed)?parsed:parsed.records;
+      candidates.push({key,value,count:Array.isArray(arr)?arr.length:0});
+    }catch(e){}
+  }
+  candidates.sort((a,b)=>b.count-a.count);
+  if(candidates.length){
+    localStorage.setItem(canonical,candidates[0].value);
+    return {recovered:true,key:candidates[0].key,count:candidates[0].count};
+  }
+  return {recovered:false,key:null};
+}
+const tonghouseRecovery=recoverTongHouseData();
+
+
+// v6.8.1.1 production guard: an empty journal stays empty; it must never overwrite
+// or disguise a storage/read problem with sample records.
+sampleIfEmpty=function(){};
+
 sampleIfEmpty();normalizeRecords();renderAll();announceBackupReceiver();
+
+if(tonghouseRecovery.recovered){
+  setTimeout(()=>showToast(`♡ 找回 ${tonghouseRecovery.count||''} 筆原本的旅行紀錄`),350);
+}
+
 </script>
 </body>
 </html>
