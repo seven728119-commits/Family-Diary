@@ -903,7 +903,7 @@
       .form-group.full{grid-column:auto}
     }
   
-    /* v6.7 · rating, review reminder, insights, cute quick row */
+    /* v6.8 · rating, review reminder, insights, cute quick row */
     #dashboardView,#recordsView{scroll-margin-top:18px}
     .filters{grid-template-columns:repeat(5,minmax(0,1fr))}
     .review-reminder{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:14px 15px;background:linear-gradient(135deg,#fff4dc,#fffaf5);border:1px dashed #e8c98f;border-radius:22px 18px 24px 19px;box-shadow:0 8px 20px rgba(116,83,50,.06)}
@@ -922,7 +922,7 @@
     @keyframes jumpGlow{0%,100%{filter:none}35%{filter:drop-shadow(0 0 12px rgba(217,150,127,.35));transform:translateY(-2px)}}
     @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters #searchInput{grid-column:1/-1}}
 
-    /* === v6.7 年度回顧 / 最愛避雷 / 平均住宿預算 === */
+    /* === v6.8 年度回顧 / 最愛避雷 / 平均住宿預算 === */
     .memory-insight-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:24px}
     .year-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:12px}
     .year-review-card{background:#fffdf9;border:1px solid #eadbd2;border-radius:24px 20px 25px 21px;padding:15px;box-shadow:0 8px 22px rgba(114,86,77,.05)}
@@ -944,7 +944,7 @@
     @media(max-width:520px){.budget-grid{grid-template-columns:1fr}.memory-insight-head{align-items:flex-start;flex-direction:column}.memory-insight-head .mini-stat-filter{width:100%}.memory-insight-head select{width:100%}}
 
 
-    /* v6.7 · next-trip focus + handier quick navigation */
+    /* v6.8 · next-trip focus + handier quick navigation */
     html{scroll-padding-top:18px}
     .next-banner.next-trip-card{
       display:block!important;padding:0;overflow:hidden;transform:none;
@@ -998,7 +998,7 @@
 
 
 /* =========================================================
-   v6.7 · visual polish / spacing normalization
+   v6.8 · visual polish / spacing normalization
    Keep the whole app feeling like one family travel journal.
    ========================================================= */
 :root{
@@ -1173,7 +1173,7 @@ textarea.field{min-height:94px}
 @media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
 
 
-/* v6.7 · warm journal, less dashboard */
+/* v6.8 · warm journal, less dashboard */
 .yearbook-card{border:1px solid var(--line);background:linear-gradient(180deg,#fffdfa,#fff7f1);border-radius:28px;padding:22px 20px;box-shadow:0 14px 30px rgba(90,64,53,.07)}
 .yearbook-kicker{font-size:10px;font-weight:900;letter-spacing:.18em;color:#b68d7e;margin-bottom:6px}
 .yearbook-title{font-size:25px;font-weight:900;color:#755a51;margin-bottom:10px}
@@ -1196,6 +1196,33 @@ textarea.field{min-height:94px}
 .ranking-card h4,.memory-board h4{margin-bottom:10px}
 #favoriteHotel{line-height:1.35}
 @media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
+
+
+/* v6.8 · annual memories */
+.memory-yearbook{overflow:hidden}
+.yearbook-glance{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:-3px 0 18px;color:#9a7d72;font-size:12px;font-weight:800}
+.yearbook-glance i{font-style:normal;opacity:.45}
+.year-memory-feature{display:grid;grid-template-columns:118px 1fr;gap:15px;align-items:stretch;margin:10px 0 12px;padding:12px;background:#fff;border:1px solid #eedfd6;border-radius:22px}
+.feature-photo{min-height:128px;border-radius:17px;overflow:hidden;background:linear-gradient(145deg,#f5e1d8,#f7eee8);display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff}
+.feature-photo img{width:100%;height:100%;min-height:128px;object-fit:cover;display:block}
+.feature-copy{padding:5px 3px 3px}
+.feature-eyebrow{font-size:10px;font-weight:900;letter-spacing:.06em;color:#b07e70;margin-bottom:6px}
+.feature-copy h4,.year-memory-soft h4{margin:0 0 5px;font-size:17px;line-height:1.35;color:#6f554c}
+.feature-stars{font-size:13px;color:#d59b56;margin-bottom:7px;letter-spacing:1px}
+.feature-copy p,.year-memory-soft p,.year-keywords p{margin:0;font-size:11px;line-height:1.7;color:#8f786f}
+.year-memory-soft{display:flex;gap:11px;align-items:flex-start;margin:12px 0;padding:14px 15px;background:rgba(246,241,238,.72);border-radius:18px}
+.soft-icon{width:34px;height:34px;flex:0 0 34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;font-size:16px}
+.year-keywords,.year-first,.year-note{margin-top:15px;padding-top:15px;border-top:1px dashed #e8d8d0}
+.keyword-cloud{display:flex;flex-wrap:wrap;gap:7px;margin:7px 0 8px}
+.keyword-cloud span{padding:6px 10px;border-radius:999px;background:#fff;border:1px solid #ecdcd3;color:#80665d;font-size:11px;font-weight:800}
+.year-first>div:last-child{font-size:12px;line-height:1.7;color:#7d6860}
+.year-note textarea{width:100%;min-height:82px;resize:vertical;border:1px solid #eadbd3;background:rgba(255,255,255,.78);border-radius:15px;padding:11px 12px;font:inherit;font-size:12px;line-height:1.7;color:#6f5a52;outline:none}
+.year-note textarea:focus{border-color:#d9b6a7;box-shadow:0 0 0 3px rgba(217,182,167,.14)}
+.year-note-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:7px}
+.year-note-foot span{font-size:9px;color:#ae958b}
+.year-note-foot button{border:0;background:#8d6d62;color:#fff;border-radius:999px;padding:7px 11px;font-size:10px;font-weight:800}
+.year-closing{margin-top:18px;padding:17px 15px 4px;text-align:center;border-top:1px dashed #e8d8d0;font-size:12px;line-height:1.9;color:#8b7168;font-weight:700}
+@media(max-width:430px){.year-memory-feature{grid-template-columns:92px 1fr}.feature-photo,.feature-photo img{min-height:112px}.feature-copy h4,.year-memory-soft h4{font-size:15px}}
 
 </style>
 </head>
@@ -1297,78 +1324,76 @@ textarea.field{min-height:94px}
 <div><h3 style="margin:0">桐House 年度旅行回顧</h3><p style="margin:4px 0 0;color:var(--muted);font-size:12px">一年一年，把我們一起走過的地方留在這裡 ♡</p></div>
 <div class="mini-stat-filter"><select class="field" id="annualReviewYear"><option value="">全部年份</option></select></div>
 </div>
-<div class="yearbook-card">
-  <div class="yearbook-kicker">YEARBOOK</div>
+
+<div class="yearbook-card memory-yearbook">
+  <div class="yearbook-kicker">OUR YEAR</div>
   <div class="yearbook-title" id="yearbookTitle">桐House一家</div>
-  <div class="yearbook-lead" id="annualReviewStory">住宿紀錄累積後，這裡會自動寫出屬於桐House一家的年度旅行小結。</div>
-  <div class="yearbook-highlights">
-    <div class="yearbook-highlight"><span>🏨</span><div><b id="reviewStayCount">0 次住宿</b><small id="reviewStaySub">還沒有住宿紀錄</small></div></div>
-    <div class="yearbook-highlight"><span>🌙</span><div><b id="reviewNights">0 晚</b><small id="reviewNightSub">一家人的旅行時光</small></div></div>
-    <div class="yearbook-highlight"><span>📍</span><div><b id="reviewTopPlace">—</b><small id="reviewTopPlaceSub">依住宿晚數計算</small></div></div>
-    <div class="yearbook-highlight"><span>💰</span><div><b id="reviewAmount">$0</b><small id="reviewAmountSub">依已入住紀錄計算</small></div></div>
+  <div class="yearbook-lead" id="annualReviewStory">今年的頁面還很空，等下一段旅行慢慢寫進來 ♡</div>
+
+  <div class="yearbook-glance">
+    <span id="reviewStayCount">0 次住宿</span>
+    <i>·</i>
+    <span id="reviewNights">0 晚</span>
+    <i>·</i>
+    <span id="reviewTopPlace">—</span>
   </div>
+  <div class="hidden" id="reviewStaySub"></div>
+  <div class="hidden" id="reviewNightSub"></div>
+  <div class="hidden" id="reviewTopPlaceSub"></div>
+  <div class="hidden" id="reviewAmount"></div>
+  <div class="hidden" id="reviewAmountSub"></div>
+
+  <div class="year-memory-feature" id="yearFavoriteFeature">
+    <div class="feature-photo" id="yearFavoritePhoto"><span>♡</span></div>
+    <div class="feature-copy">
+      <div class="feature-eyebrow">♡ 今年最喜歡</div>
+      <h4 id="yearFavoriteName">等一間讓我們想再回去的旅宿</h4>
+      <div class="feature-stars" id="yearFavoriteStars"></div>
+      <p id="yearFavoriteReason">住過、喜歡過，自然會留下答案。</p>
+    </div>
+  </div>
+
+  <div class="year-memory-soft" id="yearLeastFeature">
+    <div class="soft-icon">☁️</div>
+    <div>
+      <div class="feature-eyebrow">這次，就留在回憶裡吧</div>
+      <h4 id="yearLeastName">目前沒有特別不喜歡的住宿</h4>
+      <p id="yearLeastReason">每一趟都順順的，就是很好的旅行 ♡</p>
+    </div>
+  </div>
+
+  <div class="year-keywords">
+    <div class="feature-eyebrow">今年，我們家的旅行關鍵字</div>
+    <div class="keyword-cloud" id="yearKeywordCloud"><span>回憶慢慢累積中 ♡</span></div>
+    <p id="yearKeywordLine">原來今年的我們，喜歡的是這樣的旅行。</p>
+  </div>
+
+  <div class="year-first" id="yearFirstBlock">
+    <div class="feature-eyebrow">✨ 今年第一次</div>
+    <div id="yearFirstText">新的地方、新的回憶，都會留在這裡。</div>
+  </div>
+
   <details class="yearbook-more">
-    <summary>看看這一年更多統計</summary>
+    <summary>再翻一點今年的回憶</summary>
     <div class="yearbook-mini-grid">
-      <div><span>🌏 國家 / 城市</span><b id="yearbookPlaces">—</b></div>
-      <div><span>⭐ 評分</span><b id="yearbookRating">—</b></div>
+      <div><span>🌏 去過</span><b id="yearbookPlaces">—</b></div>
       <div><span>🏨 不同旅宿</span><b id="yearbookHotels">—</b></div>
+      <div><span>💰 住宿花費</span><b id="yearbookSpend">—</b></div>
       <div><span>💸 平均每晚</span><b id="yearbookAvgNight">—</b></div>
     </div>
   </details>
-</div><div class="section-head" style="margin-top:22px">
-<div><h3>我們最常往哪裡走？</h3><p>這一年，我們把時間留在哪些地方 ♡</p></div>
-<div class="mini-stat-filter">
-<select class="field" id="travelStatYear"><option value="">全部年份</option></select>
-</div>
-</div><div class="travel-split-grid">
-<div class="travel-split-card domestic">
-<div class="travel-kind">🇹🇼 國內住宿</div>
-<div class="travel-money" id="domesticAmount">$0</div>
-<div class="travel-meta" id="domesticMeta">0 趟 · 0 晚</div>
-</div>
-<div class="travel-split-card international">
-<div class="travel-kind">✈️ 國外住宿</div>
-<div class="travel-money" id="internationalAmount">$0</div>
-<div class="travel-meta" id="internationalMeta">0 趟 · 0 晚</div>
-</div>
-</div><div class="ranking-grid">
-<div class="ranking-card">
-<h4>🌏 國外住最久</h4>
 
-<div class="rank-list" id="countryDaysRank"></div>
-</div>
-<div class="ranking-card">
-<h4>🇹🇼 國內住最久</h4>
+  <div class="year-note">
+    <div class="feature-eyebrow">✎ 留給今年的我們</div>
+    <textarea id="yearFamilyNote" maxlength="180" placeholder="寫一句，想讓未來的我們記得的話…"></textarea>
+    <div class="year-note-foot"><span id="yearNoteSaved">會留在這一年的手札裡 ♡</span><button type="button" id="saveYearNote">收進手札</button></div>
+  </div>
 
-<div class="rank-list" id="domesticDaysRank"></div>
+  <div class="year-closing" id="yearClosing">
+    真正留下來的，不只是住過哪裡，而是那幾天，我們一家人都在一起。
+  </div>
 </div>
-<div class="ranking-card">
-<h4>💸 國外住宿花費</h4>
-
-<div class="rank-list" id="countrySpendRank"></div>
-</div>
-<div class="ranking-card">
-<h4>🧾 國內住宿花費</h4>
-
-<div class="rank-list" id="domesticSpendRank"></div>
-</div>
-</div><div class="section-head" style="margin-top:22px">
-<div><h3>最愛旅宿・避雷手札</h3><p>喜歡的想再回去，不喜歡的也好好記得。</p></div>
-</div><div class="love-avoid-grid">
-<div class="memory-board">
-<h4>♡ 我們最喜歡的幾間</h4>
-
-<div id="favoriteRankList"></div>
-</div>
-<div class="memory-board">
-<h4>⚠️ 這些就先記住</h4>
-
-<div id="avoidRankList"></div>
-</div>
-</div><div class="section-head" style="margin-top:22px">
-<div><h3>每晚預算雷達</h3><p>每一晚的花費，也是一段旅行的選擇。</p></div>
-</div><div class="budget-grid">
+<div class="budget-grid">
 <div class="budget-card"><small>全部住宿平均</small><b id="budgetOverall">$0 / 晚</b><span id="budgetOverallSub">0 晚</span></div>
 <div class="budget-card"><small>🇹🇼 國內平均</small><b id="budgetDomestic">$0 / 晚</b><span id="budgetDomesticSub">0 晚</span></div>
 <div class="budget-card"><small>✈️ 國外平均</small><b id="budgetInternational">$0 / 晚</b><span id="budgetInternationalSub">0 晚</span></div>
@@ -2594,7 +2619,7 @@ $('clearBtn').onclick=()=>{
   }
 }
 
-// v6.7 one-click backup receiver.
+// v6.8 one-click backup receiver.
 // The exported HTML opens this same deployed app and transfers the complete
 // backup (including compressed photos) via postMessage, avoiding URL-size limits.
 window.addEventListener('message',e=>{
@@ -2640,7 +2665,7 @@ function announceBackupReceiver(){
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
 
 // =========================================================
-// v6.7 · unified statistics + warm journal logic
+// v6.8 · unified statistics + warm journal logic
 // =========================================================
 function cleanText(v){return String(v||'').trim()}
 function stayedRecords(){return records.filter(r=>stayHasEnded(r) || r.status==='stayed')}
@@ -3015,6 +3040,130 @@ renderUpcoming=function(){
       <div class="u-meta">${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}<br>${esc(r.checkin)} → ${esc(r.checkout)} · ${nights(r.checkin,r.checkout)} 晚</div>
     </article>`;
   }).join(''):`<div class="empty"><span class="emoji">🧳</span>下一趟還沒決定<br>沒關係，期待本身也是旅行的一部分 ♡</div>`;
+};
+
+
+// =========================================================
+// v6.8 · annual review = memories, not a score dashboard
+// =========================================================
+function annualNoteKey(year){return `tonghouse_year_note_${year||'all'}`}
+function memoryReason(r,positive=true){
+  const line=cleanText(r.memoryLine);
+  if(line) return `「${esc(line)}」`;
+  const tags=Array.isArray(r.stickers)?r.stickers.filter(Boolean).slice(0,4):[];
+  if(tags.length){
+    const joined=tags.map(x=>stickerEmoji(x)+' '+esc(x)).join('、');
+    return positive?`${joined}，是這次留下來的旅行印象。`:`${joined}，這些感受我們先記著。`;
+  }
+  const memo=cleanText(r.memo);
+  if(memo) return esc(memo.length>70?memo.slice(0,70)+'…':memo);
+  return positive?'有些喜歡不一定說得出原因，只知道還會想起它 ♡':'不是每次住宿都要完美，住過一次，也是一段回憶。';
+}
+function setFeaturePhoto(id,r){
+  const box=$(id); if(!box)return;
+  box.innerHTML=r&&r.photo?`<img src="${r.photo}" alt="${esc(r.hotel)}">`:'<span>♡</span>';
+}
+function firstMemoryOfYear(list,year){
+  if(!list.length)return '新的地方、新的回憶，都會留在這裡。';
+  const sorted=[...list].sort((a,b)=>(a.checkin||'').localeCompare(b.checkin||''));
+  const current=sorted[0];
+  const earlier=stayedRecords().filter(r=>getYear(r.checkin)<Number(year||9999));
+  const earlierCities=new Set(earlier.map(r=>cleanText(r.city)).filter(Boolean));
+  const earlierGroups=new Set(earlier.map(r=>cleanText(r.hotelGroup)).filter(Boolean));
+  const earlierHotels=new Set(earlier.map(r=>cleanText(r.hotel)).filter(Boolean));
+  const newCity=sorted.find(r=>cleanText(r.city)&&!earlierCities.has(cleanText(r.city)));
+  if(newCity) return `第一次把「${esc(newCity.city)}」寫進我們家的旅行手札 ♡`;
+  const newGroup=sorted.find(r=>cleanText(r.hotelGroup)&&!earlierGroups.has(cleanText(r.hotelGroup)));
+  if(newGroup) return `第一次住進「${esc(newGroup.hotelGroup)}」，又多了一個熟悉的旅宿名字。`;
+  const returnHotel=sorted.find(r=>earlierHotels.has(cleanText(r.hotel)));
+  if(returnHotel) return `第一次在這一年回到「${esc(returnHotel.hotel)}」，熟悉的地方也有新的回憶。`;
+  return `這一年第一段住宿，是「${esc(current.hotel)}」。從這裡開始，又多了一頁。`;
+}
+renderAnnualInsights=function(){
+  const sel=$('annualReviewYear'); if(!sel)return;
+  const allStayed=stayedRecords();
+  const years=[...new Set(allStayed.map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  const old=sel.value;
+  sel.innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  if(old && years.map(String).includes(old)) sel.value=old;
+  else if(!old && years.includes(new Date().getFullYear())) sel.value=String(new Date().getFullYear());
+  else if(!old && years.length) sel.value=String(years[0]);
+
+  const y=sel.value;
+  let list=allStayed;
+  if(y) list=list.filter(r=>String(getYear(r.checkin))===y);
+
+  const totalNights=sumNights(list), amount=sumAmount(list);
+  const placeRows=aggregateRows(list,r=>locationName(r));
+  const topPlaces=leaders(placeRows,'nights');
+  const rated=list.filter(r=>Number(r.rating)>=1&&Number(r.rating)<=5);
+  const hotelsCount=new Set(list.map(r=>cleanText(r.hotel)).filter(Boolean)).size;
+  const countriesCount=new Set(list.map(r=>countryName(r)).filter(Boolean)).size;
+  const citiesCount=new Set(list.map(r=>cleanText(r.city)).filter(Boolean)).size;
+
+  $('yearbookTitle').textContent=y?`${y} · 桐House一家`:'桐House一家 · 我們的年鑑';
+  $('reviewStayCount').textContent=`${list.length} 次住宿`;
+  $('reviewNights').textContent=`${totalNights} 晚`;
+  $('reviewTopPlace').textContent=topPlaces.length?`${joinNames(topPlaces)} ${topPlaces[0].nights} 晚`:'回憶累積中';
+
+  const label=y?`${y} 年`:'這些年';
+  $('annualReviewStory').innerHTML=list.length
+    ? `<b>${label}，我們一起住過 ${totalNights} 個夜晚。</b> ${topPlaces.length?`時間留得最久的是「${topPlaces.map(x=>esc(x.name)).join('、')}」。`:''} 回頭看，飯店只是旅行的一部分，真正留下來的是我們一起度過的那些日子。`
+    : '今年的頁面還很空，等下一段旅行慢慢寫進來 ♡';
+
+  // Best: rating first, wantReturn breaks equal rating, recent date only breaks identical sentiment.
+  const best=[...rated].sort((a,b)=>Number(b.rating)-Number(a.rating)||Number(!!b.wantReturn)-Number(!!a.wantReturn)||(b.checkin||'').localeCompare(a.checkin||''))[0];
+  if(best){
+    $('yearFavoriteName').textContent=best.hotel;
+    $('yearFavoriteStars').textContent='★'.repeat(Number(best.rating))+'☆'.repeat(5-Number(best.rating))+(best.wantReturn?' · ♡ 還想再住':'');
+    $('yearFavoriteReason').innerHTML=memoryReason(best,true);
+    setFeaturePhoto('yearFavoritePhoto',best);
+  }else{
+    $('yearFavoriteName').textContent='等一間讓我們想再回去的旅宿';
+    $('yearFavoriteStars').textContent='';
+    $('yearFavoriteReason').textContent='住過、喜歡過，自然會留下答案。';
+    setFeaturePhoto('yearFavoritePhoto',null);
+  }
+
+  // Least: only call it out when there is a genuinely low score (<=2).
+  const low=[...rated].filter(r=>Number(r.rating)<=2).sort((a,b)=>Number(a.rating)-Number(b.rating)||(b.checkin||'').localeCompare(a.checkin||''))[0];
+  if(low){
+    $('yearLeastName').textContent=low.hotel;
+    $('yearLeastReason').innerHTML=memoryReason(low,false);
+  }else{
+    $('yearLeastName').textContent='目前沒有特別不喜歡的住宿';
+    $('yearLeastReason').textContent='每一趟都順順的，就是很好的旅行 ♡';
+  }
+
+  // Keywords from actual stickers only, frequency first. No invented preferences.
+  const counts={};
+  list.forEach(r=>(Array.isArray(r.stickers)?r.stickers:[]).forEach(x=>{x=cleanText(x);if(x)counts[x]=(counts[x]||0)+1}));
+  const keywords=Object.entries(counts).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'zh-Hant')).slice(0,5);
+  $('yearKeywordCloud').innerHTML=keywords.length?keywords.map(([x])=>`<span>${stickerEmoji(x)} ${esc(x)}</span>`).join(''):'<span>回憶慢慢累積中 ♡</span>';
+  $('yearKeywordLine').textContent=keywords.length?'原來今年的我們，喜歡的是這樣的旅行。':'多留幾個旅行貼紙，這裡會慢慢長出我們家的樣子。';
+
+  $('yearFirstText').innerHTML=firstMemoryOfYear(list,y);
+
+  $('yearbookPlaces').textContent=list.length?`${countriesCount} 個國家／地區 · ${citiesCount} 個城市`:'—';
+  $('yearbookHotels').textContent=list.length?`${hotelsCount} 間`:'—';
+  $('yearbookSpend').textContent=list.length?money(amount):'—';
+  $('yearbookAvgNight').textContent=totalNights?money(amount/totalNights):'—';
+
+  // Family-authored annual sentence.
+  const note=$('yearFamilyNote'), save=$('saveYearNote'), saved=$('yearNoteSaved');
+  const key=annualNoteKey(y);
+  note.value=localStorage.getItem(key)||'';
+  save.onclick=()=>{
+    localStorage.setItem(key,note.value.trim());
+    saved.textContent=note.value.trim()?'收好了。以後翻到這一年，這句話還會在 ♡':'這一年的話先留白，想寫的時候再寫。';
+    showToast('♡ 已收進這一年的手札');
+  };
+
+  // Closing line changes slightly with the memories actually present.
+  let closing='真正留下來的，不只是住過哪裡，而是那幾天，我們一家人都在一起。';
+  if(best&&best.wantReturn) closing=`有些地方會讓人想再回去；但最值得收藏的，還是每一次我們一起出發。`;
+  if(list.length>=4) closing=`一年走過好幾個地方，最後記得最久的，往往是路上的笑聲、早餐桌上的聊天，和一家人在一起的日常。`;
+  $('yearClosing').textContent=closing;
 };
 
 sampleIfEmpty();normalizeRecords();renderAll();announceBackupReceiver();
