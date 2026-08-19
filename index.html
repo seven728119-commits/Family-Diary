@@ -1,16 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#f7efe9" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="旅宿收藏" />
-  <title>桐House一家・家庭旅行手帳</title>
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#f7efe9" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="旅宿收藏" name="apple-mobile-web-app-title"/>
+<title>桐House一家・家庭旅行手帳</title>
+<link href="manifest.webmanifest" rel="manifest"/>
+<link href="icons/icon-192.png" rel="apple-touch-icon"/>
+<style>
 
     @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
 
@@ -523,6 +524,31 @@
     .journal-sticker:nth-child(2){background:#e7efdf;color:#6e8066;transform:rotate(1.2deg)}
     .journal-sticker:nth-child(3){background:#fff0bd;color:#8c6c34;transform:rotate(-.4deg)}
 
+
+    /* === v5.4 國內 / 國外旅宿統計 === */
+    .travel-split-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+    .travel-split-card{background:#fffdf8;border:1px solid #eadbd3;border-radius:23px 19px 25px 20px;padding:16px;position:relative;overflow:hidden}
+    .travel-split-card.domestic{background:linear-gradient(145deg,#fff8f2,#fffdf8)}
+    .travel-split-card.international{background:linear-gradient(145deg,#f4f8f1,#fffdf8)}
+    .travel-split-card .travel-kind{font-size:12px;color:var(--muted);margin-bottom:7px}
+    .travel-split-card .travel-money{font-size:24px;font-weight:700;color:#72564d;letter-spacing:-.035em}
+    .travel-split-card .travel-meta{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6}
+    .ranking-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+    .ranking-card{background:#fffdf8;border:1px dashed #dfc9bd;border-radius:22px 26px 20px 25px;padding:16px}
+    .ranking-card h4{margin:0 0 4px;font-size:15px;color:#72564d}
+    .ranking-card .rank-note{font-size:11px;color:var(--muted);margin-bottom:10px}
+    .rank-list{display:flex;flex-direction:column;gap:8px}
+    .rank-row{display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;gap:8px;font-size:13px}
+    .rank-no{width:28px;height:28px;display:grid;place-items:center;border-radius:10px;background:#f8ece6;color:#a56f61;font-size:11px;font-weight:700}
+    .rank-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .rank-value{font-size:12px;color:#8c7067;font-weight:650;white-space:nowrap}
+    .trip-type-pill{font-weight:700}
+    .trip-type-pill.domestic{background:#fff0e9;color:#a26556}
+    .trip-type-pill.international{background:#edf4e9;color:#64785c}
+    .mini-stat-filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+    .mini-stat-filter .field{min-width:150px}
+    @media(min-width:720px){.ranking-grid{grid-template-columns:repeat(2,1fr)}}
+
     @media(max-width:430px){
       .hero{padding:27px 19px 21px}
       .brand h1{font-size:29px}
@@ -867,6 +893,7 @@
       .filters{grid-template-columns:2fr 1fr 1fr}
       .records{display:grid;grid-template-columns:1fr 1fr}
     }
+
     @media(max-width:430px){
       .hero{padding:20px}
       .hero-stats{grid-template-columns:1fr 1fr}
@@ -876,7 +903,7 @@
       .form-group.full{grid-column:auto}
     }
   
-    /* v5.3 · rating, review reminder, cute quick row */
+    /* v5.8 · rating, review reminder, insights, cute quick row */
     #dashboardView,#recordsView{scroll-margin-top:18px}
     .filters{grid-template-columns:repeat(5,minmax(0,1fr))}
     .review-reminder{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:14px 15px;background:linear-gradient(135deg,#fff4dc,#fffaf5);border:1px dashed #e8c98f;border-radius:22px 18px 24px 19px;box-shadow:0 8px 20px rgba(116,83,50,.06)}
@@ -894,423 +921,573 @@
     .jump-highlight{animation:jumpGlow .85s ease}
     @keyframes jumpGlow{0%,100%{filter:none}35%{filter:drop-shadow(0 0 12px rgba(217,150,127,.35));transform:translateY(-2px)}}
     @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters #searchInput{grid-column:1/-1}}
+
+    /* === v5.8 年度回顧 / 最愛避雷 / 平均住宿預算 === */
+    .memory-insight-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:24px}
+    .year-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:12px}
+    .year-review-card{background:#fffdf9;border:1px solid #eadbd2;border-radius:24px 20px 25px 21px;padding:15px;box-shadow:0 8px 22px rgba(114,86,77,.05)}
+    .year-review-card .mini{font-size:11px;color:var(--muted);margin-bottom:6px}
+    .year-review-card b{display:block;font-size:20px;color:#72564d;font-weight:750;line-height:1.25}
+    .year-review-card span{display:block;font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}
+    .review-story{margin-top:12px;padding:17px 18px;border-radius:25px;background:linear-gradient(135deg,#f8eee8,#fff9f0);border:1px dashed #ddc5b9;line-height:1.8;color:#755f56;font-size:13px}
+    .review-story b{color:#6f5047}
+    .love-avoid-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+    .memory-board{background:#fffdf8;border:1px solid #eadbd2;border-radius:24px;padding:16px}
+    .memory-board h4{margin:0 0 3px;color:#72564d;font-size:15px}.memory-board .note{font-size:11px;color:var(--muted);margin-bottom:9px}
+    .hotel-rank-row{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px dashed #eee1d9}
+    .hotel-rank-row:last-child{border-bottom:0}.hotel-rank-no{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#f7eee8;color:#8d6b5f;font-size:11px;font-weight:800}
+    .hotel-rank-name{min-width:0}.hotel-rank-name b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotel-rank-name span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+    .hotel-rank-score{font-size:12px;font-weight:800;color:#8b6b25;white-space:nowrap}
+    .budget-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.budget-card{background:#fbf7f2;border:1px solid #eadbd2;border-radius:20px;padding:14px 12px}.budget-card small{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}.budget-card b{display:block;font-size:17px;color:#72564d}.budget-card span{display:block;font-size:10px;color:var(--muted);margin-top:4px}
+    .budget-detail{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px}.budget-line{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 13px;background:#fffdf9;border:1px dashed #eadbd2;border-radius:16px;font-size:12px}.budget-line span{color:var(--muted)}.budget-line b{color:#72564d;text-align:right}
+    @media(min-width:720px){.year-review-grid{grid-template-columns:repeat(4,1fr)}.love-avoid-grid{grid-template-columns:1fr 1fr}.budget-detail{grid-template-columns:1fr 1fr}}
+    @media(max-width:520px){.budget-grid{grid-template-columns:1fr}.memory-insight-head{align-items:flex-start;flex-direction:column}.memory-insight-head .mini-stat-filter{width:100%}.memory-insight-head select{width:100%}}
+
+
+    /* v5.8 · next-trip focus + handier quick navigation */
+    html{scroll-padding-top:18px}
+    .next-banner.next-trip-card{
+      display:block!important;padding:0;overflow:hidden;transform:none;
+      border-radius:28px;background:#fffaf5;border:1px solid #ead8cf;
+      box-shadow:0 16px 36px rgba(98,67,57,.10);margin-top:22px;
+    }
+    .next-banner.next-trip-card::before{display:none}
+    .next-trip-visual{
+      min-height:145px;padding:20px;display:flex;align-items:flex-end;position:relative;
+      background:linear-gradient(135deg,#f7d7cc,#f8e8cf 55%,#e7efe1);
+      background-size:cover;background-position:center;
+    }
+    .next-trip-visual::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(57,40,34,.52),rgba(57,40,34,.02) 70%);
+    }
+    .next-trip-badge{
+      position:absolute;left:16px;top:16px;z-index:2;background:rgba(255,255,255,.9);
+      color:#8b675b;border:1px solid rgba(255,255,255,.7);padding:6px 10px;border-radius:999px;
+      font-size:10px;font-weight:850;letter-spacing:.08em;backdrop-filter:blur(8px)
+    }
+    .next-trip-title{position:relative;z-index:2;color:#fff;text-shadow:0 2px 12px rgba(52,36,31,.25)}
+    .next-trip-title .small{color:#fff!important;opacity:.9}
+    .next-trip-title .name{font-size:22px;line-height:1.25;margin-top:5px}
+    .next-trip-body{padding:16px 17px 17px}
+    .next-trip-count-row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .next-trip-count-row .count{font-size:24px;color:#b66e5c;font-weight:850}
+    .next-trip-date{font-size:12px;color:#806d65;line-height:1.65;margin-top:7px}
+    .next-trip-actions{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:13px}
+    .next-trip-actions button{
+      border:0;border-radius:16px;padding:11px 14px;font-weight:800;font-size:12px;cursor:pointer
+    }
+    .next-trip-actions .primary{background:#d99886;color:white}
+    .next-trip-actions .secondary{background:#f6eee9;color:#8c685d}
+    .next-empty-visual{background:linear-gradient(135deg,#f8e6de,#fff1cf,#e8f0e4)}
+    .next-empty-visual::after{background:none}
+    .next-empty-visual .next-trip-title{color:#755a51;text-shadow:none}
+    .next-empty-visual .next-trip-title .small{color:#9a7f70!important}
+    .next-empty-visual .next-trip-title .name{color:#755a51}
+    .bottom-nav{max-width:430px;grid-template-columns:repeat(4,1fr)!important}
+    .bottom-nav button{padding:8px 5px;white-space:nowrap}
+    .bottom-nav .nav-add .nav-icon{background:#f4c2b4}
+    .bottom-nav button[data-tab="trip"].active{background:#fff8df;color:#8d6b55}
+    .bottom-nav button[data-tab="records"].active{background:#fff0ef;color:#9a5f58}
+    .quick-anchor{scroll-margin-top:18px}
+    @media(max-width:390px){
+      .bottom-nav button{font-size:11px}
+      .next-trip-title .name{font-size:20px}
+      .next-trip-count-row .count{font-size:21px}
+    }
+
 </style>
 </head>
 <body>
-  <main class="app">
-    <div class="topbar">
-      <div class="brand">
-        <small>OUR LITTLE TRAVEL JOURNAL</small>
-        <h1>桐House一家旅行手帳</h1>
-      </div>
-      <button class="icon-btn" id="openTools" aria-label="資料工具">⋯</button>
+<main class="app">
+<div class="topbar">
+<div class="brand">
+<small>OUR LITTLE TRAVEL JOURNAL</small>
+<h1>桐House一家旅行手帳</h1>
+</div>
+<button aria-label="資料工具" class="icon-btn" id="openTools">⋯</button>
+</div><section class="year-cover">
+<div class="year" id="journalYear">2026 FAMILY JOURNAL</div>
+<h2>桐House一家<br/>旅行手帳</h2>
+<p>一家人一起走過的城市、住過的飯店，還有那些想起來就會微笑的小事情。</p>
+<div class="cover-stats">
+<span class="cover-stat" id="coverNights">今年 0 晚</span>
+<span class="cover-stat" id="coverCities">走過 0 個城市</span>
+<span class="cover-stat" id="coverGroups">0 個旅宿品牌</span>
+</div>
+</section><section class="next-banner next-trip-card quick-anchor" id="nextBanner">
+<div class="next-trip-visual next-empty-visual" id="nextTripVisual">
+  <div class="next-trip-badge">✈ NEXT FAMILY TRIP</div>
+  <div class="next-trip-title">
+    <div class="small" id="nextTripLocation">下一趟旅程</div>
+    <div class="name" id="nextStayName">還沒有已安排的住宿</div>
+  </div>
+</div>
+<div class="next-trip-body">
+  <div class="next-trip-count-row">
+    <div>
+      <div class="count" id="nextStayCount">下一站，等你決定 ♡</div>
+      <div class="next-trip-date" id="nextStayMeta">下一趟家庭旅行，等著被安排 ♡</div>
     </div>
-
-    <section class="year-cover">
-      <div class="year" id="journalYear">2026 FAMILY JOURNAL</div>
-      <h2>桐House一家<br>旅行手帳</h2>
-      <p>一家人一起走過的城市、住過的飯店，還有那些想起來就會微笑的小事情。</p>
-      <div class="cover-stats">
-        <span class="cover-stat" id="coverNights">今年 0 晚</span>
-        <span class="cover-stat" id="coverCities">走過 0 個城市</span>
-        <span class="cover-stat" id="coverGroups">0 個旅宿品牌</span>
-      </div>
-    </section>
-
-    <section class="memory-highlight" id="memoryHighlight">
-      <div class="polaroid"><div class="photo-placeholder" id="highlightPhoto">♡</div></div>
-      <div>
-        <small>THIS YEAR'S MEMORY</small>
-        <h3 id="highlightTitle">今年的旅行回憶，等你慢慢收藏</h3>
-        <p id="highlightText">新增住宿照片與一句回憶後，這裡會像手帳首頁一樣顯示最最近的一頁。</p>
-      </div>
-    </section>
-
-    <section class="hero">
-      <div class="eyebrow">TONG HOUSE TRAVEL NOTE</div>
-      <h2>一家人的旅行，<br>一頁一頁慢慢收藏 ♡</h2>
-      <p>住過的飯店、期待中的旅程、一起笑過的小事情，都收進我們家的旅行手帳裡。</p>
-      <div class="journal-stickers">
-        <span class="journal-sticker">✈ 一起出發</span>
-        <span class="journal-sticker">⌂ 住過的地方</span>
-        <span class="journal-sticker">♡ 家庭回憶</span>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat"><span>今年住宿花費</span><strong id="heroYearAmount">$0</strong></div>
-        <div class="hero-stat"><span>今年入住</span><strong id="heroYearCount">0 次</strong></div>
-        <div class="hero-stat"><span>累積收藏</span><strong id="heroTotalCount">0 間</strong></div>
-      </div>
-    </section>
-
-    <section class="next-banner" id="nextBanner">
-      <div>
-        <div class="small">NEXT FAMILY STAY</div>
-        <div class="name" id="nextStayName">還沒有已安排的住宿</div>
-        <div class="mini-note" id="nextStayMeta" style="color:#d9d0cc">新增一趟期待中的飯店吧 ♡</div>
-      </div>
-      <div class="count" id="nextStayCount">—</div>
-    </section>
-
-    <section class="review-reminder hidden" id="reviewReminder">
-      <div class="review-reminder-icon">✎</div>
-      <div class="review-reminder-copy">
-        <b id="reviewReminderTitle">旅行結束啦，補上這次評分吧 ♡</b>
-        <span id="reviewReminderText">把真實感受記下來，下次訂房更好避雷。</span>
-      </div>
-      <button type="button" id="reviewReminderBtn">去評分</button>
-    </section>
-
-    <section id="dashboardView">
-      <div class="section-head">
-        <div><h3>旅宿小帳本</h3><p>看看我們一年一年住過多少美好地方</p></div>
-        <div class="segmented" id="statMode">
-          <button data-mode="year" class="active">年</button>
-          <button data-mode="quarter">季</button>
-          <button data-mode="month">月</button>
-        </div>
-      </div>
-      <div class="summary-grid">
-        <div class="summary-card">
-          <div class="label">目前區間總金額</div>
-          <div class="value" id="periodAmount">$0</div>
-          <div class="sub" id="periodLabel">—</div>
-        </div>
-        <div class="summary-card">
-          <div class="label">入住次數</div>
-          <div class="value" id="periodCount">0</div>
-          <div class="sub">筆住宿紀錄</div>
-        </div>
-        <div class="summary-card">
-          <div class="label">平均每晚</div>
-          <div class="value" id="avgNight">$0</div>
-          <div class="sub" id="nightCount">共 0 晚</div>
-        </div>
-        <div class="summary-card">
-          <div class="label">最常入住城市</div>
-          <div class="value" id="topCity">—</div>
-          <div class="sub">依目前區間計算</div>
-        </div>
-        <div class="summary-card wide">
-          <div class="label">區間比較</div>
-          <div class="bar-list" id="barList"></div>
-        </div>
-        <div class="summary-card wide">
-          <div class="label">收藏亮點</div>
-          <div class="value" id="favoriteHotel" style="font-size:19px">尚未有紀錄</div>
-          <div class="sub" id="favoriteHotelSub">開始新增第一間飯店吧</div>
-        </div>
-      </div>
-    </section>
+  </div>
+  <div class="next-trip-actions">
+    <button class="primary" id="nextTripPrimary" type="button">＋ 寫下下一趟</button>
+    <button class="secondary hidden" id="nextTripEdit" type="button">查看</button>
+  </div>
+</div>
+</section><section id="upcomingView">
+<div class="section-head">
+<div><h3>下一頁的期待</h3><p>已安排好的飯店，先寫進手帳等著出發</p></div>
+</div>
+<div class="upcoming-wrap" id="upcomingList"></div>
+</section><section class="review-reminder hidden" id="reviewReminder">
+<div class="review-reminder-icon">✎</div>
+<div class="review-reminder-copy">
+<b id="reviewReminderTitle">旅行結束啦，補上這次評分吧 ♡</b>
+<span id="reviewReminderText">把真實感受記下來，下次訂房更好避雷。</span>
+</div>
+<button id="reviewReminderBtn" type="button">去評分</button>
+</section><section class="memory-highlight" id="memoryHighlight">
+<div class="polaroid"><div class="photo-placeholder" id="highlightPhoto">♡</div></div>
+<div>
+<small>THIS YEAR'S MEMORY</small>
+<h3 id="highlightTitle">今年的旅行回憶，等你慢慢收藏</h3>
+<p id="highlightText">新增住宿照片與一句回憶後，這裡會像手帳首頁一樣顯示最最近的一頁。</p>
+</div>
+</section><div class="section-divider">MEMORY TIMELINE</div><section id="timelineView">
+<div class="section-head">
+<div><h3>旅行手帳時間軸</h3><p>一站一頁，翻回每一次一家人住過的地方</p></div>
+</div>
+<div class="timeline" id="timeline"></div>
+</section><div class="section-divider">OUR FOOTPRINTS</div><section id="footprintView">
+<div class="section-head">
+<div><h3>一家人的足跡版圖</h3><p>用城市與國家慢慢拼出我們家的旅行地圖</p></div>
+</div>
+<div class="footprint-board" id="footprintBoard"></div>
+</section><section class="hero">
+<div class="eyebrow">OUR FAMILY TRAVEL STORY</div>
+<h2>走過的地方，<br/>慢慢變成我們家的故事 ♡</h2>
+<p>從這裡開始回顧這一年住過多少地方、留下多少足跡，再往下看看我們家的旅行習慣。</p>
+<div class="journal-stickers">
+<span class="journal-sticker">✈ 一起出發</span>
+<span class="journal-sticker">⌂ 住過的地方</span>
+<span class="journal-sticker">♡ 家庭回憶</span>
+</div>
+<div class="hero-stats">
+<div class="hero-stat"><span>今年住宿花費</span><strong id="heroYearAmount">$0</strong></div>
+<div class="hero-stat"><span>今年入住</span><strong id="heroYearCount">0 次</strong></div>
+<div class="hero-stat"><span>累積收藏</span><strong id="heroTotalCount">0 間</strong></div>
+</div>
+</section><div class="section-divider">YEARLY MEMORIES &amp; TRAVEL STATS</div><section id="dashboardView">
 
 
-    <section id="upcomingView">
-      <div class="section-head">
-        <div><h3>下一頁的期待</h3><p>已安排好的飯店，先寫進手帳等著出發</p></div>
-      </div>
-      <div class="upcoming-wrap" id="upcomingList"></div>
-    </section>
-
-    <section id="groupsView">
-      <div class="section-head">
-        <div><h3>住過的旅宿家族</h3><p>萬豪、寒舍…看看足跡慢慢累積在哪些品牌</p></div>
-      </div>
-      <div class="group-grid" id="groupGrid"></div>
-    </section>
 
 
-    <div class="section-divider">OUR FOOTPRINTS</div>
-    <section id="footprintView">
-      <div class="section-head">
-        <div><h3>一家人的足跡版圖</h3><p>用城市與國家慢慢拼出我們家的旅行地圖</p></div>
-      </div>
-      <div class="footprint-board" id="footprintBoard"></div>
-    </section>
-
-    <div class="section-divider">MEMORY TIMELINE</div>
-    <section id="timelineView">
-      <div class="section-head">
-        <div><h3>旅行手帳時間軸</h3><p>一站一頁，翻回每一次一家人住過的地方</p></div>
-      </div>
-      <div class="timeline" id="timeline"></div>
-    </section>
-
-    <section id="recordsView">
-      <div class="section-head">
-        <div><h3>我們住過的每一站</h3><p>翻一翻一家人的住宿回憶</p></div>
-      </div>
-      <div class="filters">
-        <input class="field" id="searchInput" placeholder="搜尋飯店、城市、備註…" />
-        <select class="field" id="yearFilter"><option value="">全部年份</option></select>
-        <select class="field" id="ratingFilter">
-          <option value="">全部評分</option>
-          <option value="5">★★★★★ 5 分</option>
-          <option value="4">★★★★☆ 4 分</option>
-          <option value="3">★★★☆☆ 3 分</option>
-          <option value="2">★★☆☆☆ 2 分</option>
-          <option value="1">★☆☆☆☆ 1 分</option>
-          <option value="unrated">尚未評分</option>
-        </select>
-        <select class="field" id="returnFilter">
-          <option value="">全部旅宿</option>
-          <option value="yes">♡ 值得再住</option>
-          <option value="no">⚠ 低分避雷（1–2 分）</option>
-        </select>
-        <select class="field" id="sortFilter">
-          <option value="dateDesc">日期：新 → 舊</option>
-          <option value="dateAsc">日期：舊 → 新</option>
-          <option value="priceDesc">金額：高 → 低</option>
-          <option value="priceAsc">金額：低 → 高</option>
-          <option value="ratingDesc">評分：高 → 低</option>
-          <option value="ratingAsc">評分：低 → 高</option>
-        </select>
-      </div>
-      <div class="records" id="records"></div>
-    </section>
-  </main>
-
-  <nav class="bottom-nav">
-    <button data-tab="dashboard" class="active"><span class="nav-icon">🏠</span><span>總覽</span></button>
-    <button data-tab="add" class="nav-add"><span class="nav-icon">＋</span><span>新增</span></button>
-    <button data-tab="records"><span class="nav-icon">♡</span><span>收藏</span></button>
-  </nav>
-
-  <dialog id="recordDialog">
-    <form class="modal" id="recordForm">
-      <div class="modal-head">
-        <h3 id="formTitle">新增住宿</h3>
-        <button type="button" class="close" data-close="recordDialog">×</button>
-      </div>
-      <input type="hidden" id="recordId" />
-      <div class="form-grid">
-        <div class="form-group full">
-          <label>飯店名稱 *</label>
-          <input class="field" id="hotel" required placeholder="例如：大溪笠復威斯汀度假酒店" />
-        </div>
-        <div class="form-group">
-          <label>住宿狀態 *</label>
-          <select class="field" id="status">
-            <option value="planned">✨ 已安排，期待入住</option>
-            <option value="stayed">♡ 已入住，收藏回憶</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>國家 / 地區</label>
-          <input class="field" id="country" placeholder="例如：台灣、日本" />
-        </div>
-        <div class="form-group">
-          <label>城市 / 地區</label>
-          <input class="field" id="city" placeholder="例如：桃園大溪" />
-        </div>
-        <div class="form-group">
-          <label>旅宿集團</label>
-          <select class="field" id="hotelGroup">
-            <option value="">獨立飯店 / 未分類</option>
-            <option>萬豪 Marriott</option>
-            <option>寒舍集團</option>
-            <option>晶華國際酒店集團</option>
-            <option>雲朗觀光</option>
-            <option>國泰飯店觀光事業</option>
-            <option>IHG 洲際酒店集團</option>
-            <option>Hilton 希爾頓</option>
-            <option>Hyatt 凱悅</option>
-            <option>Accor 雅高</option>
-            <option value="__custom">＋ 自訂集團</option>
-          </select>
-        </div>
-        <div class="form-group full hidden" id="customGroupWrap">
-          <label>自訂旅宿集團</label>
-          <input class="field" id="customGroup" placeholder="輸入集團名稱" />
-        </div>
-        <div class="form-group full">
-          <label>住宿日期區間 *</label>
-          <button type="button" class="field date-range-btn" id="dateRangeBtn">
-            <span id="dateRangeText">選擇入住 ～ 退房日期</span>
-            <span class="date-range-icon">📅</span>
-          </button>
-          <input id="checkin" type="hidden" required />
-          <input id="checkout" type="hidden" required />
-          <div class="date-range-summary" id="dateRangeSummary">尚未選擇住宿日期</div>
-        </div>
-        <div class="form-group">
-          <label>總金額 (TWD) *</label>
-          <input class="field" id="price" inputmode="numeric" type="number" min="0" step="1" required placeholder="12000" />
-        </div>
-        <div class="form-group">
-          <label>房型</label>
-          <input class="field" id="room" placeholder="例如：豪華客房" />
-        </div>
-        <div class="form-group">
-          <label>訂房方式</label>
-          <select class="field" id="booking">
-            <option value="">未填</option>
-            <optgroup label="飯店 / 直接訂房">
-              <option>飯店官網</option>
-              <option>飯店電話 / 現場訂房</option>
-              <option>飯店會員 App</option>
-            </optgroup>
-            <optgroup label="國際訂房平台">
-              <option>Agoda</option>
-              <option>Booking.com</option>
-              <option>Trip.com</option>
-              <option>Expedia</option>
-              <option>Hotels.com</option>
-              <option>Traveloka</option>
-            </optgroup>
-            <optgroup label="台灣常用旅遊平台">
-              <option>Klook</option>
-              <option>KKday</option>
-              <option>易遊網 ezTravel</option>
-              <option>雄獅旅遊</option>
-              <option>可樂旅遊</option>
-              <option>東南旅遊</option>
-            </optgroup>
-            <optgroup label="日本旅遊平台">
-              <option>樂天旅遊 Rakuten Travel</option>
-              <option>Jalan じゃらん</option>
-              <option>一休.com</option>
-            </optgroup>
-            <optgroup label="票券 / 特殊方案">
-              <option>住宿券</option>
-              <option>信用卡禮遇</option>
-              <option>FHR / THC</option>
-              <option>點數 / 會員兌換</option>
-              <option>旅行社套裝行程</option>
-              <option>團購 / 優惠券</option>
-              <option>其他</option>
-            </optgroup>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>住宿評分</label>
-          <select class="field rating-field" id="rating">
-            <option value="">尚未評分</option>
-            <option value="5">★★★★★ 5 分 · 超喜歡</option>
-            <option value="4">★★★★☆ 4 分 · 很不錯</option>
-            <option value="3">★★★☆☆ 3 分 · 還可以</option>
-            <option value="2">★★☆☆☆ 2 分 · 有缺點</option>
-            <option value="1">★☆☆☆☆ 1 分 · 不會再住</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>這趟和誰一起</label>
-          <select class="field" id="companions">
-            <option value="">未填</option>
-            <option>一家人</option>
-            <option>夫妻 / 伴侶</option>
-            <option>親子</option>
-            <option>家族旅行</option>
-            <option>朋友</option>
-            <option>自己旅行</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>訂房是否已付款</label>
-          <select class="field" id="payment">
-            <option value="">未填</option>
-            <option>已付款</option>
-            <option>到店付款</option>
-            <option>部分付款 / 訂金</option>
-          </select>
-        </div>
-        <div class="form-group full">
-          <div class="check-row">
-            <input type="checkbox" id="wantReturn" />
-            <label for="wantReturn" style="margin:0;color:var(--ink)">♡ 這間值得再住一次</label>
-          </div>
-        </div>
-        <div class="form-group full">
-          <label>這一頁的照片</label>
-          <div class="photo-box">
-            <input class="field" id="photoInput" type="file" accept="image/*" />
-            <img id="photoPreview" class="photo-preview" alt="住宿照片預覽" />
-            <div class="photo-help">照片會自動縮小後存在這台裝置中，適合放飯店、房間或一家人的旅行風景。</div>
-          </div>
-        </div>
-        <div class="form-group full">
-          <label>一句回憶</label>
-          <input class="field" id="memoryLine" maxlength="80" placeholder="例如：桐桐最喜歡房間裡的大浴缸 ♡" />
-        </div>
-        <div class="form-group full">
-          <label>這趟旅行貼紙</label>
-          <div class="sticker-picker">
-            <label class="sticker-option"><input type="checkbox" value="親子" name="stickers"><span>🧸 親子</span></label>
-            <label class="sticker-option"><input type="checkbox" value="泳池" name="stickers"><span>🏊 泳池</span></label>
-            <label class="sticker-option"><input type="checkbox" value="早餐" name="stickers"><span>🥐 早餐</span></label>
-            <label class="sticker-option"><input type="checkbox" value="慶生" name="stickers"><span>🎂 慶生</span></label>
-            <label class="sticker-option"><input type="checkbox" value="度假" name="stickers"><span>🌿 度假</span></label>
-            <label class="sticker-option"><input type="checkbox" value="購物" name="stickers"><span>🛍️ 購物</span></label>
-            <label class="sticker-option"><input type="checkbox" value="溫泉" name="stickers"><span>♨️ 溫泉</span></label>
-            <label class="sticker-option"><input type="checkbox" value="海景" name="stickers"><span>🌊 海景</span></label>
-            <label class="sticker-option"><input type="checkbox" value="山景" name="stickers"><span>⛰️ 山景</span></label>
-            <label class="sticker-option"><input type="checkbox" value="樂園" name="stickers"><span>🎡 樂園</span></label>
-            <label class="sticker-option"><input type="checkbox" value="動物" name="stickers"><span>🐾 動物</span></label>
-            <label class="sticker-option"><input type="checkbox" value="美食" name="stickers"><span>🍽️ 美食</span></label>
-            <label class="sticker-option"><input type="checkbox" value="夜景" name="stickers"><span>🌙 夜景</span></label>
-            <label class="sticker-option"><input type="checkbox" value="機場" name="stickers"><span>✈️ 機場</span></label>
-            <label class="sticker-option"><input type="checkbox" value="市區" name="stickers"><span>🏙️ 市區</span></label>
-            <label class="sticker-option"><input type="checkbox" value="自駕" name="stickers"><span>🚗 自駕</span></label>
-            <label class="sticker-option"><input type="checkbox" value="雨天" name="stickers"><span>☔ 雨天</span></label>
-            <label class="sticker-option"><input type="checkbox" value="療癒" name="stickers"><span>🫧 療癒</span></label>
-          </div>
-        </div>
-        <div class="form-group full">
-          <label>小記</label>
-          <textarea class="field" id="memo" placeholder="早餐很好吃、親子設施很多、下次想再住…"></textarea>
-        </div>
-      </div>
-      <button class="save" type="submit">儲存這次住宿 ✨</button>
-    </form>
-  </dialog>
 
 
-  <dialog id="dateDialog">
-    <div class="modal">
-      <div class="modal-head">
-        <h3>選擇住宿日期</h3>
-        <button class="close" data-close="dateDialog">×</button>
-      </div>
 
-      <div class="date-picker-note">先選入住日，再選退房日 ♡</div>
 
-      <div class="calendar-head">
-        <button type="button" class="calendar-nav" id="prevMonth">‹</button>
-        <div class="calendar-title" id="calendarTitle"></div>
-        <button type="button" class="calendar-nav" id="nextMonth">›</button>
-      </div>
 
-      <div class="calendar-week">
-        <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-      </div>
-      <div class="calendar-grid" id="calendarGrid"></div>
 
-      <div class="range-preview">
-        <div><small>入住</small><b id="previewCheckin">—</b></div>
-        <div class="range-arrow">→</div>
-        <div><small>退房</small><b id="previewCheckout">—</b></div>
-      </div>
 
-      <button class="save" type="button" id="confirmDateRange">套用住宿日期</button>
-    </div>
-  </dialog>
 
-  <dialog id="toolsDialog">
-    <div class="modal">
-      <div class="modal-head">
-        <h3>資料工具</h3>
-        <button class="close" data-close="toolsDialog">×</button>
-      </div>
-      <p style="color:var(--muted);font-size:13px;line-height:1.6">資料目前只存在這台裝置的瀏覽器。建議偶爾匯出備份，換手機時也能匯入。</p>
-      <div class="tools">
-        <button class="tool-btn" id="exportBtn">⇩ 匯出備份</button>
-        <button class="tool-btn" id="importBtn">⇧ 匯入備份</button>
-      </div>
-      <input id="importFile" type="file" accept="application/json" class="hidden" />
-      <button class="tool-btn danger" id="clearBtn" style="width:100%;margin-top:10px">清除全部紀錄</button>
-    </div>
-  </dialog>
 
-  <div class="toast" id="toast"></div>
+<div class="memory-insight-head">
+<div><h3 style="margin:0">桐House 年度旅行回顧</h3><p style="margin:4px 0 0;color:var(--muted);font-size:12px">把一年住過的地方，濃縮成我們家的旅行年鑑 ♡</p></div>
+<div class="mini-stat-filter"><select class="field" id="annualReviewYear"><option value="">全部年份</option></select></div>
+</div><div class="year-review-grid">
+<div class="year-review-card"><div class="mini">🏨 住宿足跡</div><b id="reviewStayCount">0 趟</b><span id="reviewStaySub">還沒有住宿紀錄</span></div>
+<div class="year-review-card"><div class="mini">🌙 累積住宿</div><b id="reviewNights">0 晚</b><span id="reviewNightSub">一家人的旅行時光</span></div>
+<div class="year-review-card"><div class="mini">💰 住宿總花費</div><b id="reviewAmount">$0</b><span id="reviewAmountSub">依已入住紀錄計算</span></div>
+<div class="year-review-card"><div class="mini">📍 最常停留</div><b id="reviewTopPlace">—</b><span id="reviewTopPlaceSub">依住宿晚數計算</span></div>
+</div><div class="review-story" id="annualReviewStory">住宿紀錄累積後，這裡會自動寫出屬於桐House一家的年度旅行小結。</div><div class="section-head" style="margin-top:22px">
+<div><h3>我們最常往哪裡走？</h3><p>先看國內外住了幾晚，再看看一家人最常停留的國家與地區</p></div>
+<div class="mini-stat-filter">
+<select class="field" id="travelStatYear"><option value="">全部年份</option></select>
+</div>
+</div><div class="travel-split-grid">
+<div class="travel-split-card domestic">
+<div class="travel-kind">🇹🇼 國內住宿</div>
+<div class="travel-money" id="domesticAmount">$0</div>
+<div class="travel-meta" id="domesticMeta">0 趟 · 0 晚</div>
+</div>
+<div class="travel-split-card international">
+<div class="travel-kind">✈️ 國外住宿</div>
+<div class="travel-money" id="internationalAmount">$0</div>
+<div class="travel-meta" id="internationalMeta">0 趟 · 0 晚</div>
+</div>
+</div><div class="ranking-grid">
+<div class="ranking-card">
+<h4>🌏 去最多的國家</h4>
+<div class="rank-note">依住宿天數排行；同天數並列</div>
+<div class="rank-list" id="countryDaysRank"></div>
+</div>
+<div class="ranking-card">
+<h4>🇹🇼 去最多的國內地區</h4>
+<div class="rank-note">依住宿天數排行；同天數並列</div>
+<div class="rank-list" id="domesticDaysRank"></div>
+</div>
+<div class="ranking-card">
+<h4>💸 國家住宿花費排行</h4>
+<div class="rank-note">依住宿總金額排行</div>
+<div class="rank-list" id="countrySpendRank"></div>
+</div>
+<div class="ranking-card">
+<h4>🧾 國內地區花費排行</h4>
+<div class="rank-note">依住宿總金額排行</div>
+<div class="rank-list" id="domesticSpendRank"></div>
+</div>
+</div><div class="section-head" style="margin-top:22px">
+<div><h3>最愛旅宿・避雷手札</h3><p>高分值得再住，低分也誠實留下來，下一次訂房更有依據</p></div>
+</div><div class="love-avoid-grid">
+<div class="memory-board">
+<h4>♡ 桐House 最愛旅宿 TOP 5</h4>
+<div class="note">優先看評分，再參考「值得再住」</div>
+<div id="favoriteRankList"></div>
+</div>
+<div class="memory-board">
+<h4>⚠️ 低分避雷紀錄</h4>
+<div class="note">1～2 分住宿會自動集中在這裡</div>
+<div id="avoidRankList"></div>
+</div>
+</div><div class="section-head" style="margin-top:22px">
+<div><h3>每晚預算雷達</h3><p>看看我們家平常一晚住多少，以後看到房價更快知道貴不貴</p></div>
+</div><div class="budget-grid">
+<div class="budget-card"><small>全部住宿平均</small><b id="budgetOverall">$0 / 晚</b><span id="budgetOverallSub">0 晚</span></div>
+<div class="budget-card"><small>🇹🇼 國內平均</small><b id="budgetDomestic">$0 / 晚</b><span id="budgetDomesticSub">0 晚</span></div>
+<div class="budget-card"><small>✈️ 國外平均</small><b id="budgetInternational">$0 / 晚</b><span id="budgetInternationalSub">0 晚</span></div>
+</div><div class="budget-detail">
+<div class="budget-line"><span>國外最常住國家平均</span><b id="budgetCountryDetail">—</b></div>
+<div class="budget-line"><span>國內最常住地區平均</span><b id="budgetAreaDetail">—</b></div>
+</div><div class="section-head">
+<div><h3>旅宿小帳本・細看</h3><p>想看花費、入住次數與區間比較時，再慢慢翻到這一頁</p></div>
+<div class="segmented" id="statMode">
+<button class="active" data-mode="year">年</button>
+<button data-mode="quarter">季</button>
+<button data-mode="month">月</button>
+</div>
+</div><div class="summary-grid">
+<div class="summary-card">
+<div class="label">目前區間總金額</div>
+<div class="value" id="periodAmount">$0</div>
+<div class="sub" id="periodLabel">—</div>
+</div>
+<div class="summary-card">
+<div class="label">入住次數</div>
+<div class="value" id="periodCount">0</div>
+<div class="sub">筆住宿紀錄</div>
+</div>
+<div class="summary-card">
+<div class="label">平均每晚</div>
+<div class="value" id="avgNight">$0</div>
+<div class="sub" id="nightCount">共 0 晚</div>
+</div>
+<div class="summary-card">
+<div class="label">最常入住城市</div>
+<div class="value" id="topCity">—</div>
+<div class="sub">依目前區間計算</div>
+</div>
+<div class="summary-card wide">
+<div class="label">區間比較</div>
+<div class="bar-list" id="barList"></div>
+</div>
+<div class="summary-card wide">
+<div class="label">收藏亮點</div>
+<div class="value" id="favoriteHotel" style="font-size:19px">尚未有紀錄</div>
+<div class="sub" id="favoriteHotelSub">開始新增第一間飯店吧</div>
+</div>
+</div></section><section id="groupsView">
+<div class="section-head">
+<div><h3>住過的旅宿家族</h3><p>萬豪、寒舍…看看足跡慢慢累積在哪些品牌</p></div>
+</div>
+<div class="group-grid" id="groupGrid"></div>
+</section><section id="recordsView">
+<div class="section-head">
+<div><h3>我們住過的每一站</h3><p>翻一翻一家人的住宿回憶</p></div>
+</div>
+<div class="filters">
+<input class="field" id="searchInput" placeholder="搜尋飯店、城市、備註…"/>
+<select class="field" id="yearFilter"><option value="">全部年份</option></select>
+<select class="field" id="tripTypeFilter"><option value="">國內＋國外</option><option value="domestic">🇹🇼 國內</option><option value="international">✈️ 國外</option></select>
+<select class="field" id="ratingFilter">
+<option value="">全部評分</option>
+<option value="5">★★★★★ 5 分</option>
+<option value="4">★★★★☆ 4 分</option>
+<option value="3">★★★☆☆ 3 分</option>
+<option value="2">★★☆☆☆ 2 分</option>
+<option value="1">★☆☆☆☆ 1 分</option>
+<option value="unrated">尚未評分</option>
+</select>
+<select class="field" id="returnFilter">
+<option value="">全部旅宿</option>
+<option value="yes">♡ 值得再住</option>
+<option value="no">⚠ 低分避雷（1–2 分）</option>
+</select>
+<select class="field" id="sortFilter">
+<option value="dateDesc">日期：新 → 舊</option>
+<option value="dateAsc">日期：舊 → 新</option>
+<option value="priceDesc">金額：高 → 低</option>
+<option value="priceAsc">金額：低 → 高</option>
+<option value="ratingDesc">評分：高 → 低</option>
+<option value="ratingAsc">評分：低 → 高</option>
+</select>
+</div>
+<div class="records" id="records"></div>
+</section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+</main>
+<nav class="bottom-nav">
+<button class="active" data-tab="journal"><span class="nav-icon">⌂</span><span>手帳</span></button>
+<button data-tab="trip"><span class="nav-icon">✈</span><span>旅程</span></button>
+<button class="nav-add" data-tab="add"><span class="nav-icon">＋</span><span>新增</span></button>
+<button data-tab="records"><span class="nav-icon">♡</span><span>收藏</span></button>
+</nav>
+<dialog id="recordDialog">
+<form class="modal" id="recordForm">
+<div class="modal-head">
+<h3 id="formTitle">新增住宿</h3>
+<button class="close" data-close="recordDialog" type="button">×</button>
+</div>
+<input id="recordId" type="hidden"/>
+<div class="form-grid">
+<div class="form-group full">
+<label>飯店名稱 *</label>
+<input class="field" id="hotel" placeholder="例如：大溪笠復威斯汀度假酒店" required=""/>
+</div>
+<div class="form-group">
+<label>住宿狀態 *</label>
+<select class="field" id="status">
+<option value="planned">✨ 已安排，期待入住</option>
+<option value="stayed">♡ 已入住，收藏回憶</option>
+</select>
+</div>
+<div class="form-group">
+<label>旅行分類 *</label>
+<select class="field" id="tripType">
+<option value="domestic">🇹🇼 國內</option>
+<option value="international">✈️ 國外</option>
+</select>
+</div>
+<div class="form-group">
+<label>國家 / 地區</label>
+<input class="field" id="country" placeholder="國內會自動填台灣；國外例如：日本"/>
+</div>
+<div class="form-group">
+<label>城市 / 地區</label>
+<input class="field" id="city" placeholder="例如：桃園大溪"/>
+</div>
+<div class="form-group">
+<label>旅宿集團</label>
+<select class="field" id="hotelGroup">
+<option value="">獨立飯店 / 未分類</option>
+<option>萬豪 Marriott</option>
+<option>寒舍集團</option>
+<option>晶華國際酒店集團</option>
+<option>雲朗觀光</option>
+<option>國泰飯店觀光事業</option>
+<option>IHG 洲際酒店集團</option>
+<option>Hilton 希爾頓</option>
+<option>Hyatt 凱悅</option>
+<option>Accor 雅高</option>
+<option value="__custom">＋ 自訂集團</option>
+</select>
+</div>
+<div class="form-group full hidden" id="customGroupWrap">
+<label>自訂旅宿集團</label>
+<input class="field" id="customGroup" placeholder="輸入集團名稱"/>
+</div>
+<div class="form-group full">
+<label>住宿日期區間 *</label>
+<button class="field date-range-btn" id="dateRangeBtn" type="button">
+<span id="dateRangeText">選擇入住 ～ 退房日期</span>
+<span class="date-range-icon">📅</span>
+</button>
+<input id="checkin" required="" type="hidden"/>
+<input id="checkout" required="" type="hidden"/>
+<div class="date-range-summary" id="dateRangeSummary">尚未選擇住宿日期</div>
+</div>
+<div class="form-group">
+<label>總金額 (TWD) *</label>
+<input class="field" id="price" inputmode="numeric" min="0" placeholder="12000" required="" step="1" type="number"/>
+</div>
+<div class="form-group">
+<label>房型</label>
+<input class="field" id="room" placeholder="例如：豪華客房"/>
+</div>
+<div class="form-group">
+<label>訂房方式</label>
+<select class="field" id="booking">
+<option value="">未填</option>
+<optgroup label="飯店 / 直接訂房">
+<option>飯店官網</option>
+<option>飯店電話 / 現場訂房</option>
+<option>飯店會員 App</option>
+</optgroup>
+<optgroup label="國際訂房平台">
+<option>Agoda</option>
+<option>Booking.com</option>
+<option>Trip.com</option>
+<option>Expedia</option>
+<option>Hotels.com</option>
+<option>Traveloka</option>
+</optgroup>
+<optgroup label="台灣常用旅遊平台">
+<option>Klook</option>
+<option>KKday</option>
+<option>易遊網 ezTravel</option>
+<option>雄獅旅遊</option>
+<option>可樂旅遊</option>
+<option>東南旅遊</option>
+</optgroup>
+<optgroup label="日本旅遊平台">
+<option>樂天旅遊 Rakuten Travel</option>
+<option>Jalan じゃらん</option>
+<option>一休.com</option>
+</optgroup>
+<optgroup label="票券 / 特殊方案">
+<option>住宿券</option>
+<option>信用卡禮遇</option>
+<option>FHR / THC</option>
+<option>點數 / 會員兌換</option>
+<option>旅行社套裝行程</option>
+<option>團購 / 優惠券</option>
+<option>其他</option>
+</optgroup>
+</select>
+</div>
+<div class="form-group">
+<label>住宿評分</label>
+<select class="field rating-field" id="rating">
+<option value="">尚未評分</option>
+<option value="5">★★★★★ 5 分 · 超喜歡</option>
+<option value="4">★★★★☆ 4 分 · 很不錯</option>
+<option value="3">★★★☆☆ 3 分 · 還可以</option>
+<option value="2">★★☆☆☆ 2 分 · 有缺點</option>
+<option value="1">★☆☆☆☆ 1 分 · 不會再住</option>
+</select>
+</div>
+<div class="form-group">
+<label>這趟和誰一起</label>
+<select class="field" id="companions">
+<option value="">未填</option>
+<option>一家人</option>
+<option>夫妻 / 伴侶</option>
+<option>親子</option>
+<option>家族旅行</option>
+<option>朋友</option>
+<option>自己旅行</option>
+</select>
+</div>
+<div class="form-group">
+<label>訂房是否已付款</label>
+<select class="field" id="payment">
+<option value="">未填</option>
+<option>已付款</option>
+<option>到店付款</option>
+<option>部分付款 / 訂金</option>
+</select>
+</div>
+<div class="form-group full">
+<div class="check-row">
+<input id="wantReturn" type="checkbox"/>
+<label for="wantReturn" style="margin:0;color:var(--ink)">♡ 這間值得再住一次</label>
+</div>
+</div>
+<div class="form-group full">
+<label>這一頁的照片</label>
+<div class="photo-box">
+<input accept="image/*" class="field" id="photoInput" type="file"/>
+<img alt="住宿照片預覽" class="photo-preview" id="photoPreview"/>
+<div class="photo-help">照片會自動縮小後存在這台裝置中，適合放飯店、房間或一家人的旅行風景。</div>
+</div>
+</div>
+<div class="form-group full">
+<label>一句回憶</label>
+<input class="field" id="memoryLine" maxlength="80" placeholder="例如：桐桐最喜歡房間裡的大浴缸 ♡"/>
+</div>
+<div class="form-group full">
+<label>這趟旅行貼紙</label>
+<div class="sticker-picker">
+<label class="sticker-option"><input name="stickers" type="checkbox" value="親子"/><span>🧸 親子</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="泳池"/><span>🏊 泳池</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="早餐"/><span>🥐 早餐</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="慶生"/><span>🎂 慶生</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="度假"/><span>🌿 度假</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="購物"/><span>🛍️ 購物</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="溫泉"/><span>♨️ 溫泉</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="海景"/><span>🌊 海景</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="山景"/><span>⛰️ 山景</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="樂園"/><span>🎡 樂園</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="動物"/><span>🐾 動物</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="美食"/><span>🍽️ 美食</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="夜景"/><span>🌙 夜景</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="機場"/><span>✈️ 機場</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="市區"/><span>🏙️ 市區</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="自駕"/><span>🚗 自駕</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="雨天"/><span>☔ 雨天</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="療癒"/><span>🫧 療癒</span></label>
+</div>
+</div>
+<div class="form-group full">
+<label>小記</label>
+<textarea class="field" id="memo" placeholder="早餐很好吃、親子設施很多、下次想再住…"></textarea>
+</div>
+</div>
+<button class="save" type="submit">儲存這次住宿 ✨</button>
+</form>
+</dialog>
+<dialog id="dateDialog">
+<div class="modal">
+<div class="modal-head">
+<h3>選擇住宿日期</h3>
+<button class="close" data-close="dateDialog">×</button>
+</div>
+<div class="date-picker-note">先選入住日，再選退房日 ♡</div>
+<div class="calendar-head">
+<button class="calendar-nav" id="prevMonth" type="button">‹</button>
+<div class="calendar-title" id="calendarTitle"></div>
+<button class="calendar-nav" id="nextMonth" type="button">›</button>
+</div>
+<div class="calendar-week">
+<span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+</div>
+<div class="calendar-grid" id="calendarGrid"></div>
+<div class="range-preview">
+<div><small>入住</small><b id="previewCheckin">—</b></div>
+<div class="range-arrow">→</div>
+<div><small>退房</small><b id="previewCheckout">—</b></div>
+</div>
+<button class="save" id="confirmDateRange" type="button">套用住宿日期</button>
+</div>
+</dialog>
+<dialog id="toolsDialog">
+<div class="modal">
+<div class="modal-head">
+<h3>資料工具</h3>
+<button class="close" data-close="toolsDialog">×</button>
+</div>
+<p style="color:var(--muted);font-size:13px;line-height:1.6">資料目前只存在這台裝置的瀏覽器。建議偶爾匯出備份，換手機時也能匯入。</p>
+<div class="tools">
+<button class="tool-btn" id="exportBtn">⇩ 匯出備份</button>
+<button class="tool-btn" id="importBtn">⇧ 匯入備份</button>
+</div>
+<input accept="application/json" class="hidden" id="importFile" type="file">
+<button class="tool-btn danger" id="clearBtn" style="width:100%;margin-top:10px">清除全部紀錄</button>
+</input></div>
+</dialog>
+<div class="toast" id="toast"></div>
 <script>
 const KEY='hotel_memories_v1';
 let records=JSON.parse(localStorage.getItem(KEY)||'[]');
@@ -1321,6 +1498,15 @@ const $=id=>document.getElementById(id);
 const money=n=>new Intl.NumberFormat('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0}).format(Number(n||0));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 function nights(a,b){ const d=(new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/86400000; return Math.max(1,Math.round(d)||1); }
+function inferTripType(r){
+  if(r?.tripType==='domestic' || r?.tripType==='international') return r.tripType;
+  const c=String(r?.country||'').trim().toLowerCase();
+  if(['台灣','臺灣','taiwan','tw','中華民國','roc'].includes(c)) return 'domestic';
+  return c ? 'international' : 'domestic';
+}
+function tripTypeLabel(r){return inferTripType(r)==='domestic'?'🇹🇼 國內':'✈️ 國外'}
+function countryName(r){return inferTripType(r)==='domestic'?'台灣':(String(r.country||'').trim()||'未填國家')}
+
 
 async function compressImage(file,maxSize=900,quality=.76){
   if(!file) return '';
@@ -1412,18 +1598,23 @@ function renderReviewReminder(){
 }
 
 function normalizeRecords(){
-  records=records.map(r=>({
-    status:stayHasEnded(r)?'stayed':(r.status || (r.checkin && r.checkin>todayISO()?'planned':'stayed')),
-    country:r.country||'',
-    hotelGroup:r.hotelGroup||'',
-    companions:r.companions||'',
-    payment:r.payment||'',
-    wantReturn:!!r.wantReturn,
-    photo:r.photo||'',
-    memoryLine:r.memoryLine||'',
-    stickers:Array.isArray(r.stickers)?r.stickers:[],
-    ...r
-  }));
+  records=records.map(r=>{
+    const tripType=inferTripType(r);
+    return {
+      status:stayHasEnded(r)?'stayed':(r.status || (r.checkin && r.checkin>todayISO()?'planned':'stayed')),
+      country:r.country||'',
+      hotelGroup:r.hotelGroup||'',
+      companions:r.companions||'',
+      payment:r.payment||'',
+      wantReturn:!!r.wantReturn,
+      photo:r.photo||'',
+      memoryLine:r.memoryLine||'',
+      stickers:Array.isArray(r.stickers)?r.stickers:[],
+      ...r,
+      tripType,
+      country:tripType==='domestic' ? (r.country||'台灣') : (r.country||'')
+    };
+  });
 }
 function diffDays(dateStr){
   const a=new Date(todayISO()+'T12:00:00'), b=new Date(dateStr+'T12:00:00');
@@ -1431,20 +1622,34 @@ function diffDays(dateStr){
 }
 function renderUpcoming(){
   const upcoming=records.filter(r=>!stayHasEnded(r) && r.status==='planned' && r.checkout>=todayISO()).sort((a,b)=>a.checkin.localeCompare(b.checkin));
+  const visual=$('nextTripVisual'), primary=$('nextTripPrimary'), edit=$('nextTripEdit');
   if(upcoming.length){
-    const n=upcoming[0], d=diffDays(n.checkin);
+    const n=upcoming[0], d=diffDays(n.checkin), nightCount=nights(n.checkin,n.checkout);
     $('nextStayName').textContent=n.hotel;
-    $('nextStayMeta').textContent=`${n.country? n.country+' · ':''}${n.city||'旅途中'} · ${n.checkin}${n.payment?' · '+n.payment:''}`;
-    $('nextStayCount').textContent=d===0?'今天入住':`倒數 ${d} 天`;
-    $('nextBanner').style.display='flex';
+    $('nextTripLocation').textContent=[n.country,n.city].filter(Boolean).join(' · ') || '下一趟家庭旅行';
+    $('nextStayMeta').textContent=`${n.checkin} → ${n.checkout} · ${nightCount} 晚${n.payment?' · '+n.payment:''}`;
+    $('nextStayCount').textContent=d===0?'今天入住 ♡':d===1?'明天出發 ♡':`還有 ${d} 天出發 ♡`;
+    visual.classList.remove('next-empty-visual');
+    visual.style.backgroundImage=n.photo?`linear-gradient(to top,rgba(57,40,34,.45),rgba(57,40,34,.04)),url("${n.photo}")`:'';
+    primary.classList.remove('hidden');
+    primary.textContent=upcoming.length>1?`查看全部 ${upcoming.length} 個安排`:'查看旅程';
+    primary.onclick=()=>jumpToSection('upcomingView',document.querySelector('.bottom-nav button[data-tab="trip"]'));
+    edit.classList.remove('hidden');
+    edit.textContent='查看';
+    edit.onclick=()=>openForm(n);
   }else{
-    $('nextStayName').textContent='還沒有已安排的住宿';
-    $('nextStayMeta').textContent='新增一趟期待中的飯店吧 ♡';
-    $('nextStayCount').textContent='—';
+    $('nextStayName').textContent='下一站，想去哪裡呢？';
+    $('nextTripLocation').textContent='OUR NEXT LITTLE ADVENTURE';
+    $('nextStayMeta').textContent='下一趟家庭旅行，等著被安排 ♡ 新增時統一使用下方「＋」。';
+    $('nextStayCount').textContent='一起期待下一趟 ♡';
+    visual.classList.add('next-empty-visual');
+    visual.style.backgroundImage='';
+    primary.classList.add('hidden');
+    edit.classList.add('hidden');
   }
   $('upcomingList').innerHTML=upcoming.length?upcoming.slice(0,6).map(r=>{
     const d=diffDays(r.checkin);
-    return `<article class="upcoming-card">
+    return `<article class="upcoming-card" onclick="editRecord('${r.id}')" style="cursor:pointer">
       <span class="status-pill status-planned">✨ 已安排</span>
       <div class="days">${d===0?'今天':d===1?'明天':`還有 ${d} 天`}</div>
       <div class="u-title">${esc(r.hotel)}</div>
@@ -1572,6 +1777,99 @@ function renderStats(){
     </div>`).join(''):`<div style="color:var(--muted);font-size:13px">有住宿紀錄後，這裡會自動長出漂亮的花費比較圖。</div>`;
 }
 
+function renderTravelStats(){
+  const yearSel=$('travelStatYear');
+  if(!yearSel) return;
+  const cur=yearSel.value;
+  const years=[...new Set(records.filter(r=>r.status==='stayed').map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  yearSel.innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  yearSel.value=cur;
+  let stayed=records.filter(r=>r.status==='stayed');
+  if(cur) stayed=stayed.filter(r=>String(getYear(r.checkin))===cur);
+  const domestic=stayed.filter(r=>inferTripType(r)==='domestic');
+  const international=stayed.filter(r=>inferTripType(r)==='international');
+  const calc=list=>({amount:list.reduce((a,r)=>a+Number(r.price||0),0), trips:list.length, nights:list.reduce((a,r)=>a+nights(r.checkin,r.checkout),0)});
+  const d=calc(domestic), i=calc(international);
+  $('domesticAmount').textContent=money(d.amount); $('domesticMeta').textContent=`${d.trips} 趟 · ${d.nights} 晚`;
+  $('internationalAmount').textContent=money(i.amount); $('internationalMeta').textContent=`${i.trips} 趟 · ${i.nights} 晚`;
+
+  const aggregate=(list,keyFn)=>{
+    const m={};
+    list.forEach(r=>{const k=keyFn(r); if(!k)return; (m[k]??={days:0,amount:0,trips:0}); m[k].days+=nights(r.checkin,r.checkout);m[k].amount+=Number(r.price||0);m[k].trips++;});
+    return m;
+  };
+  const countries=aggregate(international,r=>countryName(r));
+  const areas=aggregate(domestic,r=>String(r.city||'').trim()||'未填地區');
+  const rankWithTies=(obj,metric)=>{
+    const rows=Object.entries(obj).map(([name,v])=>({name,...v})).sort((a,b)=>b[metric]-a[metric] || a.name.localeCompare(b.name,'zh-Hant'));
+    let rank=0,prev=null;
+    return rows.map((x,idx)=>{if(x[metric]!==prev) rank=idx+1; prev=x[metric]; return {...x,rank};});
+  };
+  const renderRank=(id,rows,metric)=>{
+    const el=$(id); if(!el)return;
+    el.innerHTML=rows.length?rows.slice(0,8).map(x=>`<div class="rank-row"><span class="rank-no">${x.rank}</span><span class="rank-name">${esc(x.name)}</span><span class="rank-value">${metric==='days'?`${x.days} 晚`:`${money(x.amount)}`}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px">還沒有足夠的住宿紀錄</div>';
+  };
+  renderRank('countryDaysRank',rankWithTies(countries,'days'),'days');
+  renderRank('domesticDaysRank',rankWithTies(areas,'days'),'days');
+  renderRank('countrySpendRank',rankWithTies(countries,'amount'),'amount');
+  renderRank('domesticSpendRank',rankWithTies(areas,'amount'),'amount');
+}
+
+
+function renderAnnualInsights(){
+  const sel=$('annualReviewYear'); if(!sel) return;
+  const years=[...new Set(records.filter(r=>r.status==='stayed').map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  const old=sel.value;
+  sel.innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  if(old && years.map(String).includes(old)) sel.value=old;
+  else if(!old && years.includes(new Date().getFullYear())) sel.value=String(new Date().getFullYear());
+  else if(!old && years.length) sel.value=String(years[0]);
+
+  const y=sel.value;
+  let list=records.filter(r=>r.status==='stayed');
+  if(y) list=list.filter(r=>String(getYear(r.checkin))===y);
+  const totalNights=list.reduce((a,r)=>a+nights(r.checkin,r.checkout),0);
+  const amount=list.reduce((a,r)=>a+Number(r.price||0),0);
+  const places={};
+  list.forEach(r=>{
+    const key=inferTripType(r)==='domestic'?(String(r.city||'').trim()||'台灣'):(String(r.country||'').trim()||'未填國家');
+    places[key]=(places[key]||0)+nights(r.checkin,r.checkout);
+  });
+  const topPlace=Object.entries(places).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'zh-Hant'))[0];
+  $('reviewStayCount').textContent=`${list.length} 趟`;
+  $('reviewStaySub').textContent=list.length?`${new Set(list.map(r=>r.hotel).filter(Boolean)).size} 間不同旅宿`:'還沒有住宿紀錄';
+  $('reviewNights').textContent=`${totalNights} 晚`;
+  $('reviewNightSub').textContent=list.length?`平均每趟 ${(totalNights/list.length).toFixed(1)} 晚`:'一家人的旅行時光';
+  $('reviewAmount').textContent=money(amount);
+  $('reviewAmountSub').textContent=totalNights?`平均 ${money(amount/totalNights)} / 晚`:'依已入住紀錄計算';
+  $('reviewTopPlace').textContent=topPlace?.[0]||'—';
+  $('reviewTopPlaceSub').textContent=topPlace?`${topPlace[1]} 晚 · 依住宿晚數計算`:'依住宿晚數計算';
+
+  const rated=list.filter(r=>Number(r.rating)>0);
+  const avgRating=rated.length?rated.reduce((a,r)=>a+Number(r.rating),0)/rated.length:0;
+  const best=[...rated].sort((a,b)=>Number(b.rating)-Number(a.rating)||(b.wantReturn?1:0)-(a.wantReturn?1:0)||(b.checkin||'').localeCompare(a.checkin||''))[0];
+  const label=y?`${y} 年`:'累積';
+  $('annualReviewStory').innerHTML=list.length
+    ? `<b>${label}，桐House一家共收藏 ${list.length} 趟住宿、${totalNights} 晚旅行時光。</b> ${topPlace?`停留最久的是「${esc(topPlace[0])}」${topPlace[1]} 晚。`:''}${rated.length?` 已完成 ${rated.length} 筆評分，平均 ${avgRating.toFixed(1)} 分。`:''}${best?` 目前最高分回憶是「${esc(best.hotel)}」${best.rating} 分${best.wantReturn?'，也被標記為值得再住 ♡':''}。`:''}`
+    : '住宿紀錄累積後，這裡會自動寫出屬於桐House一家的年度旅行小結。';
+
+  const favorites=[...rated].sort((a,b)=>Number(b.rating)-Number(a.rating)||(Number(b.wantReturn)-Number(a.wantReturn))||(b.checkin||'').localeCompare(a.checkin||'')).slice(0,5);
+  $('favoriteRankList').innerHTML=favorites.length?favorites.map((r,i)=>`<div class="hotel-rank-row"><span class="hotel-rank-no">${i+1}</span><span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}${r.wantReturn?' · ♡ 值得再住':''}</span></span><span class="hotel-rank-score">${'★'.repeat(Number(r.rating))} ${r.rating}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">完成住宿評分後，就會自動產生最愛榜。</div>';
+  const avoids=[...rated].filter(r=>Number(r.rating)<=2).sort((a,b)=>Number(a.rating)-Number(b.rating)||(b.checkin||'').localeCompare(a.checkin||''));
+  $('avoidRankList').innerHTML=avoids.length?avoids.slice(0,8).map((r,i)=>`<div class="hotel-rank-row"><span class="hotel-rank-no">${i+1}</span><span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}${r.memo?` · ${esc(String(r.memo).slice(0,24))}${String(r.memo).length>24?'…':''}`:''}</span></span><span class="hotel-rank-score">${'★'.repeat(Number(r.rating))}${'☆'.repeat(5-Number(r.rating))} ${r.rating}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">目前沒有 1～2 分的避雷紀錄，很棒 ♡</div>';
+
+  const calcAvg=arr=>{const ns=arr.reduce((a,r)=>a+nights(r.checkin,r.checkout),0),am=arr.reduce((a,r)=>a+Number(r.price||0),0);return {nights:ns,avg:ns?am/ns:0}};
+  const allAvg=calcAvg(list), dAvg=calcAvg(list.filter(r=>inferTripType(r)==='domestic')), iAvg=calcAvg(list.filter(r=>inferTripType(r)==='international'));
+  $('budgetOverall').textContent=`${money(allAvg.avg)} / 晚`; $('budgetOverallSub').textContent=`${allAvg.nights} 晚`;
+  $('budgetDomestic').textContent=`${money(dAvg.avg)} / 晚`; $('budgetDomesticSub').textContent=`${dAvg.nights} 晚`;
+  $('budgetInternational').textContent=`${money(iAvg.avg)} / 晚`; $('budgetInternationalSub').textContent=`${iAvg.nights} 晚`;
+  const avgBy=(arr,keyFn)=>{const g={};arr.forEach(r=>{const k=keyFn(r);if(!k)return;(g[k]??=[]).push(r)});return Object.entries(g).map(([name,rows])=>({name,...calcAvg(rows)})).sort((a,b)=>b.nights-a.nights||a.name.localeCompare(b.name,'zh-Hant'))[0]};
+  const c=avgBy(list.filter(r=>inferTripType(r)==='international'),r=>String(r.country||'').trim());
+  const a=avgBy(list.filter(r=>inferTripType(r)==='domestic'),r=>String(r.city||'').trim());
+  $('budgetCountryDetail').textContent=c?`${c.name} · ${money(c.avg)} / 晚（${c.nights} 晚）`:'—';
+  $('budgetAreaDetail').textContent=a?`${a.name} · ${money(a.avg)} / 晚（${a.nights} 晚）`:'—';
+}
+
 function renderYearFilter(){
   const cur=$('yearFilter').value;
   const years=[...new Set(records.map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
@@ -1583,10 +1881,12 @@ function renderRecords(){
   let list=[...records];
   const q=$('searchInput').value.trim().toLowerCase();
   const yf=$('yearFilter').value;
+  const tf=$('tripTypeFilter').value;
   const rf=$('ratingFilter').value;
   const ret=$('returnFilter').value;
   if(q) list=list.filter(r=>[r.hotel,r.country,r.city,r.hotelGroup,r.room,r.memoryLine,r.memo,r.booking,r.companions,r.payment,(r.stickers||[]).join(' ')].join(' ').toLowerCase().includes(q));
   if(yf) list=list.filter(r=>String(getYear(r.checkin))===yf);
+  if(tf) list=list.filter(r=>inferTripType(r)===tf);
   if(rf==='unrated') list=list.filter(r=>!r.rating);
   else if(rf) list=list.filter(r=>String(r.rating)===rf);
   if(ret==='yes') list=list.filter(r=>r.wantReturn);
@@ -1615,6 +1915,7 @@ function renderRecords(){
       </div>
       <div class="meta">
         <span class="status-pill ${r.status==='planned'?'status-planned':'status-stayed'}">${r.status==='planned'?'✨ 已安排':'♡ 已入住'}</span>
+        <span class="chip trip-type-pill ${inferTripType(r)}">${tripTypeLabel(r)}</span>
         <span class="chip">${n} 晚 · 平均 ${money(per)}/晚</span>
         ${r.hotelGroup?`<span class="chip">🏨 ${esc(r.hotelGroup)}</span>`:''}
         ${r.wantReturn?`<span class="chip">♡ 值得再住</span>`:''}
@@ -1635,7 +1936,7 @@ function renderRecords(){
   }).join('');
 }
 
-function renderAll(){syncStatuses();renderJournal();renderHero();renderYearFilter();renderStats();renderUpcoming();renderGroups();renderReviewReminder();renderRecords()}
+function renderAll(){syncStatuses();renderJournal();renderHero();renderYearFilter();renderStats();renderTravelStats();renderAnnualInsights();renderUpcoming();renderGroups();renderReviewReminder();renderRecords()}
 
 
 let calendarCursor = new Date();
@@ -1732,7 +2033,9 @@ function openForm(r=null){
   $('recordId').value=r?.id||'';
   $('hotel').value=r?.hotel||'';
   $('status').value=r?(stayHasEnded(r)?'stayed':(r.status||'planned')):'planned';
-  $('country').value=r?.country||'';
+  $('tripType').value=r?inferTripType(r):'domestic';
+  $('country').value=r?.country||(inferTripType(r)==='domestic'?'台灣':'');
+  syncTripTypeField();
   const known=[...$('hotelGroup').options].map(o=>o.value).filter(v=>v&&v!=='__custom');
   if(r?.hotelGroup && !known.includes(r.hotelGroup)){ $('hotelGroup').value='__custom'; $('customGroup').value=r.hotelGroup; $('customGroupWrap').classList.remove('hidden'); }
   else { $('hotelGroup').value=r?.hotelGroup||''; $('customGroup').value=''; $('customGroupWrap').classList.add('hidden'); }
@@ -1785,7 +2088,7 @@ $('recordForm').addEventListener('submit',e=>{
   if(checkout && checkin && checkout<=checkin){toast('退房日期要晚於入住日期');return}
   const data={
     id:$('recordId').value||crypto.randomUUID(),
-    hotel:$('hotel').value.trim(), status:(checkout && new Date()>=new Date(checkout+'T11:00:00'))?'stayed':$('status').value, country:$('country').value.trim(), city:$('city').value.trim(),
+    hotel:$('hotel').value.trim(), status:(checkout && new Date()>=new Date(checkout+'T11:00:00'))?'stayed':$('status').value, tripType:$('tripType').value, country:$('tripType').value==='domestic'?'台灣':$('country').value.trim(), city:$('city').value.trim(),
     hotelGroup:$('hotelGroup').value==='__custom'?$('customGroup').value.trim():$('hotelGroup').value,
     checkin, checkout, price:Number($('price').value||0),
     room:$('room').value.trim(), booking:$('booking').value,
@@ -1802,6 +2105,9 @@ $('openTools').onclick=()=>$('toolsDialog').showModal();
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
 $('searchInput').addEventListener('input',renderRecords);
 $('yearFilter').addEventListener('change',renderRecords);
+$('tripTypeFilter').addEventListener('change',renderRecords);
+$('travelStatYear').addEventListener('change',renderTravelStats);
+$('annualReviewYear').addEventListener('change',renderAnnualInsights);
 $('ratingFilter').addEventListener('change',renderRecords);
 $('returnFilter').addEventListener('change',renderRecords);
 $('sortFilter').addEventListener('change',renderRecords);
@@ -1814,7 +2120,8 @@ $('statMode').addEventListener('click',e=>{
 
 function jumpToSection(id,button){
   document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.toggle('active',x===button));
-  const target=$(id);
+  let target=$(id);
+  if(id==='journalYear') target=document.querySelector('.year-cover');
   target.scrollIntoView({behavior:'smooth',block:'start'});
   target.classList.remove('jump-highlight');
   void target.offsetWidth;
@@ -1827,10 +2134,18 @@ document.querySelector('.bottom-nav').addEventListener('click',e=>{
     document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.toggle('active',x===b));
     openForm();return;
   }
-  if(b.dataset.tab==='dashboard') jumpToSection('dashboardView',b);
+  if(b.dataset.tab==='journal') jumpToSection('journalYear',b);
+  if(b.dataset.tab==='trip') jumpToSection('nextBanner',b);
   if(b.dataset.tab==='records') jumpToSection('recordsView',b);
 });
 
+
+function syncTripTypeField(){
+  const domestic=$('tripType').value==='domestic';
+  if(domestic){$('country').value='台灣';$('country').readOnly=true;}
+  else{$('country').readOnly=false;if($('country').value==='台灣'||$('country').value==='臺灣')$('country').value='';}
+}
+$('tripType').addEventListener('change',syncTripTypeField);
 
 $('hotelGroup').addEventListener('change',()=>{
   $('customGroupWrap').classList.toggle('hidden',$('hotelGroup').value!=='__custom');

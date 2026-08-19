@@ -1,7 +1,7 @@
 {
   "name": "桐House一家・家庭旅行手帳",
   "short_name": "桐House一家",
-  "description": "像一本真正家庭手帳的旅宿 PWA：照片、回憶、足跡、飯店、花費與已安排旅程。",
+  "description": "桐House一家家庭旅行手帳：照片、回憶、評分、國內外足跡、年度回顧、最愛避雷與住宿預算。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
