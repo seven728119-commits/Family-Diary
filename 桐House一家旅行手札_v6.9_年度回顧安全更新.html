@@ -1,0 +1,3157 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#f7efe9" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="旅宿收藏" name="apple-mobile-web-app-title"/>
+<title>桐House一家・家庭旅行手帳 v6.9</title>
+<meta name="app-version" content="6.9.0"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<link href="manifest.webmanifest" rel="manifest"/>
+<link href="icons/icon-192.png" rel="apple-touch-icon"/>
+<style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
+
+    :root{
+      --bg:#fbf5ef;
+      --paper:#fffdf8;
+      --paper-2:#fff8f2;
+      --surface:rgba(255,253,248,.88);
+      --surface-solid:#fffdf8;
+      --ink:#5a4741;
+      --muted:#98837b;
+      --line:#eadbd3;
+      --accent:#d6907f;
+      --accent-2:#efb4a5;
+      --accent-soft:#f8ded4;
+      --sage:#9eaf97;
+      --sage-soft:#e6eee2;
+      --yellow:#f4d796;
+      --yellow-soft:#fff4cf;
+      --brown:#7b6259;
+      --shadow:0 16px 40px rgba(115,81,69,.10);
+      --radius:26px;
+      --safe-bottom:env(safe-area-inset-bottom, 0px);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        linear-gradient(rgba(214,144,127,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(214,144,127,.035) 1px, transparent 1px),
+        radial-gradient(circle at 12% 0%, rgba(255,255,255,.95), transparent 30%),
+        radial-gradient(circle at 100% 8%, rgba(239,180,165,.20), transparent 28%),
+        var(--bg);
+      background-size:28px 28px,28px 28px,auto,auto,auto;
+      font-family:"Zen Maru Gothic","PingFang TC","Microsoft JhengHei",sans-serif;
+      min-height:100vh;
+      padding-bottom:calc(104px + var(--safe-bottom));
+      letter-spacing:.015em;
+      font-weight:500;
+    }
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    .app{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+    .brand small{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+    .brand h1{font-size:clamp(28px,6.5vw,42px);margin:0;font-weight:900;letter-spacing:.015em;text-shadow:0 2px 0 rgba(255,255,255,.8)}
+    .icon-btn{
+      border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.7);backdrop-filter:blur(16px);
+      width:44px;height:44px;border-radius:16px;box-shadow:0 8px 24px rgba(60,40,30,.08);font-size:20px
+    }
+    .hero{
+      background:linear-gradient(145deg, rgba(255,255,255,.92), rgba(244,222,211,.82));
+      border:1px solid rgba(255,255,255,.75);border-radius:30px;padding:24px;box-shadow:var(--shadow);
+      overflow:hidden;position:relative;margin-bottom:18px
+    }
+    .hero:after{content:"";position:absolute;right:-35px;top:-55px;width:170px;height:170px;border-radius:50%;background:rgba(183,119,100,.09)}
+    .eyebrow{font-size:12px;letter-spacing:.14em;color:var(--accent);font-weight:800}
+    .hero h2{margin:7px 0 8px;font-size:clamp(24px,6vw,38px);line-height:1.25;letter-spacing:.01em;font-weight:900}
+    .hero p{margin:0;color:var(--muted);line-height:1.6;max-width:650px}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px;position:relative;z-index:1}
+    .hero-stat{background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:14px}
+    .hero-stat span{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}
+    .hero-stat strong{font-size:clamp(18px,4.2vw,26px);letter-spacing:-.03em}
+    .quick-add{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--ink);color:#fff;
+      border-radius:24px;padding:16px 18px;margin-bottom:18px;box-shadow:0 15px 30px rgba(47,43,42,.18)
+    }
+    .quick-add b{font-size:16px}.quick-add span{display:block;font-size:12px;color:#d9d0cc;margin-top:3px}
+    .add-btn{border:0;background:#fff;color:var(--ink);padding:11px 16px;border-radius:15px;font-weight:800;white-space:nowrap}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:24px 2px 12px}
+    .section-head h3{margin:0;font-size:20px;font-weight:900;letter-spacing:.02em}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+    .segmented{display:flex;background:#eee6e2;padding:4px;border-radius:14px;gap:4px}
+    .segmented button{border:0;background:transparent;border-radius:10px;padding:8px 10px;color:var(--muted);font-weight:700;font-size:12px}
+    .segmented button.active{background:#fff;color:var(--ink);box-shadow:0 3px 12px rgba(50,40,35,.08)}
+    .summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .summary-card{
+      background:var(--surface);border:1px solid rgba(255,255,255,.75);border-radius:22px;padding:17px;
+      backdrop-filter:blur(18px);box-shadow:0 8px 30px rgba(75,52,43,.06)
+    }
+    .summary-card.wide{grid-column:1/-1}
+    .summary-card .label{font-size:12px;color:var(--muted);margin-bottom:8px}
+    .summary-card .value{font-weight:850;font-size:23px;letter-spacing:-.035em}
+    .summary-card .sub{font-size:12px;color:var(--muted);margin-top:6px}
+    .bar-list{display:flex;flex-direction:column;gap:11px;margin-top:12px}
+    .bar-row{display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:center;font-size:12px}
+    .bar-track{height:9px;background:#eee7e3;border-radius:999px;overflow:hidden}
+    .bar-fill{height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:999px}
+    .filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+    .field{
+      width:100%;border:1px solid var(--line);background:rgba(255,255,255,.78);border-radius:16px;
+      padding:12px 13px;color:var(--ink);outline:none
+    }
+    .field:focus{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(183,119,100,.08)}
+    .records{display:flex;flex-direction:column;gap:12px}
+    .record{
+      position:relative;background:var(--surface-solid);border:1px solid #f0e6e1;border-radius:22px;padding:16px;
+      box-shadow:0 8px 28px rgba(75,52,43,.06);overflow:hidden
+    }
+    .record:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(var(--accent-2),var(--accent))}
+    .record-top{display:flex;justify-content:space-between;gap:12px}
+    .record h4{margin:0 0 6px;font-size:18px;font-weight:900;letter-spacing:.01em}.place{color:var(--muted);font-size:13px}
+    .price{font-weight:900;font-size:18px;white-space:nowrap}
+    .meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+    .chip{background:#f6efeb;color:#6f625d;border-radius:999px;padding:6px 9px;font-size:12px}
+    .memo{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);font-size:13px;line-height:1.6;color:#675e5a}
+    .record-actions{display:flex;gap:8px;margin-top:12px}
+    .ghost{border:0;background:#f7f1ee;border-radius:12px;padding:8px 11px;color:#665a56;font-weight:700;font-size:12px}
+    .empty{text-align:center;color:var(--muted);padding:38px 16px;background:rgba(255,255,255,.45);border:1px dashed var(--line);border-radius:22px}
+    .empty .emoji{font-size:40px;display:block;margin-bottom:10px}
+    .bottom-nav{
+      position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + var(--safe-bottom));z-index:20;
+      width:min(calc(100% - 24px),560px);background:rgba(42,38,37,.92);backdrop-filter:blur(18px);
+      border-radius:20px;padding:8px;display:grid;grid-template-columns:repeat(3,1fr);box-shadow:0 16px 42px rgba(36,30,28,.24)
+    }
+    .bottom-nav button{border:0;background:transparent;color:#c8bfbb;padding:9px 8px;border-radius:14px;font-size:12px;font-weight:800}
+    .bottom-nav button.active{background:#fff;color:var(--ink)}
+    .bottom-nav .nav-icon{display:block;font-size:19px;margin-bottom:3px}
+    dialog{
+      border:0;padding:0;border-radius:28px;width:min(92vw,560px);background:#fffaf7;color:var(--ink);
+      box-shadow:0 30px 90px rgba(42,30,25,.28);max-height:90vh
+    }
+    dialog::backdrop{background:rgba(45,37,34,.38);backdrop-filter:blur(3px)}
+    .modal{padding:22px;max-height:90vh;overflow:auto}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .modal-head h3{margin:0;font-size:22px}
+    .close{border:0;background:#f3ebe7;width:38px;height:38px;border-radius:13px;font-size:18px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    .form-group.full{grid-column:1/-1}
+    .form-group label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px 2px;font-weight:700}
+    textarea.field{min-height:88px;resize:vertical}
+    .save{width:100%;border:0;background:var(--ink);color:#fff;border-radius:16px;padding:14px;font-weight:850;margin-top:16px}
+    .danger{color:#a65454}
+    .toast{
+      position:fixed;left:50%;bottom:calc(100px + var(--safe-bottom));transform:translate(-50%,20px);background:#2f2b2a;color:#fff;
+      padding:11px 16px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:50
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .tools{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .tool-btn{border:1px solid var(--line);background:#fff;border-radius:17px;padding:13px;font-weight:800}
+    .hidden{display:none!important}
+
+    .upcoming-wrap{display:grid;gap:12px}
+    .upcoming-card{
+      background:linear-gradient(145deg,#fffdfb,#f7e9e2);border:1px solid #f0e1da;border-radius:24px;
+      padding:17px;box-shadow:0 8px 28px rgba(75,52,43,.07);position:relative;overflow:hidden
+    }
+    .upcoming-card:after{content:"✦";position:absolute;right:16px;top:12px;color:#d5a995;font-size:24px}
+    .upcoming-card .days{font-size:28px;font-weight:900;letter-spacing:-.04em;color:var(--accent)}
+    .upcoming-card .u-title{font-size:17px;font-weight:850;margin:4px 0}
+    .upcoming-card .u-meta{font-size:12px;color:var(--muted);line-height:1.6}
+    .status-pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:800}
+    .status-planned{background:#fff0d7;color:#91651f}
+    .status-stayed{background:#e8f1eb;color:#557461}
+    .group-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .group-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}
+    .group-card b{display:block;font-size:15px;margin-bottom:5px}
+    .group-card span{font-size:12px;color:var(--muted)}
+    .mini-note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:7px}
+    .check-row{display:flex;align-items:center;gap:10px;background:#f8f2ef;border-radius:14px;padding:11px 12px}
+    .check-row input{width:19px;height:19px;accent-color:var(--accent)}
+    .next-banner{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 18px;
+      background:linear-gradient(135deg,#5d5551,#2f2b2a);color:white;border-radius:24px;padding:18px;
+      box-shadow:0 14px 30px rgba(47,43,42,.16)
+    }
+    .next-banner .small{font-size:11px;color:#d9d0cc;letter-spacing:.08em}
+    .next-banner .name{font-weight:850;margin-top:4px}
+    .next-banner .count{font-size:22px;font-weight:900;white-space:nowrap}
+
+
+    .brand h1::after{content:" ♡";color:var(--accent-2);font-size:.68em;vertical-align:8%}
+    .hero{border-radius:34px}
+    .hero .eyebrow{font-weight:900;letter-spacing:.16em}
+    .hero-stat,.summary-card,.record,.upcoming-card,.group-card{transition:transform .2s ease,box-shadow .2s ease}
+    @media(hover:hover){
+      .record:hover,.upcoming-card:hover,.group-card:hover{transform:translateY(-2px)}
+    }
+    .add-btn,.save,.tool-btn,.ghost,.segmented button{font-weight:900}
+
+
+    /* === 桐House一家旅行手帳 v4 === */
+    .app{max-width:1080px}
+    .topbar{
+      margin:4px 2px 18px;
+      align-items:flex-start;
+    }
+    .brand small{
+      color:var(--accent);
+      font-size:11px;
+      font-weight:600;
+      letter-spacing:.16em;
+      margin-bottom:8px;
+    }
+    .brand h1{
+      font-size:clamp(27px,6.7vw,42px);
+      font-weight:600;
+      letter-spacing:.025em;
+      line-height:1.12;
+      color:#75584f;
+      text-shadow:none;
+    }
+    .brand h1::after{
+      content:"";
+      display:inline-block;
+      width:11px;height:11px;
+      background:var(--accent-2);
+      border-radius:50% 50% 50% 0;
+      transform:rotate(-45deg);
+      margin-left:9px;
+      vertical-align:10%;
+      opacity:.9;
+    }
+    .icon-btn{
+      background:#fffaf5;
+      border:1px solid var(--line);
+      color:var(--brown);
+      box-shadow:0 8px 20px rgba(115,81,69,.08);
+    }
+
+    .hero{
+      background:
+        linear-gradient(rgba(214,144,127,.055) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(214,144,127,.04) 1px,transparent 1px),
+        #fffdf8;
+      background-size:24px 24px;
+      border:1px solid #eadbd3;
+      border-radius:30px;
+      padding:28px 24px 24px;
+      box-shadow:0 18px 38px rgba(115,81,69,.10);
+      overflow:visible;
+      position:relative;
+      transform:rotate(-.15deg);
+    }
+    .hero::before{
+      content:"TRAVEL NOTE";
+      position:absolute;
+      top:-13px;
+      left:22px;
+      background:var(--accent-soft);
+      color:#a76e60;
+      border-radius:6px;
+      padding:5px 15px;
+      font-size:10px;
+      font-weight:600;
+      letter-spacing:.15em;
+      transform:rotate(-2deg);
+      box-shadow:0 3px 8px rgba(115,81,69,.08);
+    }
+    .hero::after{
+      content:"✿";
+      position:absolute;
+      right:18px;
+      top:14px;
+      width:auto;height:auto;
+      background:none;
+      color:#d99b89;
+      font-size:36px;
+      opacity:.55;
+    }
+    .hero .eyebrow{
+      margin-top:2px;
+      color:var(--sage);
+      font-weight:600;
+      letter-spacing:.14em;
+    }
+    .hero h2{
+      margin-top:8px;
+      font-size:clamp(26px,6vw,39px);
+      line-height:1.32;
+      font-weight:600;
+      letter-spacing:.025em;
+      color:#684f47;
+    }
+    .hero p{
+      font-size:14px;
+      color:#8b756d;
+      line-height:1.9;
+    }
+    .hero-stats{
+      margin-top:22px;
+      gap:11px;
+    }
+    .hero-stat{
+      background:#fffaf5;
+      border:1px dashed #e8c8bc;
+      border-radius:20px 18px 22px 17px;
+      box-shadow:none;
+      position:relative;
+    }
+    .hero-stat:nth-child(2){background:#f6f9f2;border-color:#cfdcc8}
+    .hero-stat:nth-child(3){background:#fff8df;border-color:#ead9a7}
+    .hero-stat span{font-size:11px}
+    .hero-stat strong{font-weight:600;color:#76584e}
+
+    .next-banner{
+      margin-top:22px;
+      background:#fff8df;
+      color:#684f47;
+      border:1px solid #ead7a1;
+      border-radius:22px 28px 20px 26px;
+      box-shadow:0 10px 25px rgba(115,81,69,.08);
+      position:relative;
+      transform:rotate(.25deg);
+    }
+    .next-banner::before{
+      content:"NEXT";
+      position:absolute;
+      top:-11px;right:18px;
+      background:#f0c97c;
+      color:#7a604f;
+      padding:3px 10px;
+      border-radius:5px;
+      font-size:10px;
+      letter-spacing:.12em;
+      transform:rotate(3deg);
+    }
+    .next-banner .small{color:#a18472}
+    .next-banner .mini-note{color:#9a7f70!important}
+    .next-banner .count{
+      color:#bf7665;
+      font-weight:600;
+      font-size:20px;
+    }
+
+    .quick-add{
+      background:#d99886;
+      border-radius:20px 26px 22px 18px;
+      box-shadow:0 12px 26px rgba(173,106,87,.18);
+      transform:rotate(-.15deg);
+    }
+    .quick-add span{color:#fff3ef}
+    .add-btn{
+      background:#fffaf6;
+      color:#986557;
+      border-radius:14px 17px 13px 18px;
+      font-weight:600;
+    }
+
+    .section-head{
+      margin-top:30px;
+      position:relative;
+    }
+    .section-head h3{
+      font-size:21px;
+      font-weight:600;
+      color:#75584f;
+      display:inline-block;
+      position:relative;
+    }
+    .section-head h3::after{
+      content:"";
+      position:absolute;
+      left:0;right:0;bottom:-4px;
+      height:5px;
+      background:rgba(239,180,165,.36);
+      border-radius:99px;
+      transform:rotate(-1deg);
+      z-index:-1;
+    }
+    .section-head p{font-size:12px;line-height:1.6}
+
+    .segmented{
+      background:#f3e7e1;
+      border:1px solid #eadbd3;
+    }
+    .segmented button{
+      font-weight:600;
+      font-family:inherit;
+    }
+    .segmented button.active{
+      background:#fffaf6;
+      color:#9d685b;
+    }
+
+    .summary-card{
+      background:#fffdf8;
+      border:1px solid #eadfd8;
+      border-radius:22px 26px 20px 25px;
+      box-shadow:0 8px 22px rgba(115,81,69,.06);
+      position:relative;
+    }
+    .summary-card:nth-child(2n){transform:rotate(.12deg)}
+    .summary-card:nth-child(3n){background:#fafcf7}
+    .summary-card .label{font-size:11px}
+    .summary-card .value{font-weight:600;color:#72564d}
+
+    .bar-track{background:#f2e8e3}
+    .bar-fill{background:linear-gradient(90deg,#f0baa9,#d58b78)}
+
+    .upcoming-card{
+      background:#fffdf8;
+      border:1px solid #eadbd3;
+      border-radius:22px 28px 21px 25px;
+      box-shadow:0 9px 24px rgba(115,81,69,.07);
+    }
+    .upcoming-card::before{
+      content:"";
+      position:absolute;
+      width:62px;height:17px;
+      left:22px;top:-8px;
+      background:rgba(230,205,185,.75);
+      transform:rotate(-3deg);
+      border-radius:2px;
+    }
+    .upcoming-card:after{
+      content:"♡";
+      color:#d79a8a;
+      font-size:28px;
+    }
+    .upcoming-card .days{
+      font-weight:600;
+      color:#ca7f6c;
+    }
+
+    .group-card{
+      background:#fffaf5;
+      border:1px dashed #e1c8bc;
+      border-radius:20px 24px 19px 26px;
+      box-shadow:none;
+    }
+    .group-card:nth-child(2n){background:#f7faf5;border-color:#d4dfcf}
+    .group-card b{font-weight:600}
+
+    .record{
+      background:#fffdf8;
+      border:1px solid #eadbd3;
+      border-radius:24px 20px 27px 21px;
+      box-shadow:0 9px 24px rgba(115,81,69,.06);
+    }
+    .record:before{
+      width:4px;
+      background:#e9a999;
+    }
+    .record h4{
+      font-weight:600;
+      letter-spacing:.015em;
+      color:#6e534a;
+    }
+    .chip{
+      background:#f8ece6;
+      color:#826961;
+    }
+    .status-planned{background:#fff0c7;color:#8f6b32}
+    .status-stayed{background:#e9f1e5;color:#61725c}
+
+    .field{
+      background:#fffdf9;
+      border:1px solid #e7d8d0;
+      border-radius:15px 19px 14px 18px;
+      color:#654f47;
+      font-family:inherit;
+    }
+    .field::placeholder{color:#b8a49b}
+    .field:focus{border-color:#dfa08e;box-shadow:0 0 0 4px rgba(214,144,127,.09)}
+
+    .bottom-nav{
+      background:rgba(100,78,70,.94);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:24px 20px 26px 22px;
+    }
+    .bottom-nav button{
+      font-family:inherit;
+      font-weight:600;
+    }
+    .bottom-nav button.active{
+      background:#fff8f3;
+      color:#9c6558;
+    }
+
+    dialog{
+      background:#fffaf6;
+      border-radius:26px 30px 24px 29px;
+    }
+    .modal-head h3{font-weight:600;color:#75584f}
+    .save{
+      background:#d6907f;
+      border-radius:16px 20px 15px 19px;
+      font-family:inherit;
+      font-weight:600;
+      box-shadow:0 8px 18px rgba(173,106,87,.16);
+    }
+    .ghost,.tool-btn,.close{font-family:inherit}
+    .empty{
+      background:#fffdf8;
+      border:1px dashed #dfc9bd;
+      border-radius:22px 28px 21px 26px;
+    }
+
+    /* scrapbook stickers */
+    .journal-stickers{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin:12px 0 2px;
+    }
+    .journal-sticker{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      padding:6px 10px;
+      border-radius:8px 12px 8px 12px;
+      font-size:11px;
+      font-weight:600;
+      transform:rotate(-1deg);
+      border:1px solid rgba(120,90,80,.08);
+    }
+    .journal-sticker:nth-child(1){background:#f9dfd6;color:#9d6659}
+    .journal-sticker:nth-child(2){background:#e7efdf;color:#6e8066;transform:rotate(1.2deg)}
+    .journal-sticker:nth-child(3){background:#fff0bd;color:#8c6c34;transform:rotate(-.4deg)}
+
+
+    /* === v5.4 國內 / 國外旅宿統計 === */
+    .travel-split-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+    .travel-split-card{background:#fffdf8;border:1px solid #eadbd3;border-radius:23px 19px 25px 20px;padding:16px;position:relative;overflow:hidden}
+    .travel-split-card.domestic{background:linear-gradient(145deg,#fff8f2,#fffdf8)}
+    .travel-split-card.international{background:linear-gradient(145deg,#f4f8f1,#fffdf8)}
+    .travel-split-card .travel-kind{font-size:12px;color:var(--muted);margin-bottom:7px}
+    .travel-split-card .travel-money{font-size:24px;font-weight:700;color:#72564d;letter-spacing:-.035em}
+    .travel-split-card .travel-meta{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6}
+    .ranking-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+    .ranking-card{background:#fffdf8;border:1px dashed #dfc9bd;border-radius:22px 26px 20px 25px;padding:16px}
+    .ranking-card h4{margin:0 0 4px;font-size:15px;color:#72564d}
+    .ranking-card .rank-note{font-size:11px;color:var(--muted);margin-bottom:10px}
+    .rank-list{display:flex;flex-direction:column;gap:8px}
+    .rank-row{display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;gap:8px;font-size:13px}
+    .rank-no{width:28px;height:28px;display:grid;place-items:center;border-radius:10px;background:#f8ece6;color:#a56f61;font-size:11px;font-weight:700}
+    .rank-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .rank-value{font-size:12px;color:#8c7067;font-weight:650;white-space:nowrap}
+    .trip-type-pill{font-weight:700}
+    .trip-type-pill.domestic{background:#fff0e9;color:#a26556}
+    .trip-type-pill.international{background:#edf4e9;color:#64785c}
+    .mini-stat-filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+    .mini-stat-filter .field{min-width:150px}
+    @media(min-width:720px){.ranking-grid{grid-template-columns:repeat(2,1fr)}}
+
+    @media(max-width:430px){
+      .hero{padding:27px 19px 21px}
+      .brand h1{font-size:29px}
+      .next-banner{align-items:flex-start}
+      .next-banner .count{font-size:18px}
+    }
+
+
+    /* === v5 真正一本家庭手帳 === */
+    .year-cover{
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,.75), transparent 25%),
+        linear-gradient(145deg,#f3c7b9,#e8aa98);
+      color:#fffaf5;
+      border-radius:32px 28px 34px 26px;
+      padding:25px 23px 22px;
+      margin:18px 0 22px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 18px 38px rgba(159,96,78,.18);
+      transform:rotate(.15deg);
+    }
+    .year-cover::before{
+      content:"OUR FAMILY JOURNAL";
+      position:absolute;
+      right:-28px;top:20px;
+      background:rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.28);
+      padding:7px 28px;
+      transform:rotate(8deg);
+      font-size:10px;
+      letter-spacing:.14em;
+      border-radius:999px;
+    }
+    .year-cover .year{font-size:13px;letter-spacing:.18em;opacity:.9}
+    .year-cover h2{
+      margin:8px 0 6px;
+      font-size:clamp(27px,7vw,42px);
+      line-height:1.22;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+    .year-cover p{margin:0;font-size:13px;line-height:1.8;opacity:.92;max-width:620px}
+    .cover-stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+    .cover-stat{
+      background:rgba(255,255,255,.20);
+      border:1px solid rgba(255,255,255,.30);
+      padding:8px 11px;
+      border-radius:13px;
+      font-size:11px;
+      backdrop-filter:blur(8px);
+    }
+
+    .memory-highlight{
+      display:grid;
+      grid-template-columns:112px 1fr;
+      gap:16px;
+      align-items:center;
+      background:#fffdf8;
+      border:1px solid #eadbd3;
+      border-radius:26px 20px 29px 22px;
+      padding:16px;
+      margin-bottom:20px;
+      box-shadow:0 10px 26px rgba(115,81,69,.07);
+    }
+    .polaroid{
+      background:#fff;
+      padding:8px 8px 22px;
+      box-shadow:0 7px 18px rgba(83,61,53,.13);
+      transform:rotate(-2deg);
+      border-radius:3px;
+    }
+    .polaroid img,.photo-placeholder{
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#f5e8e0;
+      color:#bc8b7d;
+      font-size:28px;
+      border-radius:2px;
+    }
+    .memory-highlight small{color:var(--accent);font-size:10px;letter-spacing:.15em}
+    .memory-highlight h3{margin:5px 0 5px;font-size:18px;font-weight:700;color:#6f534a}
+    .memory-highlight p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}
+
+    .footprint-board{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+    .footprint-card{
+      background:#fffdf8;
+      border:1px dashed #dcc8be;
+      border-radius:19px 24px 18px 25px;
+      padding:14px;
+      position:relative;
+    }
+    .footprint-card:nth-child(2n){background:#f8fbf5;border-color:#cfdcc9}
+    .footprint-card b{display:block;font-size:15px;color:#6f554d}
+    .footprint-card span{font-size:11px;color:var(--muted)}
+    .footprint-card .stamp{
+      position:absolute;right:11px;top:10px;
+      width:34px;height:34px;border:1.5px solid #d99d8d;
+      border-radius:50%;
+      display:grid;place-items:center;
+      color:#d58f7d;font-size:15px;
+      transform:rotate(8deg);
+      opacity:.65;
+    }
+
+    .timeline{position:relative;padding-left:21px}
+    .timeline::before{
+      content:"";
+      position:absolute;left:8px;top:8px;bottom:8px;
+      width:2px;
+      background:repeating-linear-gradient(to bottom,#d9b7aa 0 6px,transparent 6px 11px);
+    }
+    .timeline-item{position:relative;margin-bottom:15px}
+    .timeline-item::before{
+      content:"";
+      position:absolute;left:-18px;top:16px;
+      width:10px;height:10px;border-radius:50%;
+      background:#e4a18f;
+      border:3px solid #fbf5ef;
+      box-shadow:0 0 0 1px #e1b8aa;
+    }
+    .timeline-card{
+      display:grid;
+      grid-template-columns:78px 1fr;
+      gap:13px;
+      background:#fffdf8;
+      border:1px solid #eadbd3;
+      border-radius:21px 25px 20px 27px;
+      padding:12px;
+    }
+    .timeline-thumb{
+      width:78px;height:78px;object-fit:cover;
+      border-radius:9px;
+      background:#f4e5dd;
+      display:grid;place-items:center;
+      color:#c08e80;
+      font-size:22px;
+    }
+    .timeline-card h4{margin:2px 0 4px;font-size:15px;font-weight:700;color:#6e534b}
+    .timeline-card .line{font-size:11px;color:var(--muted);line-height:1.55}
+    .timeline-card .quote{
+      margin-top:6px;
+      font-size:12px;
+      color:#8d665d;
+      line-height:1.55;
+      font-weight:500;
+    }
+
+    .sticker-picker{display:flex;gap:8px;flex-wrap:wrap}
+    .sticker-option input{display:none}
+    .sticker-option span{
+      display:inline-flex;align-items:center;gap:4px;
+      border:1px solid #e7d8d0;
+      background:#fffdf9;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:12px;
+      cursor:pointer;
+    }
+    .sticker-option input:checked + span{
+      background:#f7ddd4;
+      border-color:#dda08f;
+      color:#9d6557;
+    }
+    .photo-box{
+      border:1px dashed #d9bfb4;
+      background:#fffaf6;
+      border-radius:18px;
+      padding:12px;
+    }
+    .photo-preview{
+      width:100%;
+      max-height:210px;
+      object-fit:cover;
+      border-radius:14px;
+      display:none;
+      margin-top:10px;
+    }
+    .photo-help{font-size:11px;color:var(--muted);line-height:1.6;margin-top:7px}
+
+    .record-photo{
+      width:100%;
+      aspect-ratio:16/10;
+      object-fit:cover;
+      border-radius:15px 18px 14px 19px;
+      margin-bottom:12px;
+      background:#f3e6de;
+    }
+    .record-memory{
+      margin:10px 0 0;
+      padding:9px 11px;
+      background:#fff7df;
+      border-radius:12px 15px 11px 16px;
+      color:#866650;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .section-divider{
+      display:flex;align-items:center;gap:8px;
+      color:#b18477;font-size:11px;
+      margin:28px 3px 8px;
+    }
+    .section-divider::before,.section-divider::after{
+      content:"";height:1px;background:#ead8cf;flex:1;
+    }
+
+    @media(max-width:560px){
+      .memory-highlight{grid-template-columns:92px 1fr}
+      .timeline-card{grid-template-columns:68px 1fr}
+      .timeline-thumb{width:68px;height:68px}
+      .year-cover{padding:23px 19px 20px}
+    }
+
+
+    .date-range-btn{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      text-align:left;
+      cursor:pointer;
+      min-height:48px;
+    }
+    .date-range-icon{font-size:18px}
+    .date-range-summary{
+      margin-top:7px;
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+    .date-picker-note{
+      font-size:12px;
+      color:var(--muted);
+      margin:-4px 0 14px;
+      background:#fff7df;
+      border-radius:12px;
+      padding:9px 11px;
+    }
+    .calendar-head{
+      display:grid;
+      grid-template-columns:42px 1fr 42px;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+    }
+    .calendar-title{
+      text-align:center;
+      font-weight:700;
+      color:#6f534a;
+      font-size:16px;
+    }
+    .calendar-nav{
+      border:1px solid var(--line);
+      background:#fffdf9;
+      width:42px;height:42px;
+      border-radius:14px;
+      font-size:24px;
+      color:#8e675b;
+    }
+    .calendar-week,.calendar-grid{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:5px;
+    }
+    .calendar-week{
+      margin-bottom:5px;
+    }
+    .calendar-week span{
+      text-align:center;
+      font-size:10px;
+      color:var(--muted);
+      padding:4px 0;
+    }
+    .calendar-day{
+      border:0;
+      background:#fffdf9;
+      border-radius:12px;
+      aspect-ratio:1/1;
+      min-height:38px;
+      color:#644f47;
+      font-family:inherit;
+      font-size:12px;
+      position:relative;
+    }
+    .calendar-day:hover{background:#f8ece6}
+    .calendar-day.muted{opacity:.28}
+    .calendar-day.today::after{
+      content:"";
+      position:absolute;
+      width:4px;height:4px;
+      border-radius:50%;
+      background:#d6907f;
+      bottom:4px;left:50%;
+      transform:translateX(-50%);
+    }
+    .calendar-day.selected{
+      background:#d6907f;
+      color:white;
+      font-weight:700;
+    }
+    .calendar-day.in-range{
+      background:#f6ded5;
+      color:#8e6256;
+      border-radius:8px;
+    }
+    .calendar-day.range-start{border-radius:14px 6px 6px 14px}
+    .calendar-day.range-end{border-radius:6px 14px 14px 6px}
+    .range-preview{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:10px;
+      align-items:center;
+      background:#fffaf5;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      margin-top:14px;
+    }
+    .range-preview small{
+      display:block;
+      font-size:10px;
+      color:var(--muted);
+      margin-bottom:3px;
+    }
+    .range-preview b{
+      font-size:13px;
+      color:#6d534a;
+    }
+    .range-arrow{color:#d39a89}
+
+    @media(min-width:760px){
+      .summary-grid{grid-template-columns:repeat(4,1fr)}
+      .summary-card.wide{grid-column:span 2}
+      .filters{grid-template-columns:2fr 1fr 1fr}
+      .records{display:grid;grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:430px){
+      .hero{padding:20px}
+      .hero-stats{grid-template-columns:1fr 1fr}
+      .hero-stat:first-child{grid-column:1/-1}
+      .filters{grid-template-columns:1fr}
+      .form-grid{grid-template-columns:1fr}
+      .form-group.full{grid-column:auto}
+    }
+  
+    /* v6.7 · rating, review reminder, insights, cute quick row */
+    #dashboardView,#recordsView{scroll-margin-top:18px}
+    .filters{grid-template-columns:repeat(5,minmax(0,1fr))}
+    .review-reminder{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:14px 15px;background:linear-gradient(135deg,#fff4dc,#fffaf5);border:1px dashed #e8c98f;border-radius:22px 18px 24px 19px;box-shadow:0 8px 20px rgba(116,83,50,.06)}
+    .review-reminder-icon{width:42px;height:42px;border-radius:15px;background:#fff;display:grid;place-items:center;font-size:21px;transform:rotate(-4deg);box-shadow:0 4px 12px rgba(96,70,53,.08)}
+    .review-reminder-copy{min-width:0;flex:1}.review-reminder-copy b{display:block;color:#75584f;font-size:14px}.review-reminder-copy span{display:block;margin-top:4px;color:#9a8175;font-size:11px;line-height:1.5}
+    .review-reminder button{border:0;background:#d9967f;color:white;padding:9px 12px;border-radius:13px;font-family:inherit;font-weight:700;white-space:nowrap}
+    .rating-chip{letter-spacing:.04em;background:#fff6d9;color:#8b6b25}.rating-1,.rating-2{background:#fff0eb;color:#a05f55}.avoid-chip{background:#f8e5e1;color:#9b564d}
+    .rating-field{font-weight:700}
+    .bottom-nav{padding:7px;gap:5px;border-radius:28px;box-shadow:0 16px 38px rgba(70,50,44,.23)}
+    .bottom-nav button{min-height:54px;border-radius:18px;transition:transform .18s ease,background .18s ease;color:#eadfda}
+    .bottom-nav button:active{transform:scale(.94)}
+    .bottom-nav button.active{box-shadow:0 5px 14px rgba(65,44,38,.14)}
+    .bottom-nav .nav-icon{font-size:18px;line-height:1;margin-bottom:5px}
+    .bottom-nav .nav-add{position:relative}.bottom-nav .nav-add .nav-icon{width:28px;height:28px;margin:-2px auto 2px;border-radius:50%;display:grid;place-items:center;background:#f3c2b4;color:#7b5147;font-size:22px;box-shadow:0 3px 8px rgba(51,33,29,.15)}
+    .jump-highlight{animation:jumpGlow .85s ease}
+    @keyframes jumpGlow{0%,100%{filter:none}35%{filter:drop-shadow(0 0 12px rgba(217,150,127,.35));transform:translateY(-2px)}}
+    @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters #searchInput{grid-column:1/-1}}
+
+    /* === v6.7 年度回顧 / 最愛避雷 / 平均住宿預算 === */
+    .memory-insight-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:24px}
+    .year-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:12px}
+    .year-review-card{background:#fffdf9;border:1px solid #eadbd2;border-radius:24px 20px 25px 21px;padding:15px;box-shadow:0 8px 22px rgba(114,86,77,.05)}
+    .year-review-card .mini{font-size:11px;color:var(--muted);margin-bottom:6px}
+    .year-review-card b{display:block;font-size:20px;color:#72564d;font-weight:750;line-height:1.25}
+    .year-review-card span{display:block;font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}
+    .review-story{margin-top:12px;padding:17px 18px;border-radius:25px;background:linear-gradient(135deg,#f8eee8,#fff9f0);border:1px dashed #ddc5b9;line-height:1.8;color:#755f56;font-size:13px}
+    .review-story b{color:#6f5047}
+    .love-avoid-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+    .memory-board{background:#fffdf8;border:1px solid #eadbd2;border-radius:24px;padding:16px}
+    .memory-board h4{margin:0 0 3px;color:#72564d;font-size:15px}.memory-board .note{font-size:11px;color:var(--muted);margin-bottom:9px}
+    .hotel-rank-row{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px dashed #eee1d9}
+    .hotel-rank-row:last-child{border-bottom:0}.hotel-rank-no{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#f7eee8;color:#8d6b5f;font-size:11px;font-weight:800}
+    .hotel-rank-name{min-width:0}.hotel-rank-name b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hotel-rank-name span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+    .hotel-rank-score{font-size:12px;font-weight:800;color:#8b6b25;white-space:nowrap}
+    .budget-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.budget-card{background:#fbf7f2;border:1px solid #eadbd2;border-radius:20px;padding:14px 12px}.budget-card small{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}.budget-card b{display:block;font-size:17px;color:#72564d}.budget-card span{display:block;font-size:10px;color:var(--muted);margin-top:4px}
+    .budget-detail{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px}.budget-line{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 13px;background:#fffdf9;border:1px dashed #eadbd2;border-radius:16px;font-size:12px}.budget-line span{color:var(--muted)}.budget-line b{color:#72564d;text-align:right}
+    @media(min-width:720px){.year-review-grid{grid-template-columns:repeat(4,1fr)}.love-avoid-grid{grid-template-columns:1fr 1fr}.budget-detail{grid-template-columns:1fr 1fr}}
+    @media(max-width:520px){.budget-grid{grid-template-columns:1fr}.memory-insight-head{align-items:flex-start;flex-direction:column}.memory-insight-head .mini-stat-filter{width:100%}.memory-insight-head select{width:100%}}
+
+
+    /* v6.7 · next-trip focus + handier quick navigation */
+    html{scroll-padding-top:18px}
+    .next-banner.next-trip-card{
+      display:block!important;padding:0;overflow:hidden;transform:none;
+      border-radius:28px;background:#fffaf5;border:1px solid #ead8cf;
+      box-shadow:0 16px 36px rgba(98,67,57,.10);margin-top:22px;
+    }
+    .next-banner.next-trip-card::before{display:none}
+    .next-trip-visual{
+      min-height:145px;padding:20px;display:flex;align-items:flex-end;position:relative;
+      background:linear-gradient(135deg,#f7d7cc,#f8e8cf 55%,#e7efe1);
+      background-size:cover;background-position:center;
+    }
+    .next-trip-visual::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(57,40,34,.52),rgba(57,40,34,.02) 70%);
+    }
+    .next-trip-badge{
+      position:absolute;left:16px;top:16px;z-index:2;background:rgba(255,255,255,.9);
+      color:#8b675b;border:1px solid rgba(255,255,255,.7);padding:6px 10px;border-radius:999px;
+      font-size:10px;font-weight:850;letter-spacing:.08em;backdrop-filter:blur(8px)
+    }
+    .next-trip-title{position:relative;z-index:2;color:#fff;text-shadow:0 2px 12px rgba(52,36,31,.25)}
+    .next-trip-title .small{color:#fff!important;opacity:.9}
+    .next-trip-title .name{font-size:22px;line-height:1.25;margin-top:5px}
+    .next-trip-body{padding:16px 17px 17px}
+    .next-trip-count-row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .next-trip-count-row .count{font-size:24px;color:#b66e5c;font-weight:850}
+    .next-trip-date{font-size:12px;color:#806d65;line-height:1.65;margin-top:7px}
+    .next-trip-actions{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:13px}
+    .next-trip-actions button{
+      border:0;border-radius:16px;padding:11px 14px;font-weight:800;font-size:12px;cursor:pointer
+    }
+    .next-trip-actions .primary{background:#d99886;color:white}
+    .next-trip-actions .secondary{background:#f6eee9;color:#8c685d}
+    .next-empty-visual{background:linear-gradient(135deg,#f8e6de,#fff1cf,#e8f0e4)}
+    .next-empty-visual::after{background:none}
+    .next-empty-visual .next-trip-title{color:#755a51;text-shadow:none}
+    .next-empty-visual .next-trip-title .small{color:#9a7f70!important}
+    .next-empty-visual .next-trip-title .name{color:#755a51}
+    .bottom-nav{max-width:430px;grid-template-columns:repeat(4,1fr)!important}
+    .bottom-nav button{padding:8px 5px;white-space:nowrap}
+    .bottom-nav .nav-add .nav-icon{background:#f4c2b4}
+    .bottom-nav button[data-tab="trip"].active{background:#fff8df;color:#8d6b55}
+    .bottom-nav button[data-tab="records"].active{background:#fff0ef;color:#9a5f58}
+    .quick-anchor{scroll-margin-top:18px}
+    @media(max-width:390px){
+      .bottom-nav button{font-size:11px}
+      .next-trip-title .name{font-size:20px}
+      .next-trip-count-row .count{font-size:21px}
+    }
+
+
+/* =========================================================
+   v6.7 · visual polish / spacing normalization
+   Keep the whole app feeling like one family travel journal.
+   ========================================================= */
+:root{
+  --ui-gap-xs:8px;
+  --ui-gap-sm:12px;
+  --ui-gap-md:18px;
+  --ui-gap-lg:26px;
+  --ui-gap-xl:34px;
+  --ui-radius-sm:14px;
+  --ui-radius-md:18px;
+  --ui-radius-lg:24px;
+  --ui-radius-xl:30px;
+}
+
+/* Page rhythm */
+body{padding-bottom:calc(104px + var(--safe-bottom))}
+.app{padding-bottom:8px}
+.topbar{margin-bottom:18px}
+.year-cover{margin-bottom:22px}
+main.app>section{margin-top:0}
+main.app>section+section{margin-top:26px}
+.section-head{margin-bottom:13px;gap:12px}
+.section-head h3{margin:0 0 4px;line-height:1.25}
+.section-head p{margin:0;line-height:1.55}
+.mini-note{margin-top:5px}
+
+/* Hero / cover consistency */
+.year-cover,.hero,.memory-highlight,.memory-insight-section{
+  border-radius:var(--ui-radius-xl);
+}
+.year-cover{padding:25px 22px}
+.cover-stats{gap:8px;margin-top:17px}
+.cover-stat{padding:7px 10px}
+
+/* Next trip */
+.next-banner.next-trip-card{margin:0;border-radius:var(--ui-radius-xl)}
+.next-trip-visual{min-height:158px;padding:20px}
+.next-trip-body{padding:17px 18px 18px}
+.next-trip-count-row{align-items:flex-start}
+.next-trip-count-row .count{line-height:1.15}
+.next-trip-date{margin-top:8px}
+.next-trip-actions:has(.primary.hidden):has(.secondary.hidden){display:none}
+.next-trip-actions{margin-top:14px}
+.next-trip-actions button{min-height:42px}
+
+/* Upcoming / reminders */
+.upcoming-wrap{gap:11px}
+.upcoming-card{padding:16px 17px;border-radius:22px}
+.review-reminder{margin:0;padding:14px 15px}
+.review-reminder button{min-height:40px}
+
+/* Card systems */
+.summary-grid,.group-grid,.year-review-grid,.budget-grid,.budget-detail,.love-avoid-grid{
+  gap:11px;
+}
+.summary-card,.group-card,.record,.budget-card,.year-review-card,.love-avoid-card{
+  border-radius:20px;
+}
+.summary-card,.group-card,.budget-card,.year-review-card,.love-avoid-card{
+  padding:15px;
+}
+.record{padding:16px}
+.record-actions{gap:8px;margin-top:11px}
+.chips{gap:6px}
+.chip,.status-pill{line-height:1.2}
+
+/* Filters & controls */
+.filters{gap:9px;margin-bottom:14px}
+.field,.filters input,.filters select,.mini-stat-filter select{
+  min-height:44px;
+  border-radius:14px;
+}
+.segmented{gap:5px;padding:5px;border-radius:16px}
+.segmented button{min-height:38px}
+.ghost,.tool-btn,.save,.add-btn{
+  min-height:44px;
+}
+.tool-btn{display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.35}
+.tools{gap:9px}
+
+/* Dialog and form density */
+dialog{border-radius:26px}
+.modal{padding:20px 18px 22px}
+.modal-head{margin-bottom:15px}
+.modal-head h3{font-size:21px}
+.form-grid{gap:12px 10px}
+.form-group label{margin-bottom:6px}
+textarea.field{min-height:94px}
+.save{margin-top:18px}
+
+/* Insight / ranking blocks */
+.memory-insight-section{padding:18px}
+.memory-insight-head{margin-bottom:13px}
+.rank-list,.budget-list{gap:8px}
+.rank-row,.budget-line{padding:10px 11px;border-radius:14px}
+
+/* Timeline / memories */
+.memory-highlight{gap:16px;padding:18px}
+.timeline{gap:13px}
+.timeline-item{padding-bottom:13px}
+.polaroid{flex:0 0 auto}
+
+/* Bottom navigation */
+.bottom-nav{
+  width:min(calc(100% - 20px),430px);
+  bottom:calc(10px + var(--safe-bottom));
+  padding:6px;
+  gap:4px;
+  border-radius:24px;
+}
+.bottom-nav button{
+  min-height:56px;
+  padding:8px 4px 7px;
+  border-radius:17px;
+  line-height:1.1;
+}
+.bottom-nav .nav-icon{margin-bottom:5px}
+.bottom-nav .nav-add .nav-icon{width:29px;height:29px}
+.toast{bottom:calc(92px + var(--safe-bottom))}
+
+/* Empty states */
+.empty{
+  padding:30px 16px;
+  border-radius:20px;
+  line-height:1.65;
+}
+.empty .emoji{font-size:34px;margin-bottom:8px}
+
+/* Mobile refinement */
+@media(max-width:520px){
+  main.app>section+section{margin-top:23px}
+  .year-cover{padding:22px 18px}
+  .next-trip-visual{min-height:145px;padding:18px}
+  .next-trip-body{padding:15px 16px 16px}
+  .memory-highlight{padding:16px;gap:13px}
+  .memory-insight-section{padding:16px}
+  .summary-card,.group-card,.budget-card,.year-review-card,.love-avoid-card{padding:14px}
+  .record{padding:15px}
+  .review-reminder{align-items:flex-start}
+  .review-reminder button{align-self:center}
+}
+@media(max-width:390px){
+  .app{padding-left:14px;padding-right:14px}
+  .brand h1{font-size:27px}
+  .year-cover h2{font-size:30px}
+  .bottom-nav{width:calc(100% - 16px)}
+  .bottom-nav button{font-size:10.5px}
+  .bottom-nav .nav-icon{font-size:17px}
+  .review-reminder{gap:9px;padding:12px}
+  .review-reminder-icon{width:38px;height:38px}
+}
+
+
+.yearbook-card{border:1px solid var(--line);background:linear-gradient(180deg,#fffdf9,#fff8f2);border-radius:28px;padding:22px 20px;box-shadow:0 14px 30px rgba(90,64,53,.07)}
+.yearbook-kicker{font-size:10px;font-weight:900;letter-spacing:.18em;color:#b68d7e;margin-bottom:6px}
+.yearbook-title{font-size:25px;font-weight:900;color:#755a51;margin-bottom:10px}
+.yearbook-lead{font-size:13px;line-height:1.8;color:#7d6a62;margin-bottom:18px}
+.yearbook-highlights{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yearbook-highlight{display:flex;gap:10px;align-items:flex-start;padding:13px 12px;background:rgba(255,255,255,.72);border:1px solid #eee0d8;border-radius:17px}
+.yearbook-highlight>span{font-size:18px;line-height:1}
+.yearbook-highlight b{display:block;font-size:15px;color:#6f554c;line-height:1.3}
+.yearbook-highlight small{display:block;margin-top:4px;font-size:10px;line-height:1.45;color:#a08a80}
+.yearbook-more{margin-top:14px;border-top:1px dashed #e7d5cb;padding-top:12px}
+.yearbook-more summary{cursor:pointer;list-style:none;font-size:12px;font-weight:800;color:#8f6c60;display:flex;justify-content:space-between;align-items:center}
+.yearbook-more summary::-webkit-details-marker{display:none}
+.yearbook-more summary::after{content:"＋";font-size:18px;font-weight:500}
+.yearbook-more[open] summary::after{content:"−"}
+.yearbook-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:12px}
+.yearbook-mini-grid>div{padding:11px;border-radius:14px;background:#fff;border:1px solid #efe3dc}
+.yearbook-mini-grid span{display:block;font-size:9px;color:#aa9186;margin-bottom:4px}
+.yearbook-mini-grid b{font-size:13px;color:#765c53}
+@media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
+
+
+/* v6.7 · warm journal, less dashboard */
+.yearbook-card{border:1px solid var(--line);background:linear-gradient(180deg,#fffdfa,#fff7f1);border-radius:28px;padding:22px 20px;box-shadow:0 14px 30px rgba(90,64,53,.07)}
+.yearbook-kicker{font-size:10px;font-weight:900;letter-spacing:.18em;color:#b68d7e;margin-bottom:6px}
+.yearbook-title{font-size:25px;font-weight:900;color:#755a51;margin-bottom:10px}
+.yearbook-lead{font-size:13px;line-height:1.85;color:#7d6a62;margin-bottom:18px}
+.yearbook-highlights{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yearbook-highlight{display:flex;gap:10px;align-items:flex-start;padding:13px 12px;background:rgba(255,255,255,.72);border:1px solid #eee0d8;border-radius:17px}
+.yearbook-highlight>span{font-size:18px;line-height:1}
+.yearbook-highlight b{display:block;font-size:15px;color:#6f554c;line-height:1.35}
+.yearbook-highlight small{display:block;margin-top:4px;font-size:10px;line-height:1.5;color:#a08a80}
+.yearbook-more{margin-top:14px;border-top:1px dashed #e7d5cb;padding-top:12px}
+.yearbook-more summary{cursor:pointer;list-style:none;font-size:12px;font-weight:800;color:#8f6c60;display:flex;justify-content:space-between;align-items:center}
+.yearbook-more summary::-webkit-details-marker{display:none}
+.yearbook-more summary::after{content:"＋";font-size:18px;font-weight:500}
+.yearbook-more[open] summary::after{content:"−"}
+.yearbook-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:12px}
+.yearbook-mini-grid>div{padding:11px;border-radius:14px;background:#fff;border:1px solid #efe3dc}
+.yearbook-mini-grid span{display:block;font-size:9px;color:#aa9186;margin-bottom:4px}
+.yearbook-mini-grid b{font-size:13px;color:#765c53}
+.ranking-card .rank-note,.memory-board .note:empty{display:none}
+.ranking-card h4,.memory-board h4{margin-bottom:10px}
+#favoriteHotel{line-height:1.35}
+@media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
+
+
+/* === v6.9 · 年度回顧：家庭旅行記憶版 === */
+.annual-memory-stack{display:grid;gap:14px;margin-top:12px}
+.annual-cover-card{
+  position:relative;overflow:hidden;padding:24px 20px;border-radius:30px;
+  background:linear-gradient(145deg,#e9ad9b,#d98f7c);color:#fffaf6;
+  box-shadow:0 16px 34px rgba(137,82,66,.16)
+}
+.annual-cover-card:after{content:"♡";position:absolute;right:18px;top:10px;font-size:54px;opacity:.16}
+.annual-cover-year{font-size:12px;letter-spacing:.18em;font-weight:800;opacity:.9}
+.annual-cover-card h2{margin:7px 0 7px;font-size:clamp(26px,7vw,38px);line-height:1.3}
+.annual-cover-card p{margin:0;font-size:12px;line-height:1.75;opacity:.92}
+.annual-feature{
+  display:grid;grid-template-columns:105px 1fr;gap:14px;align-items:center;
+  background:#fffdf9;border:1px solid #eadbd2;border-radius:25px;padding:15px
+}
+.annual-feature.bad-memory{background:#fffaf6}
+.annual-feature-photo{width:105px;aspect-ratio:1/1;object-fit:cover;border-radius:16px;background:#f5e8e0}
+.annual-feature-placeholder{width:105px;aspect-ratio:1/1;border-radius:16px;background:#f5e8e0;display:grid;place-items:center;font-size:28px;color:#c28d7d}
+.annual-feature .kicker{font-size:10px;letter-spacing:.12em;font-weight:800;color:#bd7c6c}
+.annual-feature h4{margin:5px 0 5px;font-size:17px;color:#6f534a}
+.annual-feature p{margin:0;font-size:12px;line-height:1.7;color:#8e786f}
+.annual-section-card{background:#fffdf9;border:1px solid #eadbd2;border-radius:24px;padding:17px}
+.annual-section-card h4{margin:0 0 4px;color:#72564d;font-size:15px}
+.annual-section-card .annual-sub{font-size:11px;color:var(--muted);margin-bottom:11px;line-height:1.6}
+.annual-place-grid,.annual-first-grid,.annual-money-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.annual-mini{padding:12px;background:#fff8f3;border-radius:16px;border:1px solid #f0e1d9}
+.annual-mini b{display:block;color:#71564d;font-size:14px}
+.annual-mini span{display:block;color:#9b8379;font-size:10px;margin-top:4px;line-height:1.5}
+.annual-keywords{display:flex;flex-wrap:wrap;gap:8px}
+.annual-keyword{padding:7px 10px;border-radius:999px;background:#f8e8e1;color:#8b665b;font-size:11px;font-weight:700}
+.annual-closing{padding:19px 18px;border-radius:24px;background:linear-gradient(135deg,#f8eee8,#fff8df);border:1px dashed #dfc7ba;color:#755f56;line-height:1.9;font-size:13px}
+.annual-own-note textarea{width:100%;min-height:92px;margin-top:9px}
+.annual-own-note .note-status{font-size:10px;color:var(--muted);margin-top:6px}
+@media(max-width:520px){
+  .annual-feature{grid-template-columns:86px 1fr}
+  .annual-feature-photo,.annual-feature-placeholder{width:86px}
+  .annual-place-grid,.annual-first-grid,.annual-money-grid{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<main class="app">
+<div class="topbar">
+<div class="brand">
+<small>OUR LITTLE TRAVEL JOURNAL</small>
+<h1>桐House一家旅行手帳</h1>
+</div>
+<button aria-label="資料工具" class="icon-btn" id="openTools">⋯</button>
+</div><section class="year-cover">
+<div class="year" id="journalYear">2026 FAMILY JOURNAL</div>
+<h2>桐House一家<br/>旅行手帳</h2>
+<p>一家人一起走過的城市、住過的飯店，還有那些想起來就會微笑的小事情。</p>
+<div class="cover-stats">
+<span class="cover-stat" id="coverNights">今年 0 晚</span>
+<span class="cover-stat" id="coverCities">走過 0 個城市</span>
+<span class="cover-stat" id="coverGroups">0 個旅宿品牌</span>
+</div>
+</section><section class="next-banner next-trip-card quick-anchor" id="nextBanner">
+<div class="next-trip-visual next-empty-visual" id="nextTripVisual">
+  <div class="next-trip-badge">✈ NEXT FAMILY TRIP</div>
+  <div class="next-trip-title">
+    <div class="small" id="nextTripLocation">下一趟旅程</div>
+    <div class="name" id="nextStayName">還沒有已安排的住宿</div>
+  </div>
+</div>
+<div class="next-trip-body">
+  <div class="next-trip-count-row">
+    <div>
+      <div class="count" id="nextStayCount">下一站，等你決定 ♡</div>
+      <div class="next-trip-date" id="nextStayMeta">下一趟家庭旅行，等著被安排 ♡</div>
+    </div>
+  </div>
+  <div class="next-trip-actions">
+    <button class="primary hidden" id="nextTripPrimary" type="button">查看旅程</button>
+    <button class="secondary hidden" id="nextTripEdit" type="button">查看</button>
+  </div>
+</div>
+</section><section id="upcomingView">
+<div class="section-head">
+<div><h3>下一頁的期待</h3><p>已安排好的飯店，先寫進手帳等著出發</p></div>
+</div>
+<div class="upcoming-wrap" id="upcomingList"></div>
+</section><section class="review-reminder hidden" id="reviewReminder">
+<div class="review-reminder-icon">✎</div>
+<div class="review-reminder-copy">
+<b id="reviewReminderTitle">旅行結束啦，補上這次評分吧 ♡</b>
+<span id="reviewReminderText">把真實感受記下來，下次訂房更好避雷。</span>
+</div>
+<button id="reviewReminderBtn" type="button">去評分</button>
+</section><section class="memory-highlight" id="memoryHighlight">
+<div class="polaroid"><div class="photo-placeholder" id="highlightPhoto">♡</div></div>
+<div>
+<small>THIS YEAR'S MEMORY</small>
+<h3 id="highlightTitle">今年的旅行回憶，等你慢慢收藏</h3>
+<p id="highlightText">新增住宿照片與一句回憶後，這裡會像手帳首頁一樣顯示最最近的一頁。</p>
+</div>
+</section><div class="section-divider">MEMORY TIMELINE</div><section id="timelineView">
+<div class="section-head">
+<div><h3>旅行手帳時間軸</h3><p>一站一頁，翻回每一次一家人住過的地方</p></div>
+</div>
+<div class="timeline" id="timeline"></div>
+</section><div class="section-divider">OUR FOOTPRINTS</div><section id="footprintView">
+<div class="section-head">
+<div><h3>一家人的足跡版圖</h3><p>用城市與國家慢慢拼出我們家的旅行地圖</p></div>
+</div>
+<div class="footprint-board" id="footprintBoard"></div>
+</section><section class="hero">
+<div class="eyebrow">OUR FAMILY TRAVEL STORY</div>
+<h2>走過的地方，<br/>慢慢變成我們家的故事 ♡</h2>
+<p>從這裡開始回顧這一年住過多少地方、留下多少足跡，再往下看看我們家的旅行習慣。</p>
+<div class="journal-stickers">
+<span class="journal-sticker">✈ 一起出發</span>
+<span class="journal-sticker">⌂ 住過的地方</span>
+<span class="journal-sticker">♡ 家庭回憶</span>
+</div>
+<div class="hero-stats">
+<div class="hero-stat"><span>今年住宿花費</span><strong id="heroYearAmount">$0</strong></div>
+<div class="hero-stat"><span>今年入住</span><strong id="heroYearCount">0 次</strong></div>
+<div class="hero-stat"><span>累積收藏</span><strong id="heroTotalCount">0 間</strong></div>
+</div>
+</section><div class="section-divider">YEARLY MEMORIES &amp; TRAVEL STATS</div><section id="dashboardView">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="memory-insight-head">
+<div><h3 style="margin:0">桐House 年度旅行回顧</h3><p style="margin:4px 0 0;color:var(--muted);font-size:12px">不是成績單，是我們一家人一起住過的日子 ♡</p></div>
+<div class="mini-stat-filter"><select class="field" id="annualReviewYear"><option value="">全部年份</option></select></div>
+</div>
+
+<div class="annual-memory-stack">
+  <div class="annual-cover-card">
+    <div class="annual-cover-year" id="annualCoverYear">OUR FAMILY · 2026</div>
+    <h2 id="annualCoverTitle">2026，我們一起住了 0 個夜晚</h2>
+    <p id="annualCoverSub">旅行還在慢慢發生，回憶也會一頁一頁留下來。</p>
+  </div>
+
+  <div class="annual-feature" id="annualFavoriteCard">
+    <div class="annual-feature-placeholder" id="annualFavoritePhoto">♡</div>
+    <div>
+      <div class="kicker">♡ 今年最喜歡的一間</div>
+      <h4 id="annualFavoriteHotel">還在等我們遇見</h4>
+      <p id="annualFavoriteReason">有留下評分與回憶後，這裡會選出真正喜歡的那一間。</p>
+    </div>
+  </div>
+
+  <div class="annual-feature bad-memory" id="annualLeastCard">
+    <div class="annual-feature-placeholder" id="annualLeastPhoto">☁️</div>
+    <div>
+      <div class="kicker">☁️ 這次就留在回憶裡吧</div>
+      <h4 id="annualLeastHotel">目前沒有特別不喜歡的住宿</h4>
+      <p id="annualLeastReason">不是每趟都要完美，真實留下當時的感受就好。</p>
+    </div>
+  </div>
+
+  <div class="annual-section-card">
+    <h4>📍 今年走過的地方</h4>
+    <div class="annual-sub">用住宿晚數記，不用「入住次數」假裝哪裡待最久。</div>
+    <div class="annual-place-grid" id="annualPlaces"></div>
+  </div>
+
+  <div class="annual-section-card">
+    <h4>✨ 今年第一次</h4>
+    <div class="annual-sub">第一次去的城市、第一次住的旅宿集團，還有第一次回到熟悉的地方。</div>
+    <div class="annual-first-grid" id="annualFirsts"></div>
+  </div>
+
+  <div class="annual-section-card">
+    <h4>🏷 我們家的旅行關鍵字</h4>
+    <div class="annual-sub">從你真的貼過的旅行貼紙裡，留下這一年的樣子。</div>
+    <div class="annual-keywords" id="annualKeywords"></div>
+  </div>
+
+  <div class="annual-section-card">
+    <h4>💰 今年旅行的小帳本</h4>
+    <div class="annual-sub">錢放後面一點。先記得一起去了哪裡，再看看這一年花了多少。</div>
+    <div class="annual-money-grid">
+      <div class="annual-mini"><b id="annualTotalSpend">—</b><span>總住宿費</span></div>
+      <div class="annual-mini"><b id="annualAvgNight">—</b><span>平均每晚</span></div>
+    </div>
+  </div>
+
+  <div class="annual-closing" id="annualClosing">♡ 今年的一句話，會在旅行累積後慢慢長出來。</div>
+
+  <div class="annual-section-card annual-own-note">
+    <h4>✎ 留給今年的我們</h4>
+    <div class="annual-sub">這一句不是系統幫你寫的，是留給以後的你們。</div>
+    <textarea class="field" id="annualOwnNote" maxlength="220" placeholder="寫一句想記住的話……"></textarea>
+    <div class="note-status" id="annualOwnNoteStatus">會自動保存在這台裝置。</div>
+  </div>
+</div><div class="section-head" style="margin-top:22px">
+<div><h3>我們最常往哪裡走？</h3><p>這一年，我們把時間留在哪些地方 ♡</p></div>
+<div class="mini-stat-filter">
+<select class="field" id="travelStatYear"><option value="">全部年份</option></select>
+</div>
+</div><div class="travel-split-grid">
+<div class="travel-split-card domestic">
+<div class="travel-kind">🇹🇼 國內住宿</div>
+<div class="travel-money" id="domesticAmount">$0</div>
+<div class="travel-meta" id="domesticMeta">0 趟 · 0 晚</div>
+</div>
+<div class="travel-split-card international">
+<div class="travel-kind">✈️ 國外住宿</div>
+<div class="travel-money" id="internationalAmount">$0</div>
+<div class="travel-meta" id="internationalMeta">0 趟 · 0 晚</div>
+</div>
+</div><div class="ranking-grid">
+<div class="ranking-card">
+<h4>🌏 國外住最久</h4>
+
+<div class="rank-list" id="countryDaysRank"></div>
+</div>
+<div class="ranking-card">
+<h4>🇹🇼 國內住最久</h4>
+
+<div class="rank-list" id="domesticDaysRank"></div>
+</div>
+<div class="ranking-card">
+<h4>💸 國外住宿花費</h4>
+
+<div class="rank-list" id="countrySpendRank"></div>
+</div>
+<div class="ranking-card">
+<h4>🧾 國內住宿花費</h4>
+
+<div class="rank-list" id="domesticSpendRank"></div>
+</div>
+</div><div class="section-head" style="margin-top:22px">
+<div><h3>最愛旅宿・避雷手札</h3><p>喜歡的想再回去，不喜歡的也好好記得。</p></div>
+</div><div class="love-avoid-grid">
+<div class="memory-board">
+<h4>♡ 我們最喜歡的幾間</h4>
+
+<div id="favoriteRankList"></div>
+</div>
+<div class="memory-board">
+<h4>⚠️ 這些就先記住</h4>
+
+<div id="avoidRankList"></div>
+</div>
+</div><div class="section-head" style="margin-top:22px">
+<div><h3>每晚預算雷達</h3><p>每一晚的花費，也是一段旅行的選擇。</p></div>
+</div><div class="budget-grid">
+<div class="budget-card"><small>全部住宿平均</small><b id="budgetOverall">$0 / 晚</b><span id="budgetOverallSub">0 晚</span></div>
+<div class="budget-card"><small>🇹🇼 國內平均</small><b id="budgetDomestic">$0 / 晚</b><span id="budgetDomesticSub">0 晚</span></div>
+<div class="budget-card"><small>✈️ 國外平均</small><b id="budgetInternational">$0 / 晚</b><span id="budgetInternationalSub">0 晚</span></div>
+</div><div class="budget-detail">
+<div class="budget-line"><span>國外最常住國家平均</span><b id="budgetCountryDetail">—</b></div>
+<div class="budget-line"><span>國內最常住地區平均</span><b id="budgetAreaDetail">—</b></div>
+</div><div class="section-head">
+<div><h3>旅宿小帳本・細看</h3><p>偶爾翻翻，看看這些年我們把旅行花在哪裡。</p></div>
+<div class="segmented" id="statMode">
+<button class="active" data-mode="year">年</button>
+<button data-mode="quarter">季</button>
+<button data-mode="month">月</button>
+</div>
+</div><div class="summary-grid">
+<div class="summary-card">
+<div class="label">目前區間總金額</div>
+<div class="value" id="periodAmount">$0</div>
+<div class="sub" id="periodLabel">—</div>
+</div>
+<div class="summary-card">
+<div class="label">入住次數</div>
+<div class="value" id="periodCount">0</div>
+<div class="sub">筆住宿紀錄</div>
+</div>
+<div class="summary-card">
+<div class="label">平均每晚</div>
+<div class="value" id="avgNight">$0</div>
+<div class="sub" id="nightCount">共 0 晚</div>
+</div>
+<div class="summary-card">
+<div class="label">住最久的城市</div>
+<div class="value" id="topCity">—</div>
+<div class="sub" id="topCitySub">這段時間的住宿晚數</div>
+</div>
+<div class="summary-card wide">
+<div class="label">區間比較</div>
+<div class="bar-list" id="barList"></div>
+</div>
+<div class="summary-card wide">
+<div class="label">最常回訪</div>
+<div class="value" id="favoriteHotel" style="font-size:19px">尚未有紀錄</div>
+<div class="sub" id="favoriteHotelSub">真的再住過，才算回訪 ♡</div>
+</div>
+</div></section><section id="groupsView">
+<div class="section-head">
+<div><h3>住過的旅宿家族</h3><p>那些熟悉的旅宿名字，也慢慢成了家的旅行記憶。</p></div>
+</div>
+<div class="group-grid" id="groupGrid"></div>
+</section><section id="recordsView">
+<div class="section-head">
+<div><h3>我們住過的每一站</h3><p>翻一翻一家人的住宿回憶</p></div>
+</div>
+<div class="filters">
+<input class="field" id="searchInput" placeholder="搜尋飯店、城市、備註…"/>
+<select class="field" id="yearFilter"><option value="">全部年份</option></select>
+<select class="field" id="tripTypeFilter"><option value="">國內＋國外</option><option value="domestic">🇹🇼 國內</option><option value="international">✈️ 國外</option></select>
+<select class="field" id="ratingFilter">
+<option value="">全部評分</option>
+<option value="5">★★★★★ 5 分</option>
+<option value="4">★★★★☆ 4 分</option>
+<option value="3">★★★☆☆ 3 分</option>
+<option value="2">★★☆☆☆ 2 分</option>
+<option value="1">★☆☆☆☆ 1 分</option>
+<option value="unrated">尚未評分</option>
+</select>
+<select class="field" id="returnFilter">
+<option value="">全部旅宿</option>
+<option value="yes">♡ 值得再住</option>
+<option value="no">⚠ 低分避雷（1–2 分）</option>
+</select>
+<select class="field" id="sortFilter">
+<option value="dateDesc">日期：新 → 舊</option>
+<option value="dateAsc">日期：舊 → 新</option>
+<option value="priceDesc">金額：高 → 低</option>
+<option value="priceAsc">金額：低 → 高</option>
+<option value="ratingDesc">評分：高 → 低</option>
+<option value="ratingAsc">評分：低 → 高</option>
+</select>
+</div>
+<div class="records" id="records"></div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</main>
+<nav class="bottom-nav">
+<button class="active" data-tab="journal"><span class="nav-icon">⌂</span><span>手帳</span></button>
+<button data-tab="trip"><span class="nav-icon">✈</span><span>旅程</span></button>
+<button class="nav-add" data-tab="add"><span class="nav-icon">＋</span><span>新增</span></button>
+<button data-tab="records"><span class="nav-icon">♡</span><span>收藏</span></button>
+</nav>
+<dialog id="recordDialog">
+<form class="modal" id="recordForm">
+<div class="modal-head">
+<h3 id="formTitle">新增住宿</h3>
+<button class="close" data-close="recordDialog" type="button">×</button>
+</div>
+<input id="recordId" type="hidden"/>
+<div class="form-grid">
+<div class="form-group full">
+<label>飯店名稱 *</label>
+<input class="field" id="hotel" placeholder="例如：大溪笠復威斯汀度假酒店" required=""/>
+</div>
+<div class="form-group">
+<label>住宿狀態 *</label>
+<select class="field" id="status">
+<option value="planned">✨ 已安排，期待入住</option>
+<option value="stayed">♡ 已入住，收藏回憶</option>
+</select>
+</div>
+<div class="form-group">
+<label>旅行分類 *</label>
+<select class="field" id="tripType">
+<option value="domestic">🇹🇼 國內</option>
+<option value="international">✈️ 國外</option>
+</select>
+</div>
+<div class="form-group">
+<label>國家 / 地區</label>
+<input class="field" id="country" placeholder="國內會自動填台灣；國外例如：日本"/>
+</div>
+<div class="form-group">
+<label>城市 / 地區</label>
+<input class="field" id="city" placeholder="例如：桃園大溪"/>
+</div>
+<div class="form-group">
+<label>旅宿集團</label>
+<select class="field" id="hotelGroup">
+<option value="">獨立飯店 / 未分類</option>
+<option>萬豪 Marriott</option>
+<option>寒舍集團</option>
+<option>晶華國際酒店集團</option>
+<option>雲朗觀光</option>
+<option>國泰飯店觀光事業</option>
+<option>IHG 洲際酒店集團</option>
+<option>Hilton 希爾頓</option>
+<option>Hyatt 凱悅</option>
+<option>Accor 雅高</option>
+<option value="__custom">＋ 自訂集團</option>
+</select>
+</div>
+<div class="form-group full hidden" id="customGroupWrap">
+<label>自訂旅宿集團</label>
+<input class="field" id="customGroup" placeholder="輸入集團名稱"/>
+</div>
+<div class="form-group full">
+<label>住宿日期區間 *</label>
+<button class="field date-range-btn" id="dateRangeBtn" type="button">
+<span id="dateRangeText">選擇入住 ～ 退房日期</span>
+<span class="date-range-icon">📅</span>
+</button>
+<input id="checkin" required="" type="hidden"/>
+<input id="checkout" required="" type="hidden"/>
+<div class="date-range-summary" id="dateRangeSummary">尚未選擇住宿日期</div>
+</div>
+<div class="form-group">
+<label>總金額 (TWD) *</label>
+<input class="field" id="price" inputmode="numeric" min="0" placeholder="12000" required="" step="1" type="number"/>
+</div>
+<div class="form-group">
+<label>房型</label>
+<input class="field" id="room" placeholder="例如：豪華客房"/>
+</div>
+<div class="form-group">
+<label>訂房方式</label>
+<select class="field" id="booking">
+<option value="">未填</option>
+<optgroup label="飯店 / 直接訂房">
+<option>飯店官網</option>
+<option>飯店電話 / 現場訂房</option>
+<option>飯店會員 App</option>
+</optgroup>
+<optgroup label="國際訂房平台">
+<option>Agoda</option>
+<option>Booking.com</option>
+<option>Trip.com</option>
+<option>Expedia</option>
+<option>Hotels.com</option>
+<option>Traveloka</option>
+</optgroup>
+<optgroup label="台灣常用旅遊平台">
+<option>Klook</option>
+<option>KKday</option>
+<option>易遊網 ezTravel</option>
+<option>雄獅旅遊</option>
+<option>可樂旅遊</option>
+<option>東南旅遊</option>
+</optgroup>
+<optgroup label="日本旅遊平台">
+<option>樂天旅遊 Rakuten Travel</option>
+<option>Jalan じゃらん</option>
+<option>一休.com</option>
+</optgroup>
+<optgroup label="票券 / 特殊方案">
+<option>住宿券</option>
+<option>信用卡禮遇</option>
+<option>FHR / THC</option>
+<option>點數 / 會員兌換</option>
+<option>旅行社套裝行程</option>
+<option>團購 / 優惠券</option>
+<option>其他</option>
+</optgroup>
+</select>
+</div>
+<div class="form-group">
+<label>住宿評分</label>
+<select class="field rating-field" id="rating">
+<option value="">尚未評分</option>
+<option value="5">★★★★★ 5 分 · 超喜歡</option>
+<option value="4">★★★★☆ 4 分 · 很不錯</option>
+<option value="3">★★★☆☆ 3 分 · 還可以</option>
+<option value="2">★★☆☆☆ 2 分 · 有缺點</option>
+<option value="1">★☆☆☆☆ 1 分 · 不會再住</option>
+</select>
+</div>
+<div class="form-group">
+<label>這趟和誰一起</label>
+<select class="field" id="companions">
+<option value="">未填</option>
+<option>一家人</option>
+<option>夫妻 / 伴侶</option>
+<option>親子</option>
+<option>家族旅行</option>
+<option>朋友</option>
+<option>自己旅行</option>
+</select>
+</div>
+<div class="form-group">
+<label>訂房是否已付款</label>
+<select class="field" id="payment">
+<option value="">未填</option>
+<option>已付款</option>
+<option>到店付款</option>
+<option>部分付款 / 訂金</option>
+</select>
+</div>
+<div class="form-group full">
+<div class="check-row">
+<input id="wantReturn" type="checkbox"/>
+<label for="wantReturn" style="margin:0;color:var(--ink)">♡ 這間值得再住一次</label>
+</div>
+</div>
+<div class="form-group full">
+<label>這一頁的照片</label>
+<div class="photo-box">
+<input accept="image/*" class="field" id="photoInput" type="file"/>
+<img alt="住宿照片預覽" class="photo-preview" id="photoPreview"/>
+<div class="photo-help">照片會自動縮小後存在這台裝置中，適合放飯店、房間或一家人的旅行風景。</div>
+</div>
+</div>
+<div class="form-group full">
+<label>一句回憶</label>
+<input class="field" id="memoryLine" maxlength="80" placeholder="例如：桐桐最喜歡房間裡的大浴缸 ♡"/>
+</div>
+<div class="form-group full">
+<label>這趟旅行貼紙</label>
+<div class="sticker-picker">
+<label class="sticker-option"><input name="stickers" type="checkbox" value="親子"/><span>🧸 親子</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="泳池"/><span>🏊 泳池</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="早餐"/><span>🥐 早餐</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="慶生"/><span>🎂 慶生</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="度假"/><span>🌿 度假</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="購物"/><span>🛍️ 購物</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="溫泉"/><span>♨️ 溫泉</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="海景"/><span>🌊 海景</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="山景"/><span>⛰️ 山景</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="樂園"/><span>🎡 樂園</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="動物"/><span>🐾 動物</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="美食"/><span>🍽️ 美食</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="夜景"/><span>🌙 夜景</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="機場"/><span>✈️ 機場</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="市區"/><span>🏙️ 市區</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="自駕"/><span>🚗 自駕</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="雨天"/><span>☔ 雨天</span></label>
+<label class="sticker-option"><input name="stickers" type="checkbox" value="療癒"/><span>🫧 療癒</span></label>
+</div>
+</div>
+<div class="form-group full">
+<label>小記</label>
+<textarea class="field" id="memo" placeholder="早餐很好吃、親子設施很多、下次想再住…"></textarea>
+</div>
+</div>
+<button class="save" type="submit">儲存這次住宿 ✨</button>
+</form>
+</dialog>
+<dialog id="dateDialog">
+<div class="modal">
+<div class="modal-head">
+<h3>選擇住宿日期</h3>
+<button class="close" data-close="dateDialog">×</button>
+</div>
+<div class="date-picker-note">先選入住日，再選退房日 ♡</div>
+<div class="calendar-head">
+<button class="calendar-nav" id="prevMonth" type="button">‹</button>
+<div class="calendar-title" id="calendarTitle"></div>
+<button class="calendar-nav" id="nextMonth" type="button">›</button>
+</div>
+<div class="calendar-week">
+<span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+</div>
+<div class="calendar-grid" id="calendarGrid"></div>
+<div class="range-preview">
+<div><small>入住</small><b id="previewCheckin">—</b></div>
+<div class="range-arrow">→</div>
+<div><small>退房</small><b id="previewCheckout">—</b></div>
+</div>
+<button class="save" id="confirmDateRange" type="button">套用住宿日期</button>
+</div>
+</dialog>
+<dialog id="toolsDialog">
+<div class="modal">
+<div class="modal-head">
+<h3>資料工具</h3><span style="font-size:10px;color:var(--muted)">v6.9.0</span>
+<button class="close" data-close="toolsDialog">×</button>
+</div>
+<p style="color:var(--muted);font-size:13px;line-height:1.6">「搬出手札」會把住宿紀錄、日期、金額、評分、備註、貼紙與照片全部打包成一個 iPhone 可辨識的 JSON 完整搬家檔。AirDrop 到新 iPhone 後，在新手機的桐House按「搬入手札」選取它即可。</p>
+<div class="tools">
+<button class="tool-btn" id="exportBtn">📤 搬出手札</button>
+<button class="tool-btn" id="moveInBtn">📥 搬入手札</button>
+<button class="tool-btn" id="shareBackupBtn">↗ LINE 快速分享（不含照片）</button>
+<button class="tool-btn" id="importBtn">⇧ 舊備份匯入</button>
+<div style="margin-top:12px;padding:12px;border-radius:16px;background:#fff8f3;border:1px dashed #e6d2c7">
+  <div style="font-size:12px;font-weight:800;margin-bottom:7px">📋 LINE 備份碼還原</div>
+  <textarea id="backupCodeInput" rows="3" placeholder="把 LINE 裡收到的 THB1:... 備份碼貼到這裡" style="width:100%;resize:vertical;border:1px solid #ead8cf;border-radius:12px;padding:10px;font:inherit;font-size:12px;background:white"></textarea>
+  <button class="tool-btn" id="restoreCodeBtn" style="margin-top:8px">貼上備份碼還原</button>
+</div>
+</div>
+<input accept="application/json,.json,text/json" class="hidden" id="importFile" type="file">
+<input accept="application/json,.json,text/json" class="hidden" id="moveInFile" type="file">
+<button class="tool-btn danger" id="clearBtn" style="width:100%;margin-top:10px">清除全部紀錄</button>
+</input></div>
+</dialog>
+<div class="toast" id="toast"></div>
+<script>
+const KEY='hotel_memories_v1';
+const YEAR_NOTE_KEY='tonghouse_year_notes_v1';
+const APP_VERSION='6.9.0';
+let records=JSON.parse(localStorage.getItem(KEY)||'[]');
+let statMode='year';
+const todayISO=()=>new Date().toISOString().slice(0,10);
+
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0}).format(Number(n||0));
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function nights(a,b){ const d=(new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/86400000; return Math.max(1,Math.round(d)||1); }
+function inferTripType(r){
+  if(r?.tripType==='domestic' || r?.tripType==='international') return r.tripType;
+  const c=String(r?.country||'').trim().toLowerCase();
+  if(['台灣','臺灣','taiwan','tw','中華民國','roc'].includes(c)) return 'domestic';
+  return c ? 'international' : 'domestic';
+}
+function tripTypeLabel(r){return inferTripType(r)==='domestic'?'🇹🇼 國內':'✈️ 國外'}
+function countryName(r){return inferTripType(r)==='domestic'?'台灣':(String(r.country||'').trim()||'未填國家')}
+
+
+async function compressImage(file,maxSize=900,quality=.76){
+  if(!file) return '';
+  return await new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=reject;
+    reader.onload=()=>{
+      const img=new Image();
+      img.onerror=reject;
+      img.onload=()=>{
+        let w=img.width,h=img.height;
+        const scale=Math.min(1,maxSize/Math.max(w,h));
+        w=Math.round(w*scale); h=Math.round(h*scale);
+        const c=document.createElement('canvas'); c.width=w;c.height=h;
+        const ctx=c.getContext('2d'); ctx.drawImage(img,0,0,w,h);
+        resolve(c.toDataURL('image/jpeg',quality));
+      };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function selectedStickers(){
+  return [...document.querySelectorAll('input[name="stickers"]:checked')].map(x=>x.value);
+}
+function setSelectedStickers(arr=[]){
+  document.querySelectorAll('input[name="stickers"]').forEach(x=>x.checked=arr.includes(x.value));
+}
+function stickerEmoji(name){
+  return {親子:'🧸',泳池:'🏊',早餐:'🥐',慶生:'🎂',度假:'🌿',購物:'🛍️',溫泉:'♨️',海景:'🌊',山景:'⛰️',樂園:'🎡',動物:'🐾',美食:'🍽️',夜景:'🌙',機場:'✈️',市區:'🏙️',自駕:'🚗',雨天:'☔',療癒:'🫧'}[name]||'♡';
+}
+
+function save(){localStorage.setItem(KEY,JSON.stringify(records));renderAll()}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+
+function sampleIfEmpty(){
+  if(records.length) return;
+  // Keep first use clean; no sample data persisted.
+}
+
+function getYear(d){return Number((d||'').slice(0,4))}
+function getMonth(d){return Number((d||'').slice(5,7))}
+function getQuarter(d){return Math.ceil(getMonth(d)/3)}
+function periodKey(r,mode){
+  const y=getYear(r.checkin), m=getMonth(r.checkin);
+  if(mode==='year') return String(y);
+  if(mode==='quarter') return `${y} Q${Math.ceil(m/3)}`;
+  return `${y}-${String(m).padStart(2,'0')}`;
+}
+function latestPeriod(mode){
+  const now=new Date(), y=now.getFullYear(), m=now.getMonth()+1;
+  if(mode==='year') return String(y);
+  if(mode==='quarter') return `${y} Q${Math.ceil(m/3)}`;
+  return `${y}-${String(m).padStart(2,'0')}`;
+}
+function labelPeriod(key,mode){
+  if(mode==='year') return `${key} 年`;
+  if(mode==='quarter'){const [y,q]=key.split(' ');return `${y} 年 · 第 ${q.slice(1)} 季`;}
+  const [y,m]=key.split('-');return `${y} 年 ${Number(m)} 月`;
+}
+
+
+function stayHasEnded(r){
+  if(!r?.checkout) return false;
+  const now=new Date();
+  const end=new Date(r.checkout+'T11:00:00');
+  return now>=end;
+}
+function syncStatuses(){
+  let changed=false;
+  records=records.map(r=>{
+    if(stayHasEnded(r) && r.status!=='stayed'){ changed=true; return {...r,status:'stayed',autoCompleted:true}; }
+    return r;
+  });
+  if(changed) localStorage.setItem(KEY,JSON.stringify(records));
+}
+function reviewPendingRecords(){
+  return records.filter(r=>stayHasEnded(r) && (!r.rating || !String(r.memo||'').trim())).sort((a,b)=>(b.checkout||'').localeCompare(a.checkout||''));
+}
+function renderReviewReminder(){
+  const pending=reviewPendingRecords();
+  const box=$('reviewReminder');
+  if(!pending.length){ box.classList.add('hidden'); return; }
+  const r=pending[0];
+  box.classList.remove('hidden');
+  $('reviewReminderTitle').textContent=pending.length===1?`「${r.hotel}」住完啦，補上評分吧 ♡`:`有 ${pending.length} 趟旅行等你補評分 ♡`;
+  $('reviewReminderText').textContent=`${r.checkout} 已退房 · 留下星等與備註，下次訂房更好避雷。`;
+  $('reviewReminderBtn').onclick=()=>openForm(r);
+}
+
+function normalizeRecords(){
+  records=records.map(r=>{
+    const tripType=inferTripType(r);
+    return {
+      status:stayHasEnded(r)?'stayed':(r.status || (r.checkin && r.checkin>todayISO()?'planned':'stayed')),
+      country:r.country||'',
+      hotelGroup:r.hotelGroup||'',
+      companions:r.companions||'',
+      payment:r.payment||'',
+      wantReturn:!!r.wantReturn,
+      photo:r.photo||'',
+      memoryLine:r.memoryLine||'',
+      stickers:Array.isArray(r.stickers)?r.stickers:[],
+      ...r,
+      tripType,
+      country:tripType==='domestic' ? (r.country||'台灣') : (r.country||'')
+    };
+  });
+}
+function diffDays(dateStr){
+  const a=new Date(todayISO()+'T12:00:00'), b=new Date(dateStr+'T12:00:00');
+  return Math.ceil((b-a)/86400000);
+}
+function renderUpcoming(){
+  const upcoming=records.filter(r=>!stayHasEnded(r) && r.status==='planned' && r.checkout>=todayISO()).sort((a,b)=>a.checkin.localeCompare(b.checkin));
+  const visual=$('nextTripVisual'), primary=$('nextTripPrimary'), edit=$('nextTripEdit');
+  if(upcoming.length){
+    const n=upcoming[0], d=diffDays(n.checkin), nightCount=nights(n.checkin,n.checkout);
+    $('nextStayName').textContent=n.hotel;
+    $('nextTripLocation').textContent=[n.country,n.city].filter(Boolean).join(' · ') || '下一趟家庭旅行';
+    $('nextStayMeta').textContent=`${n.checkin} → ${n.checkout} · ${nightCount} 晚${n.payment?' · '+n.payment:''}`;
+    $('nextStayCount').textContent=d===0?'今天入住 ♡':d===1?'明天出發 ♡':`還有 ${d} 天出發 ♡`;
+    visual.classList.remove('next-empty-visual');
+    visual.style.backgroundImage=n.photo?`linear-gradient(to top,rgba(57,40,34,.45),rgba(57,40,34,.04)),url("${n.photo}")`:'';
+    primary.classList.remove('hidden');
+    primary.textContent=upcoming.length>1?`查看全部 ${upcoming.length} 個安排`:'查看旅程';
+    primary.onclick=()=>jumpToSection('upcomingView',document.querySelector('.bottom-nav button[data-tab="trip"]'));
+    edit.classList.remove('hidden');
+    edit.textContent='查看';
+    edit.onclick=()=>openForm(n);
+  }else{
+    $('nextStayName').textContent='下一站，想去哪裡呢？';
+    $('nextTripLocation').textContent='OUR NEXT LITTLE ADVENTURE';
+    $('nextStayMeta').textContent='下一站，等我們一起出發 ♡';
+    $('nextStayCount').textContent='一起期待下一趟 ♡';
+    visual.classList.add('next-empty-visual');
+    visual.style.backgroundImage='';
+    primary.classList.add('hidden');
+    edit.classList.add('hidden');
+  }
+  $('upcomingList').innerHTML=upcoming.length?upcoming.slice(0,6).map(r=>{
+    const d=diffDays(r.checkin);
+    return `<article class="upcoming-card" onclick="editRecord('${r.id}')" style="cursor:pointer">
+      <span class="status-pill status-planned">✨ 已安排</span>
+      <div class="days">${d===0?'今天':d===1?'明天':`還有 ${d} 天`}</div>
+      <div class="u-title">${esc(r.hotel)}</div>
+      <div class="u-meta">${esc([r.country,r.city].filter(Boolean).join(' · ')||'未填地點')}<br>${esc(r.checkin)} → ${esc(r.checkout)} · ${nights(r.checkin,r.checkout)} 晚${r.hotelGroup?` · ${esc(r.hotelGroup)}`:''}${r.payment?` · ${esc(r.payment)}`:''}</div>
+    </article>`;
+  }).join(''):`<div class="empty"><span class="emoji">🧳</span>下一趟還沒決定<br>沒關係，期待本身也是旅行的一部分 ♡</div>`;
+}
+function renderGroups(){
+  const groups={};
+  records.filter(r=>r.hotelGroup).forEach(r=>{
+    groups[r.hotelGroup]??={count:0,amount:0,planned:0};
+    groups[r.hotelGroup].count++;
+    groups[r.hotelGroup].amount+=Number(r.price||0);
+    if(r.status==='planned') groups[r.hotelGroup].planned++;
+  });
+  const arr=Object.entries(groups).sort((a,b)=>b[1].count-a[1].count);
+  $('groupGrid').innerHTML=arr.length?arr.slice(0,8).map(([g,v])=>`
+    <div class="group-card">
+      <b>${esc(g)}</b>
+      <span>${v.count} 次足跡 · ${money(v.amount)}</span>
+      ${v.planned?`<div class="mini-note">✨ 還有 ${v.planned} 趟已安排</div>`:''}
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1"><span class="emoji">🏨</span>住過的旅宿家族，會一個一個留在這裡 ♡</div>`;
+}
+
+
+function renderJournal(){
+  const y=new Date().getFullYear();
+  $('journalYear').textContent=`${y} FAMILY JOURNAL`;
+  const stayed=records.filter(r=>r.status==='stayed' && getYear(r.checkin)===y);
+  const nightsCount=stayed.reduce((a,r)=>a+nights(r.checkin,r.checkout),0);
+  const cities=new Set(stayed.map(r=>r.city).filter(Boolean));
+  const groups=new Set(stayed.map(r=>r.hotelGroup).filter(Boolean));
+  $('coverNights').textContent=`今年 ${nightsCount} 晚`;
+  $('coverCities').textContent=`走過 ${cities.size} 個城市`;
+  $('coverGroups').textContent=`${groups.size} 個旅宿品牌`;
+
+  const memory=[...stayed].filter(r=>r.photo||r.memoryLine).sort((a,b)=>b.checkin.localeCompare(a.checkin))[0];
+  const hp=$('highlightPhoto');
+  if(memory){
+    if(memory.photo){
+      hp.outerHTML=`<img id="highlightPhoto" src="${memory.photo}" alt="${esc(memory.hotel)}">`;
+    }else{
+      if(hp.tagName==='IMG') hp.outerHTML='<div class="photo-placeholder" id="highlightPhoto">♡</div>';
+    }
+    $('highlightTitle').textContent=memory.hotel;
+    $('highlightText').textContent=memory.memoryLine || `${memory.city||'這趟旅行'}，成為今年手帳裡的一頁。`;
+  }else{
+    if(hp && hp.tagName==='IMG') hp.outerHTML='<div class="photo-placeholder" id="highlightPhoto">♡</div>';
+    $('highlightTitle').textContent='今年的旅行回憶，等你慢慢收藏';
+    $('highlightText').textContent='照片和一句話，就能把那一天留久一點。';
+  }
+
+  const fp={};
+  records.filter(r=>r.status==='stayed').forEach(r=>{
+    const key=[r.country,r.city].filter(Boolean).join(' · ') || '未分類足跡';
+    fp[key]=(fp[key]||0)+1;
+  });
+  const fpArr=Object.entries(fp).sort((a,b)=>b[1]-a[1]);
+  $('footprintBoard').innerHTML=fpArr.length?fpArr.slice(0,10).map(([k,v],i)=>`
+    <div class="footprint-card">
+      <b>${esc(k)}</b>
+      <span>${v} 次住宿足跡</span>
+      <div class="stamp">${i%3===0?'✈':i%3===1?'⌂':'♡'}</div>
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1">我們走過的地方，會慢慢留成一家人的足跡。</div>`;
+
+  const tl=[...records].filter(r=>r.status==='stayed').sort((a,b)=>b.checkin.localeCompare(a.checkin)).slice(0,12);
+  $('timeline').innerHTML=tl.length?tl.map(r=>`
+    <div class="timeline-item">
+      <div class="timeline-card">
+        ${r.photo?`<img class="timeline-thumb" src="${r.photo}" alt="${esc(r.hotel)}">`:`<div class="timeline-thumb">⌂</div>`}
+        <div>
+          <h4>${esc(r.hotel)}</h4>
+          <div class="line">${esc(r.checkin)} · ${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}</div>
+          ${r.memoryLine?`<div class="quote">「${esc(r.memoryLine)}」</div>`:''}
+          ${r.stickers?.length?`<div class="meta" style="margin-top:7px">${r.stickers.map(x=>`<span class="chip">${stickerEmoji(x)} ${esc(x)}</span>`).join('')}</div>`:''}
+        </div>
+      </div>
+    </div>`).join(''):`<div class="empty">還沒有可以翻閱的旅行頁面，先新增第一趟住宿吧 ♡</div>`;
+}
+
+function renderHero(){
+  const y=new Date().getFullYear();
+  const yr=records.filter(r=>getYear(r.checkin)===y && r.status==='stayed');
+  $('heroYearAmount').textContent=money(yr.reduce((a,r)=>a+Number(r.price||0),0));
+  $('heroYearCount').textContent=`${yr.length} 次`;
+  $('heroTotalCount').textContent=`${records.filter(r=>r.status==='stayed').length} 間`;
+}
+
+function renderStats(){
+  const groups={};
+  records.filter(r=>r.status==='stayed').forEach(r=>{
+    const k=periodKey(r,statMode);
+    (groups[k]??=[]).push(r);
+  });
+  let current=latestPeriod(statMode);
+  if(!groups[current] && records.length){
+    current=Object.keys(groups).sort().slice(-1)[0];
+  }
+  const arr=groups[current]||[];
+  const amount=arr.reduce((a,r)=>a+Number(r.price||0),0);
+  const totalNights=arr.reduce((a,r)=>a+nights(r.checkin,r.checkout),0);
+  $('periodAmount').textContent=money(amount);
+  $('periodLabel').textContent=labelPeriod(current,statMode);
+  $('periodCount').textContent=arr.length;
+  $('avgNight').textContent=money(totalNights?amount/totalNights:0);
+  $('nightCount').textContent=`共 ${totalNights} 晚`;
+
+  const cities={};
+  arr.forEach(r=>{ if(r.city) cities[r.city]=(cities[r.city]||0)+1; });
+  $('topCity').textContent=Object.entries(cities).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
+
+  const hotelCounts={};
+  records.filter(r=>r.status==='stayed').forEach(r=>hotelCounts[r.hotel]=(hotelCounts[r.hotel]||0)+1);
+  const favorite=Object.entries(hotelCounts).sort((a,b)=>b[1]-a[1])[0];
+  $('favoriteHotel').textContent=favorite?.[0]||'尚未有紀錄';
+  $('favoriteHotelSub').textContent=favorite?`累積入住 ${favorite[1]} 次`:'第一段住宿回憶，等你留下來 ♡';
+
+  const entries=Object.entries(groups).map(([k,v])=>[k,v.reduce((a,r)=>a+Number(r.price||0),0)]).sort((a,b)=>a[0].localeCompare(b[0])).slice(-6);
+  const max=Math.max(...entries.map(e=>e[1]),1);
+  $('barList').innerHTML=entries.length?entries.map(([k,v])=>`
+    <div class="bar-row">
+      <span>${esc(statMode==='month'?k.slice(2):k)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(4,v/max*100)}%"></div></div>
+      <b>${money(v)}</b>
+    </div>`).join(''):`<div style="color:var(--muted);font-size:13px">旅行多一點，這裡就會留下花費的軌跡。</div>`;
+}
+
+function renderTravelStats(){
+  const yearSel=$('travelStatYear');
+  if(!yearSel) return;
+  const cur=yearSel.value;
+  const years=[...new Set(records.filter(r=>r.status==='stayed').map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  yearSel.innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  yearSel.value=cur;
+  let stayed=records.filter(r=>r.status==='stayed');
+  if(cur) stayed=stayed.filter(r=>String(getYear(r.checkin))===cur);
+  const domestic=stayed.filter(r=>inferTripType(r)==='domestic');
+  const international=stayed.filter(r=>inferTripType(r)==='international');
+  const calc=list=>({amount:list.reduce((a,r)=>a+Number(r.price||0),0), trips:list.length, nights:list.reduce((a,r)=>a+nights(r.checkin,r.checkout),0)});
+  const d=calc(domestic), i=calc(international);
+  $('domesticAmount').textContent=money(d.amount); $('domesticMeta').textContent=`${d.trips} 趟 · ${d.nights} 晚`;
+  $('internationalAmount').textContent=money(i.amount); $('internationalMeta').textContent=`${i.trips} 趟 · ${i.nights} 晚`;
+
+  const aggregate=(list,keyFn)=>{
+    const m={};
+    list.forEach(r=>{const k=keyFn(r); if(!k)return; (m[k]??={days:0,amount:0,trips:0}); m[k].days+=nights(r.checkin,r.checkout);m[k].amount+=Number(r.price||0);m[k].trips++;});
+    return m;
+  };
+  const countries=aggregate(international,r=>countryName(r));
+  const areas=aggregate(domestic,r=>String(r.city||'').trim()||'未填地區');
+  const rankWithTies=(obj,metric)=>{
+    const rows=Object.entries(obj).map(([name,v])=>({name,...v})).sort((a,b)=>b[metric]-a[metric] || a.name.localeCompare(b.name,'zh-Hant'));
+    let rank=0,prev=null;
+    return rows.map((x,idx)=>{if(x[metric]!==prev) rank=idx+1; prev=x[metric]; return {...x,rank};});
+  };
+  const renderRank=(id,rows,metric)=>{
+    const el=$(id); if(!el)return;
+    el.innerHTML=rows.length?rows.slice(0,8).map(x=>`<div class="rank-row"><span class="rank-no">${x.rank}</span><span class="rank-name">${esc(x.name)}</span><span class="rank-value">${metric==='days'?`${x.days} 晚`:`${money(x.amount)}`}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px">回憶再多一點，這裡就會有答案 ♡</div>';
+  };
+  renderRank('countryDaysRank',rankWithTies(countries,'days'),'days');
+  renderRank('domesticDaysRank',rankWithTies(areas,'days'),'days');
+  renderRank('countrySpendRank',rankWithTies(countries,'amount'),'amount');
+  renderRank('domesticSpendRank',rankWithTies(areas,'amount'),'amount');
+}
+
+
+function renderAnnualInsights(){
+  const sel=$('annualReviewYear'); if(!sel) return;
+  const years=[...new Set(records.filter(r=>r.status==='stayed').map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  const old=sel.value;
+  sel.innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  if(old && years.map(String).includes(old)) sel.value=old;
+  else if(!old && years.includes(new Date().getFullYear())) sel.value=String(new Date().getFullYear());
+  else if(!old && years.length) sel.value=String(years[0]);
+
+  const y=sel.value;
+  let list=records.filter(r=>r.status==='stayed');
+  if(y) list=list.filter(r=>String(getYear(r.checkin))===y);
+  const totalNights=list.reduce((a,r)=>a+nights(r.checkin,r.checkout),0);
+  const amount=list.reduce((a,r)=>a+Number(r.price||0),0);
+  const places={};
+  list.forEach(r=>{
+    const key=inferTripType(r)==='domestic'?(String(r.city||'').trim()||'台灣'):(String(r.country||'').trim()||'未填國家');
+    places[key]=(places[key]||0)+nights(r.checkin,r.checkout);
+  });
+  const topPlace=Object.entries(places).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'zh-Hant'))[0];
+  $('reviewStayCount').textContent=`${list.length} 趟`;
+  $('reviewStaySub').textContent=list.length?`${new Set(list.map(r=>r.hotel).filter(Boolean)).size} 間不同旅宿`:'還沒有住宿紀錄';
+  $('reviewNights').textContent=`${totalNights} 晚`;
+  $('reviewNightSub').textContent=list.length?`平均每趟 ${(totalNights/list.length).toFixed(1)} 晚`:'一家人的旅行時光';
+  $('reviewAmount').textContent=money(amount);
+  $('reviewAmountSub').textContent=totalNights?`平均 ${money(amount/totalNights)} / 晚`:'依已入住紀錄計算';
+  $('reviewTopPlace').textContent=topPlace?.[0]||'—';
+  $('reviewTopPlaceSub').textContent=topPlace?`${topPlace[1]} 晚 · 依住宿晚數計算`:'依住宿晚數計算';
+
+  const rated=list.filter(r=>Number(r.rating)>0);
+  const avgRating=rated.length?rated.reduce((a,r)=>a+Number(r.rating),0)/rated.length:0;
+  const best=[...rated].sort((a,b)=>Number(b.rating)-Number(a.rating)||(b.wantReturn?1:0)-(a.wantReturn?1:0)||(b.checkin||'').localeCompare(a.checkin||''))[0];
+  const label=y?`${y} 年`:'累積';
+  $('annualReviewStory').innerHTML=list.length
+    ? `<b>${label}，桐House一家共收藏 ${list.length} 趟住宿、${totalNights} 晚旅行時光。</b> ${topPlace?`停留最久的是「${esc(topPlace[0])}」${topPlace[1]} 晚。`:''}${rated.length?` 已完成 ${rated.length} 筆評分，平均 ${avgRating.toFixed(1)} 分。`:''}${best?` 目前最高分回憶是「${esc(best.hotel)}」${best.rating} 分${best.wantReturn?'，也被標記為值得再住 ♡':''}。`:''}`
+    : '住宿紀錄累積後，這裡會自動寫出屬於桐House一家的年度旅行小結。';
+
+  const favorites=[...rated].sort((a,b)=>Number(b.rating)-Number(a.rating)||(Number(b.wantReturn)-Number(a.wantReturn))||(b.checkin||'').localeCompare(a.checkin||'')).slice(0,5);
+let favRank=0,favPrevRating=null,favPrevReturn=null;
+const favoriteRows=favorites.map((r,idx)=>{const rr=Number(r.rating),wr=Number(!!r.wantReturn);if(rr!==favPrevRating||wr!==favPrevReturn)favRank=idx+1;favPrevRating=rr;favPrevReturn=wr;return{r,rank:favRank};});
+  $('favoriteRankList').innerHTML=favoriteRows.length?favoriteRows.map(({r,rank})=>`<div class="hotel-rank-row"><span class="hotel-rank-no">${rank}</span><span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}${r.wantReturn?' · ♡ 值得再住':''}</span></span><span class="hotel-rank-score">${'★'.repeat(Number(r.rating))} ${r.rating}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">住過、喜歡過，自然會留下最愛 ♡</div>';
+  const avoids=[...rated].filter(r=>Number(r.rating)<=2).sort((a,b)=>Number(a.rating)-Number(b.rating)||(b.checkin||'').localeCompare(a.checkin||''));
+  $('avoidRankList').innerHTML=avoids.length?avoids.slice(0,8).map((r,i)=>`<div class="hotel-rank-row"><span class="hotel-rank-no">${i+1}</span><span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}${r.memo?` · ${esc(String(r.memo).slice(0,24))}${String(r.memo).length>24?'…':''}`:''}</span></span><span class="hotel-rank-score">${'★'.repeat(Number(r.rating))}${'☆'.repeat(5-Number(r.rating))} ${r.rating}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">目前沒有踩雷紀錄，真好 ♡</div>';
+
+  const calcAvg=arr=>{const ns=arr.reduce((a,r)=>a+nights(r.checkin,r.checkout),0),am=arr.reduce((a,r)=>a+Number(r.price||0),0);return {nights:ns,avg:ns?am/ns:0}};
+  const allAvg=calcAvg(list), dAvg=calcAvg(list.filter(r=>inferTripType(r)==='domestic')), iAvg=calcAvg(list.filter(r=>inferTripType(r)==='international'));
+  $('budgetOverall').textContent=`${money(allAvg.avg)} / 晚`; $('budgetOverallSub').textContent=`${allAvg.nights} 晚`;
+  $('budgetDomestic').textContent=`${money(dAvg.avg)} / 晚`; $('budgetDomesticSub').textContent=`${dAvg.nights} 晚`;
+  $('budgetInternational').textContent=`${money(iAvg.avg)} / 晚`; $('budgetInternationalSub').textContent=`${iAvg.nights} 晚`;
+  const avgBy=(arr,keyFn)=>{const g={};arr.forEach(r=>{const k=keyFn(r);if(!k)return;(g[k]??=[]).push(r)});return Object.entries(g).map(([name,rows])=>({name,...calcAvg(rows)})).sort((a,b)=>b.nights-a.nights||a.name.localeCompare(b.name,'zh-Hant'))[0]};
+  const c=avgBy(list.filter(r=>inferTripType(r)==='international'),r=>String(r.country||'').trim());
+  const a=avgBy(list.filter(r=>inferTripType(r)==='domestic'),r=>String(r.city||'').trim());
+  $('budgetCountryDetail').textContent=c?`${c.name} · ${money(c.avg)} / 晚（${c.nights} 晚）`:'—';
+  $('budgetAreaDetail').textContent=a?`${a.name} · ${money(a.avg)} / 晚（${a.nights} 晚）`:'—';
+}
+
+function renderYearFilter(){
+  const cur=$('yearFilter').value;
+  const years=[...new Set(records.map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  $('yearFilter').innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  $('yearFilter').value=cur;
+}
+
+function renderRecords(){
+  let list=[...records];
+  const q=$('searchInput').value.trim().toLowerCase();
+  const yf=$('yearFilter').value;
+  const tf=$('tripTypeFilter').value;
+  const rf=$('ratingFilter').value;
+  const ret=$('returnFilter').value;
+  if(q) list=list.filter(r=>[r.hotel,r.country,r.city,r.hotelGroup,r.room,r.memoryLine,r.memo,r.booking,r.companions,r.payment,(r.stickers||[]).join(' ')].join(' ').toLowerCase().includes(q));
+  if(yf) list=list.filter(r=>String(getYear(r.checkin))===yf);
+  if(tf) list=list.filter(r=>inferTripType(r)===tf);
+  if(rf==='unrated') list=list.filter(r=>!r.rating);
+  else if(rf) list=list.filter(r=>String(r.rating)===rf);
+  if(ret==='yes') list=list.filter(r=>r.wantReturn);
+  if(ret==='no') list=list.filter(r=>r.rating && Number(r.rating)<=2);
+  const sort=$('sortFilter').value;
+  list.sort((a,b)=>{
+    if(sort==='dateAsc') return a.checkin.localeCompare(b.checkin);
+    if(sort==='priceDesc') return Number(b.price)-Number(a.price);
+    if(sort==='priceAsc') return Number(a.price)-Number(b.price);
+    if(sort==='ratingDesc') return Number(b.rating||0)-Number(a.rating||0);
+    if(sort==='ratingAsc') return (a.rating?Number(a.rating):99)-(b.rating?Number(b.rating):99);
+    return b.checkin.localeCompare(a.checkin);
+  });
+  if(!list.length){
+    $('records').innerHTML=`<div class="empty"><span class="emoji">🛎️</span>${records.length?'找不到符合條件的住宿':'還沒有住宿紀錄<br>新增第一間你喜歡的飯店吧！'}</div>`;
+    return;
+  }
+  $('records').innerHTML=list.map(r=>{
+    const n=nights(r.checkin,r.checkout), per=Math.round(Number(r.price||0)/n);
+    const rating=r.rating?`${'★'.repeat(Number(r.rating))}${'☆'.repeat(5-Number(r.rating))} ${r.rating} 分`:'';
+    return `<article class="record">
+      ${r.photo?`<img class="record-photo" src="${r.photo}" alt="${esc(r.hotel)}">`:''}
+      <div class="record-top">
+        <div><h4>${esc(r.hotel)}</h4><div class="place">${esc([r.country,r.city].filter(Boolean).join(' · ')||'未填地區')} · ${esc(r.checkin)} → ${esc(r.checkout)}</div></div>
+        <div class="price">${money(r.price)}</div>
+      </div>
+      <div class="meta">
+        <span class="status-pill ${r.status==='planned'?'status-planned':'status-stayed'}">${r.status==='planned'?'✨ 已安排':'♡ 已入住'}</span>
+        <span class="chip trip-type-pill ${inferTripType(r)}">${tripTypeLabel(r)}</span>
+        <span class="chip">${n} 晚 · 平均 ${money(per)}/晚</span>
+        ${r.hotelGroup?`<span class="chip">🏨 ${esc(r.hotelGroup)}</span>`:''}
+        ${r.wantReturn?`<span class="chip">♡ 值得再住</span>`:''}
+        ${r.room?`<span class="chip">${esc(r.room)}</span>`:''}
+        ${r.booking?`<span class="chip">${esc(r.booking)}</span>`:''}
+        ${r.companions?`<span class="chip">👨‍👩‍👧 ${esc(r.companions)}</span>`:''}
+        ${r.payment?`<span class="chip">${esc(r.payment)}</span>`:''}
+        ${rating?`<span class="chip rating-chip rating-${r.rating}">${rating}</span>`:''}${r.rating && Number(r.rating)<=2?`<span class="chip avoid-chip">⚠ 避雷紀錄</span>`:''}
+      </div>
+      ${r.memoryLine?`<div class="record-memory">「${esc(r.memoryLine)}」</div>`:''}
+      ${r.stickers?.length?`<div class="meta">${r.stickers.map(x=>`<span class="chip">${stickerEmoji(x)} ${esc(x)}</span>`).join('')}</div>`:''}
+      ${r.memo?`<div class="memo">${esc(r.memo)}</div>`:''}
+      <div class="record-actions">
+        <button class="ghost" onclick="editRecord('${r.id}')">編輯</button>
+        <button class="ghost danger" onclick="deleteRecord('${r.id}')">刪除</button>
+      </div>
+    </article>`
+  }).join('');
+}
+
+function renderAll(){syncStatuses();renderJournal();renderHero();renderYearFilter();renderStats();renderTravelStats();renderAnnualInsights();renderUpcoming();renderGroups();renderReviewReminder();renderRecords()}
+
+
+let calendarCursor = new Date();
+let tempCheckin = '';
+let tempCheckout = '';
+
+function isoFromParts(y,m,d){
+  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+function prettyDate(iso){
+  if(!iso) return '—';
+  const [y,m,d]=iso.split('-');
+  return `${y}/${Number(m)}/${Number(d)}`;
+}
+function updateDateRangeUI(){
+  const a=$('checkin').value, b=$('checkout').value;
+  if(a && b){
+    $('dateRangeText').textContent=`${prettyDate(a)} ～ ${prettyDate(b)}`;
+    $('dateRangeSummary').textContent=`共 ${nights(a,b)} 晚`;
+  }else if(a){
+    $('dateRangeText').textContent=`入住 ${prettyDate(a)} · 請選退房日`;
+    $('dateRangeSummary').textContent='尚未完成日期區間';
+  }else{
+    $('dateRangeText').textContent='選擇入住 ～ 退房日期';
+    $('dateRangeSummary').textContent='尚未選擇住宿日期';
+  }
+}
+function openDatePicker(){
+  tempCheckin=$('checkin').value||'';
+  tempCheckout=$('checkout').value||'';
+  const base=tempCheckin?new Date(tempCheckin+'T12:00:00'):new Date();
+  calendarCursor=new Date(base.getFullYear(),base.getMonth(),1);
+  updateRangePreview();
+  renderCalendar();
+  $('dateDialog').showModal();
+}
+function updateRangePreview(){
+  $('previewCheckin').textContent=prettyDate(tempCheckin);
+  $('previewCheckout').textContent=prettyDate(tempCheckout);
+  $('confirmDateRange').disabled=!(tempCheckin&&tempCheckout);
+  $('confirmDateRange').style.opacity=(tempCheckin&&tempCheckout)?'1':'.45';
+}
+function renderCalendar(){
+  const y=calendarCursor.getFullYear();
+  const m=calendarCursor.getMonth();
+  $('calendarTitle').textContent=`${y} 年 ${m+1} 月`;
+  const first=new Date(y,m,1);
+  const startDay=first.getDay();
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const prevDays=new Date(y,m,0).getDate();
+  const today=todayISO();
+
+  const cells=[];
+  for(let i=0;i<42;i++){
+    let cy=y, cm=m, day, muted=false;
+    if(i<startDay){
+      day=prevDays-startDay+i+1; cm=m-1; muted=true;
+    }else if(i>=startDay+daysInMonth){
+      day=i-(startDay+daysInMonth)+1; cm=m+1; muted=true;
+    }else{
+      day=i-startDay+1;
+    }
+    if(cm<0){cm=11;cy=y-1}
+    if(cm>11){cm=0;cy=y+1}
+    const iso=isoFromParts(cy,cm+1,day);
+    let cls='calendar-day';
+    if(muted) cls+=' muted';
+    if(iso===today) cls+=' today';
+    if(tempCheckin && tempCheckout && iso>tempCheckin && iso<tempCheckout) cls+=' in-range';
+    if(iso===tempCheckin) cls+=' selected range-start';
+    if(iso===tempCheckout) cls+=' selected range-end';
+    cells.push(`<button type="button" class="${cls}" data-date="${iso}">${day}</button>`);
+  }
+  $('calendarGrid').innerHTML=cells.join('');
+}
+function chooseDate(iso){
+  if(!tempCheckin || (tempCheckin && tempCheckout)){
+    tempCheckin=iso;
+    tempCheckout='';
+  }else{
+    if(iso<=tempCheckin){
+      tempCheckin=iso;
+      tempCheckout='';
+    }else{
+      tempCheckout=iso;
+    }
+  }
+  updateRangePreview();
+  renderCalendar();
+}
+
+function openForm(r=null){
+  $('formTitle').textContent=r?'編輯住宿':'新增住宿';
+  $('recordId').value=r?.id||'';
+  $('hotel').value=r?.hotel||'';
+  $('status').value=r?(stayHasEnded(r)?'stayed':(r.status||'planned')):'planned';
+  $('tripType').value=r?inferTripType(r):'domestic';
+  $('country').value=r?.country||(inferTripType(r)==='domestic'?'台灣':'');
+  syncTripTypeField();
+  const known=[...$('hotelGroup').options].map(o=>o.value).filter(v=>v&&v!=='__custom');
+  if(r?.hotelGroup && !known.includes(r.hotelGroup)){ $('hotelGroup').value='__custom'; $('customGroup').value=r.hotelGroup; $('customGroupWrap').classList.remove('hidden'); }
+  else { $('hotelGroup').value=r?.hotelGroup||''; $('customGroup').value=''; $('customGroupWrap').classList.add('hidden'); }
+  $('city').value=r?.city||'';
+  $('checkin').value=r?.checkin||new Date().toISOString().slice(0,10);
+  $('checkout').value=r?.checkout||'';
+  updateDateRangeUI();
+  $('price').value=r?.price||'';
+  $('room').value=r?.room||'';
+  $('booking').value=r?.booking||'';
+  $('rating').value=r?.rating||'';
+  $('companions').value=r?.companions||'';
+  $('payment').value=r?.payment||'';
+  $('wantReturn').checked=!!r?.wantReturn;
+  $('memo').value=r?.memo||'';
+  $('memoryLine').value=r?.memoryLine||'';
+  setSelectedStickers(r?.stickers||[]);
+  window.__currentPhoto=r?.photo||'';
+  const prev=$('photoPreview');
+  if(window.__currentPhoto){prev.src=window.__currentPhoto;prev.style.display='block';}
+  else{prev.removeAttribute('src');prev.style.display='none';}
+  $('photoInput').value='';
+  $('recordDialog').showModal();
+  setTimeout(()=>$('hotel').focus(),100);
+}
+window.editRecord=id=>openForm(records.find(r=>r.id===id));
+window.deleteRecord=id=>{
+  const r=records.find(x=>x.id===id);
+  if(confirm(`要刪除「${r?.hotel||'這筆住宿'}」嗎？`)){
+    records=records.filter(x=>x.id!==id); save(); toast('已刪除住宿紀錄');
+  }
+}
+
+
+$('photoInput').addEventListener('change',async e=>{
+  const f=e.target.files?.[0]; if(!f)return;
+  try{
+    window.__currentPhoto=await compressImage(f);
+    $('photoPreview').src=window.__currentPhoto;
+    $('photoPreview').style.display='block';
+    toast('照片已放進這一頁 ♡');
+  }catch{
+    toast('照片讀取失敗，請換一張再試');
+  }
+});
+
+$('recordForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const checkin=$('checkin').value, checkout=$('checkout').value;
+  if(checkout && checkin && checkout<=checkin){toast('退房日期要晚於入住日期');return}
+  const data={
+    id:$('recordId').value||crypto.randomUUID(),
+    hotel:$('hotel').value.trim(), status:(checkout && new Date()>=new Date(checkout+'T11:00:00'))?'stayed':$('status').value, tripType:$('tripType').value, country:$('tripType').value==='domestic'?'台灣':$('country').value.trim(), city:$('city').value.trim(),
+    hotelGroup:$('hotelGroup').value==='__custom'?$('customGroup').value.trim():$('hotelGroup').value,
+    checkin, checkout, price:Number($('price').value||0),
+    room:$('room').value.trim(), booking:$('booking').value,
+    rating:$('rating').value, companions:$('companions').value, payment:$('payment').value,
+    wantReturn:$('wantReturn').checked, photo:window.__currentPhoto||'', memoryLine:$('memoryLine').value.trim(), stickers:selectedStickers(), memo:$('memo').value.trim(),
+    updatedAt:new Date().toISOString()
+  };
+  const i=records.findIndex(r=>r.id===data.id);
+  if(i>=0) records[i]=data; else records.push(data);
+  save(); $('recordDialog').close(); toast(i>=0?'住宿紀錄已更新 ♡':'收藏成功，旅途又多一頁 ✨');
+});
+
+$('openTools').onclick=()=>$('toolsDialog').showModal();
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
+$('searchInput').addEventListener('input',renderRecords);
+$('yearFilter').addEventListener('change',renderRecords);
+$('tripTypeFilter').addEventListener('change',renderRecords);
+$('travelStatYear').addEventListener('change',renderTravelStats);
+$('annualReviewYear').addEventListener('change',renderAnnualInsights);
+$('ratingFilter').addEventListener('change',renderRecords);
+$('returnFilter').addEventListener('change',renderRecords);
+$('sortFilter').addEventListener('change',renderRecords);
+$('statMode').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  statMode=b.dataset.mode;
+  [...$('statMode').children].forEach(x=>x.classList.toggle('active',x===b));
+  renderStats();
+});
+
+function jumpToSection(id,button){
+  document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.toggle('active',x===button));
+  let target=$(id);
+  if(id==='journalYear') target=document.querySelector('.year-cover');
+  target.scrollIntoView({behavior:'smooth',block:'start'});
+  target.classList.remove('jump-highlight');
+  void target.offsetWidth;
+  target.classList.add('jump-highlight');
+  setTimeout(()=>target.classList.remove('jump-highlight'),900);
+}
+document.querySelector('.bottom-nav').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  if(b.dataset.tab==='add'){
+    document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.toggle('active',x===b));
+    openForm();return;
+  }
+  if(b.dataset.tab==='journal') jumpToSection('journalYear',b);
+  if(b.dataset.tab==='trip') jumpToSection('nextBanner',b);
+  if(b.dataset.tab==='records') jumpToSection('recordsView',b);
+});
+
+
+function syncTripTypeField(){
+  const domestic=$('tripType').value==='domestic';
+  if(domestic){$('country').value='台灣';$('country').readOnly=true;}
+  else{$('country').readOnly=false;if($('country').value==='台灣'||$('country').value==='臺灣')$('country').value='';}
+}
+$('tripType').addEventListener('change',syncTripTypeField);
+
+$('hotelGroup').addEventListener('change',()=>{
+  $('customGroupWrap').classList.toggle('hidden',$('hotelGroup').value!=='__custom');
+  if($('hotelGroup').value==='__custom') setTimeout(()=>$('customGroup').focus(),80);
+});
+
+
+$('dateRangeBtn').addEventListener('click',openDatePicker);
+$('calendarGrid').addEventListener('click',e=>{
+  const b=e.target.closest('[data-date]');
+  if(!b)return;
+  chooseDate(b.dataset.date);
+});
+$('prevMonth').addEventListener('click',()=>{
+  calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);
+  renderCalendar();
+});
+$('nextMonth').addEventListener('click',()=>{
+  calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);
+  renderCalendar();
+});
+$('confirmDateRange').addEventListener('click',()=>{
+  if(!(tempCheckin&&tempCheckout)) return;
+  $('checkin').value=tempCheckin;
+  $('checkout').value=tempCheckout;
+  updateDateRangeUI();
+  $('dateDialog').close();
+  toast(`住宿日期已選好 · ${nights(tempCheckin,tempCheckout)} 晚 ♡`);
+});
+
+
+function backupLitePayload(){
+  // LINE-friendly backup deliberately excludes embedded photo data to keep the message size manageable.
+  const liteRecords=records.map(r=>{
+    const copy={...r};
+    if(copy.photo) copy.photo='';
+    return copy;
+  });
+  return {
+    app:'桐House一家家庭旅行手帳',
+    format:'tonghouse-line-backup',
+    version:1,
+    exportedAt:new Date().toISOString(),
+    records:liteRecords
+  };
+}
+function utf8ToBase64(str){
+  const bytes=new TextEncoder().encode(str);
+  let binary='';
+  bytes.forEach(b=>binary+=String.fromCharCode(b));
+  return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function base64ToUtf8(str){
+  str=str.replace(/-/g,'+').replace(/_/g,'/');
+  while(str.length%4) str+='=';
+  const binary=atob(str);
+  const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+function makeLineBackupText(){
+  const payload=backupLitePayload();
+  const code=utf8ToBase64(JSON.stringify(payload));
+  return `桐House一家・旅行手帳備份\n`+
+    `備份日期：${new Date(payload.exportedAt).toLocaleString('zh-TW')}\n`+
+    `住宿紀錄：${payload.records.length} 筆\n\n`+
+    `請複製下方「桐House備份碼」後，打開桐House手帳 → 工具 → 貼上備份碼還原。\n\n`+
+    `THB1:${code}`;
+}
+
+$('shareBackupBtn').onclick=async()=>{
+  const text=makeLineBackupText();
+  try{
+    if(navigator.share){
+      await navigator.share({
+        title:'桐House一家・旅行手帳備份',
+        text
+      });
+      toast('已開啟分享選單 ♡');
+    }else{
+      await navigator.clipboard.writeText(text);
+      toast('備份文字已複製，可直接貼到 LINE');
+    }
+  }catch(err){
+    if(err && err.name==='AbortError') return;
+    try{
+      await navigator.clipboard.writeText(text);
+      toast('無法直接分享，已改為複製備份文字');
+    }catch{
+      prompt('請複製這段備份文字後貼到 LINE：',text);
+    }
+  }
+}
+$('exportBtn').onclick=async()=>{
+  const backup={
+    app:'桐House一家家庭旅行手帳',
+    format:'tonghouse-full-backup',
+    version:4,
+    exportedAt:new Date().toISOString(),
+    photoCount:records.filter(r=>!!r.photo).length,
+    yearNotes:JSON.parse(localStorage.getItem(YEAR_NOTE_KEY)||'{}'),
+    records
+  };
+  const text=JSON.stringify(backup);
+  const fileName=`桐House一家_完整搬家_${new Date().toISOString().slice(0,10)}.json`;
+  const blob=new Blob([text],{type:'application/json'});
+  const file=new File([blob],fileName,{type:'application/json'});
+  // On iPhone/PWA, native share sheet is the most convenient way to AirDrop the real data file.
+  try{
+    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({
+        title:'桐House一家・完整搬家',
+        text:`${records.length} 筆住宿 · ${backup.photoCount} 張照片`,
+        files:[file]
+      });
+      toast('完整手札已準備搬出 ♡');
+      return;
+    }
+  }catch(err){
+    if(err?.name==='AbortError') return;
+  }
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=fileName;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  toast('完整搬家檔已下載，可用 AirDrop 傳送');
+}
+
+$('moveInBtn').onclick=()=>$('moveInFile').click();
+$('moveInFile').onchange=async e=>{
+  const f=e.target.files?.[0];
+  if(!f) return;
+  try{
+    const data=JSON.parse(await f.text());
+    const incoming=Array.isArray(data)?data:data?.records;
+    if(!Array.isArray(incoming)) throw new Error('invalid');
+    if(!Array.isArray(data) && data?.app && data.app!=='桐House一家家庭旅行手帳') throw new Error('wrong-app');
+    const photos=data?.photoCount ?? incoming.filter(r=>!!r.photo).length;
+    const exportedAt=data?.exportedAt?new Date(data.exportedAt).toLocaleString('zh-TW'):'未知日期';
+    const choice=confirm(
+      `準備搬入桐House ♡\n\n`+
+      `備份日期：${exportedAt}\n`+
+      `搬入住宿：${incoming.length} 筆\n`+
+      `包含照片：${photos} 張\n`+
+      `目前手機：${records.length} 筆\n\n`+
+      `按「確定」＝合併兩邊資料（推薦）\n`+
+      `按「取消」＝先不搬入\n\n`+
+      `合併時相同 ID 的住宿會以搬入檔版本更新，不會重複建立。`
+    );
+    if(!choice){e.target.value='';return;}
+    const byId=new Map(records.map(r=>[r.id,r]));
+    incoming.forEach(r=>byId.set(r.id,r));
+    records=[...byId.values()];
+    if(data?.yearNotes && typeof data.yearNotes==='object'){
+      const currentNotes=JSON.parse(localStorage.getItem(YEAR_NOTE_KEY)||'{}');
+      localStorage.setItem(YEAR_NOTE_KEY,JSON.stringify({...currentNotes,...data.yearNotes}));
+    }
+    normalizeRecords();
+    localStorage.setItem(KEY,JSON.stringify(records));
+    renderAll();
+    $('toolsDialog').close();
+    toast(`搬家完成 ♡ 現在共有 ${records.length} 筆住宿`);
+  }catch(err){
+    toast('這個檔案不是有效的桐House搬家備份');
+  }finally{
+    e.target.value='';
+  }
+}
+
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{
+  const file=e.target.files?.[0]; if(!file)return;
+  try{
+    const data=JSON.parse(await file.text());
+    const incoming=Array.isArray(data)?data:data.records;
+    if(!Array.isArray(incoming)) throw new Error();
+    if(confirm(`找到 ${incoming.length} 筆紀錄。\n\n為了保護現在的手札，會用「合併」方式匯入，不會整批刪掉目前資料。\n相同 ID 才會以備份版本更新。`)){
+      const byId=new Map(records.map(r=>[r.id,r]));
+      incoming.forEach(r=>byId.set(r.id,r));
+      records=[...byId.values()];normalizeRecords();save();$('toolsDialog').close();toast('資料已安全合併 ✨');
+    }
+  }catch{toast('這個備份檔格式不正確')}
+  e.target.value='';
+}
+
+$('restoreCodeBtn').onclick=async()=>{
+  let raw=$('backupCodeInput').value.trim();
+  if(!raw && navigator.clipboard){
+    try{
+      raw=(await navigator.clipboard.readText()).trim();
+      $('backupCodeInput').value=raw;
+    }catch{}
+  }
+  const m=raw.match(/THB1:([A-Za-z0-9_-]+)/);
+  if(!m){
+    toast('沒有找到有效的桐House備份碼');
+    return;
+  }
+  try{
+    const data=JSON.parse(base64ToUtf8(m[1]));
+    if(!data || data.format!=='tonghouse-line-backup' || !Array.isArray(data.records)) throw new Error('invalid');
+    const exportedAt=data.exportedAt?new Date(data.exportedAt).toLocaleString('zh-TW'):'未知日期';
+    const ok=confirm(
+      `找到桐House LINE 備份 ♡\n\n`+
+      `備份日期：${exportedAt}\n`+
+      `備份內：${data.records.length} 筆\n`+
+      `目前手帳：${records.length} 筆\n\n`+
+      `這種快速備份不包含住宿照片。\n`+
+      `要匯入並取代目前住宿紀錄嗎？`
+    );
+    if(!ok) return;
+    records=data.records;
+    normalizeRecords();
+    localStorage.setItem(KEY,JSON.stringify(records));
+    renderAll();
+    $('backupCodeInput').value='';
+    $('toolsDialog').close();
+    toast(`已還原 ${records.length} 筆旅行紀錄 ✨`);
+  }catch{
+    toast('備份碼內容損壞或格式不符');
+  }
+}
+
+$('clearBtn').onclick=()=>{
+  if(confirm('確定要清除全部住宿紀錄？這個動作無法復原。')){
+    records=[];save();$('toolsDialog').close();toast('全部紀錄已清除');
+  }
+}
+
+// v6.7 one-click backup receiver.
+// The exported HTML opens this same deployed app and transfers the complete
+// backup (including compressed photos) via postMessage, avoiding URL-size limits.
+window.addEventListener('message',e=>{
+  const msg=e.data;
+  if(!msg || msg.type!=='tonghouse-backup-data') return;
+  const data=msg.backup;
+  const incoming=Array.isArray(data)?data:data?.records;
+  if(!Array.isArray(incoming)){
+    toast('這個備份內容無法辨識');
+    return;
+  }
+  const exportedAt=data?.exportedAt ? new Date(data.exportedAt).toLocaleString('zh-TW') : '未知日期';
+  const ok=confirm(
+    `桐House 備份已送達 ♡\n\n`+
+    `備份日期：${exportedAt}\n`+
+    `備份內：${incoming.length} 筆\n`+
+    `目前手帳：${records.length} 筆\n\n`+
+    `要匯入並取代目前的住宿紀錄嗎？`
+  );
+  if(!ok) return;
+  records=incoming;
+  normalizeRecords();
+  localStorage.setItem(KEY,JSON.stringify(records));
+  renderAll();
+  history.replaceState(null,'',location.pathname+location.search);
+  toast(`已還原 ${records.length} 筆旅行紀錄 ✨`);
+  try{ e.source?.postMessage({type:'tonghouse-backup-done'},'*'); }catch{}
+});
+
+function announceBackupReceiver(){
+  if(location.hash==='#backup-receiver' && window.opener){
+    // Repeat a few times so slower iPhone/Safari loads still complete the handshake.
+    let tries=0;
+    const ping=()=>{
+      tries++;
+      try{window.opener.postMessage({type:'tonghouse-backup-ready'},'*')}catch{}
+      if(tries<8) setTimeout(ping,450);
+    };
+    ping();
+  }
+}
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load',async()=>{
+    try{
+      const reg=await navigator.serviceWorker.register('./sw.js?v=6.9.0',{updateViaCache:'none'});
+      await reg.update();
+    }catch{}
+  });
+}
+
+// =========================================================
+// v6.7 · unified statistics + warm journal logic
+// =========================================================
+function cleanText(v){return String(v||'').trim()}
+function stayedRecords(){return records.filter(r=>stayHasEnded(r) || r.status==='stayed')}
+function stayStage(r){
+  if(stayHasEnded(r)) return 'stayed';
+  const today=todayISO();
+  if(r.checkin && r.checkin<=today) return 'ongoing';
+  return 'planned';
+}
+function domesticAreaName(r){
+  const raw=cleanText(r.city);
+  const pairs=[
+    ['臺北','台北'],['台北','台北'],['新北','新北'],['桃園','桃園'],
+    ['新竹','新竹'],['苗栗','苗栗'],['臺中','台中'],['台中','台中'],
+    ['彰化','彰化'],['南投','南投'],['雲林','雲林'],['嘉義','嘉義'],
+    ['臺南','台南'],['台南','台南'],['高雄','高雄'],['屏東','屏東'],
+    ['宜蘭','宜蘭'],['花蓮','花蓮'],['臺東','台東'],['台東','台東'],
+    ['基隆','基隆'],['澎湖','澎湖'],['金門','金門'],['連江','連江'],['馬祖','連江']
+  ];
+  for(const [needle,name] of pairs) if(raw.includes(needle)) return name;
+  return raw || '台灣';
+}
+function locationName(r){return cleanText(r.city)||cleanText(r.country)||'旅行途中'}
+function sumNights(list){return list.reduce((a,r)=>a+nights(r.checkin,r.checkout),0)}
+function sumAmount(list){return list.reduce((a,r)=>a+Number(r.price||0),0)}
+function aggregateRows(list,keyFn){
+  const map={};
+  list.forEach(r=>{
+    const k=cleanText(keyFn(r));
+    if(!k) return;
+    if(!map[k]) map[k]={name:k,nights:0,amount:0,visits:0};
+    map[k].nights+=nights(r.checkin,r.checkout);
+    map[k].amount+=Number(r.price||0);
+    map[k].visits+=1;
+  });
+  return Object.values(map);
+}
+function rankRows(rows,metric){
+  const sorted=[...rows].sort((a,b)=>b[metric]-a[metric]||a.name.localeCompare(b.name,'zh-Hant'));
+  let prev=null,rank=0;
+  return sorted.map((x,i)=>{if(x[metric]!==prev)rank=i+1;prev=x[metric];return {...x,rank}});
+}
+function leaders(rows,metric){
+  if(!rows.length) return [];
+  const ranked=[...rows].sort((a,b)=>b[metric]-a[metric]||a.name.localeCompare(b.name,'zh-Hant'));
+  const max=ranked[0][metric];
+  return ranked.filter(x=>x[metric]===max);
+}
+function joinNames(rows){return rows.map(x=>x.name).join('、')}
+
+normalizeRecords=function(){
+  records=records.map(r=>{
+    const tripType=inferTripType(r);
+    const status=stayHasEnded(r)?'stayed':(r.status||((r.checkin&&r.checkin>todayISO())?'planned':'stayed'));
+    return {
+      ...r,
+      status,
+      country:tripType==='domestic'?(r.country||'台灣'):(r.country||''),
+      hotelGroup:r.hotelGroup||'',
+      companions:r.companions||'',
+      payment:r.payment||'',
+      wantReturn:!!r.wantReturn,
+      photo:r.photo||'',
+      memoryLine:r.memoryLine||'',
+      stickers:Array.isArray(r.stickers)?r.stickers:[],
+      tripType
+    };
+  });
+};
+
+reviewPendingRecords=function(){
+  // Rating is the only required follow-up. Notes remain optional, so the app never nags forever.
+  return records.filter(r=>stayHasEnded(r) && !Number(r.rating))
+    .sort((a,b)=>(b.checkout||'').localeCompare(a.checkout||''));
+};
+renderReviewReminder=function(){
+  const pending=reviewPendingRecords(), box=$('reviewReminder');
+  if(!pending.length){box.classList.add('hidden');return;}
+  const r=pending[0];
+  box.classList.remove('hidden');
+  $('reviewReminderTitle').textContent=pending.length===1?`「${r.hotel}」住完啦 ♡`:`有 ${pending.length} 段回憶還沒留下星星`;
+  $('reviewReminderText').textContent='給這次住宿一個星等，想說的話也可以順手留一句。';
+  $('reviewReminderBtn').textContent='留下回憶';
+  $('reviewReminderBtn').onclick=()=>openForm(r);
+};
+
+renderHero=function(){
+  const y=new Date().getFullYear();
+  const yr=stayedRecords().filter(r=>getYear(r.checkin)===y);
+  $('heroYearAmount').textContent=money(sumAmount(yr));
+  $('heroYearCount').textContent=`${yr.length} 次`;
+  $('heroTotalCount').textContent=`${new Set(stayedRecords().map(r=>cleanText(r.hotel)).filter(Boolean)).size} 間`;
+};
+
+renderStats=function(){
+  const stayed=stayedRecords();
+  const groups={};
+  stayed.forEach(r=>{const k=periodKey(r,statMode);(groups[k]??=[]).push(r)});
+  let current=latestPeriod(statMode);
+  if(!groups[current]) current=Object.keys(groups).sort().slice(-1)[0]||'';
+  const arr=current?(groups[current]||[]):[];
+  const amount=sumAmount(arr), totalNights=sumNights(arr);
+  $('periodAmount').textContent=money(amount);
+  $('periodLabel').textContent=current?labelPeriod(current,statMode):'還沒有已完成的住宿';
+  $('periodCount').textContent=arr.length;
+  $('avgNight').textContent=totalNights?money(amount/totalNights):'—';
+  $('nightCount').textContent=totalNights?`共 ${totalNights} 晚`:'還沒有住宿晚數';
+
+  const cityRows=aggregateRows(arr,r=>cleanText(r.city));
+  const cityLeaders=leaders(cityRows,'nights');
+  if(cityLeaders.length){
+    $('topCity').textContent=joinNames(cityLeaders);
+    const n=cityLeaders[0].nights;
+    $('topCitySub').textContent=cityLeaders.length>1?`並列 · 各 ${n} 晚`:`共住了 ${n} 晚`;
+  }else{
+    $('topCity').textContent='—';
+    $('topCitySub').textContent='這段時間還沒有住宿';
+  }
+
+  const hotelRows=aggregateRows(stayed,r=>cleanText(r.hotel));
+  const realReturns=hotelRows.filter(x=>x.visits>=2);
+  if(realReturns.length){
+    const top=leaders(realReturns,'visits');
+    $('favoriteHotel').textContent=joinNames(top);
+    $('favoriteHotelSub').textContent=top.length>1?`都回訪了 ${top[0].visits} 次`:`回去住了 ${top[0].visits} 次 · 共 ${top[0].nights} 晚`;
+  }else{
+    $('favoriteHotel').textContent='還沒有回訪過的旅宿';
+    $('favoriteHotelSub').textContent='哪天又回到同一間，這裡就會記得 ♡';
+  }
+
+  const entries=Object.entries(groups)
+    .map(([k,v])=>[k,sumAmount(v)])
+    .sort((a,b)=>a[0].localeCompare(b[0])).slice(-6);
+  const max=Math.max(...entries.map(e=>e[1]),1);
+  $('barList').innerHTML=entries.length?entries.map(([k,v])=>`
+    <div class="bar-row">
+      <span>${esc(statMode==='month'?k.slice(2):k)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(4,v/max*100)}%"></div></div>
+      <b>${money(v)}</b>
+    </div>`).join(''):`<div style="color:var(--muted);font-size:13px">旅行多一點，這裡就會留下花費的軌跡。</div>`;
+};
+
+renderTravelStats=function(){
+  const yearSel=$('travelStatYear');
+  if(!yearSel)return;
+  const years=[...new Set(stayedRecords().map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  const old=yearSel.value;
+  yearSel.innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  if(old && years.map(String).includes(old)) yearSel.value=old;
+
+  let list=stayedRecords();
+  if(yearSel.value) list=list.filter(r=>String(getYear(r.checkin))===yearSel.value);
+  const domestic=list.filter(r=>inferTripType(r)==='domestic');
+  const international=list.filter(r=>inferTripType(r)==='international');
+
+  const fillSplit=(prefix,arr)=>{
+    const ns=sumNights(arr), am=sumAmount(arr);
+    $(prefix+'Amount').textContent=money(am);
+    $(prefix+'Meta').textContent=arr.length?`${arr.length} 次住宿 · ${ns} 晚`:'還沒有住宿回憶';
+  };
+  fillSplit('domestic',domestic); fillSplit('international',international);
+
+  const countries=aggregateRows(international,r=>countryName(r));
+  const areas=aggregateRows(domestic,r=>domesticAreaName(r));
+  const renderRank=(id,rows,metric)=>{
+    const el=$(id); if(!el)return;
+    const ranked=rankRows(rows,metric).slice(0,8);
+    el.innerHTML=ranked.length?ranked.map(x=>`
+      <div class="rank-row">
+        <span class="rank-no">${x.rank}</span>
+        <span class="rank-name">${esc(x.name)}</span>
+        <span class="rank-value">${metric==='nights'?`${x.nights} 晚`:money(x.amount)}</span>
+      </div>`).join(''):'<div style="color:var(--muted);font-size:12px">回憶再多一點，這裡就會有答案 ♡</div>';
+  };
+  renderRank('countryDaysRank',countries,'nights');
+  renderRank('domesticDaysRank',areas,'nights');
+  renderRank('countrySpendRank',countries,'amount');
+  renderRank('domesticSpendRank',areas,'amount');
+};
+
+renderAnnualInsights=function(){
+  const sel=$('annualReviewYear'); if(!sel)return;
+  const stayed=stayedRecords();
+  const years=[...new Set(stayed.map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  const old=sel.value;
+  sel.innerHTML=years.map(y=>`<option value="${y}">${y} 年</option>`).join('') || `<option value="${new Date().getFullYear()}">${new Date().getFullYear()} 年</option>`;
+  if(old && years.map(String).includes(old)) sel.value=old;
+  else if(years.includes(new Date().getFullYear())) sel.value=String(new Date().getFullYear());
+  else if(years.length) sel.value=String(years[0]);
+
+  const y=Number(sel.value)||new Date().getFullYear();
+  const list=stayed.filter(r=>getYear(r.checkin)===y).sort((a,b)=>(a.checkin||'').localeCompare(b.checkin||''));
+  const totalNights=sumNights(list), amount=sumAmount(list);
+  const avgNight=totalNights?amount/totalNights:0;
+
+  $('annualCoverYear').textContent=`OUR FAMILY · ${y}`;
+  $('annualCoverTitle').textContent=`${y}，我們一起住了 ${totalNights} 個夜晚`;
+  $('annualCoverSub').textContent=list.length
+    ? `${list.length} 次住宿，不是拿來比較多不多，是把一家人一起醒來的早晨好好收著。`
+    : '這一年的旅行頁面還是空白，等我們一起把故事住進來。';
+
+  const rated=list.filter(r=>Number(r.rating)>=1 && Number(r.rating)<=5);
+  const reasonFor=r=>{
+    const memory=cleanText(r.memoryLine), memo=cleanText(r.memo);
+    if(memory) return `「${memory}」`;
+    if(memo) return memo;
+    if(r.wantReturn) return '你曾經特別勾下「這間值得再住一次」，這就是最直接的喜歡。';
+    return `你給了這次住宿 ${r.rating} 顆星。`;
+  };
+  const setFeaturePhoto=(id,r,fallback)=>{
+    const oldEl=$(id); if(!oldEl)return;
+    const html=r?.photo
+      ? `<img class="annual-feature-photo" id="${id}" src="${r.photo}" alt="${esc(r.hotel)}">`
+      : `<div class="annual-feature-placeholder" id="${id}">${fallback}</div>`;
+    oldEl.outerHTML=html;
+  };
+
+  // Most-liked: highest rating; "wantReturn" breaks ties; then newest memory.
+  const favorite=[...rated].sort((a,b)=>
+    Number(b.rating)-Number(a.rating) ||
+    Number(!!b.wantReturn)-Number(!!a.wantReturn) ||
+    (b.checkin||'').localeCompare(a.checkin||'')
+  )[0];
+  setFeaturePhoto('annualFavoritePhoto',favorite,'♡');
+  $('annualFavoriteHotel').textContent=favorite?.hotel||'還在等我們遇見';
+  $('annualFavoriteReason').textContent=favorite
+    ? reasonFor(favorite)
+    : '有留下評分與回憶後，這裡會選出真正喜歡的那一間。';
+
+  // Least-liked only appears when there is a meaningful contrast.
+  const least=[...rated].sort((a,b)=>
+    Number(a.rating)-Number(b.rating) ||
+    Number(!!a.wantReturn)-Number(!!b.wantReturn) ||
+    (b.checkin||'').localeCompare(a.checkin||'')
+  )[0];
+  const hasLeast=least && favorite && (Number(least.rating)<Number(favorite.rating) || Number(least.rating)<=2);
+  setFeaturePhoto('annualLeastPhoto',hasLeast?least:null,'☁️');
+  $('annualLeastHotel').textContent=hasLeast?least.hotel:'目前沒有特別不喜歡的住宿';
+  $('annualLeastReason').textContent=hasLeast
+    ? reasonFor(least)
+    : '如果每一間都喜歡，就不用硬挑一個「最不喜歡」；回憶不需要為了排名而排名。';
+
+  // Places are counted by actual nights.
+  const places=aggregateRows(list,r=>locationName(r)).sort((a,b)=>b.nights-a.nights||b.visits-a.visits||a.name.localeCompare(b.name,'zh-Hant'));
+  $('annualPlaces').innerHTML=places.length
+    ? places.map(x=>`<div class="annual-mini"><b>${esc(x.name)}</b><span>${x.nights} 晚 · ${x.visits} 次住宿</span></div>`).join('')
+    : '<div class="annual-mini"><b>還沒有足跡</b><span>下一趟旅行會從這裡開始。</span></div>';
+
+  // "Firsts" compare this year with all completed stays before Jan 1 of this year.
+  const before=stayed.filter(r=>getYear(r.checkin)<y);
+  const beforeCities=new Set(before.map(r=>cleanText(r.city)).filter(Boolean));
+  const beforeGroups=new Set(before.map(r=>cleanText(r.hotelGroup)).filter(Boolean));
+  const firstCity=list.find(r=>cleanText(r.city) && !beforeCities.has(cleanText(r.city)));
+  const firstGroup=list.find(r=>cleanText(r.hotelGroup) && !beforeGroups.has(cleanText(r.hotelGroup)));
+
+  // First revisit of the year = first stay whose hotel already appeared in an earlier completed stay.
+  const firstRevisit=list.find(r=>{
+    const h=cleanText(r.hotel); if(!h)return false;
+    return stayed.some(prev=>cleanText(prev.hotel)===h && (prev.checkin||'')<(r.checkin||''));
+  });
+  const firsts=[];
+  if(firstCity) firsts.push(['第一次走進',cleanText(firstCity.city),firstCity.hotel]);
+  if(firstGroup) firsts.push(['第一次住進',cleanText(firstGroup.hotelGroup),firstGroup.hotel]);
+  if(firstRevisit) firsts.push(['第一次回訪',cleanText(firstRevisit.hotel),firstRevisit.city||'熟悉的地方']);
+  $('annualFirsts').innerHTML=firsts.length
+    ? firsts.map(([label,name,sub])=>`<div class="annual-mini"><b>${esc(name)}</b><span>${esc(label)} · ${esc(sub||'')}</span></div>`).join('')
+    : '<div class="annual-mini"><b>今年沒有新的「第一次」也沒關係</b><span>熟悉的地方，再去一次也會有新的故事。</span></div>';
+
+  const stickerCounts={};
+  list.forEach(r=>(r.stickers||[]).forEach(s=>stickerCounts[s]=(stickerCounts[s]||0)+1));
+  const keywords=Object.entries(stickerCounts).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'zh-Hant')).slice(0,8);
+  $('annualKeywords').innerHTML=keywords.length
+    ? keywords.map(([name,count])=>`<span class="annual-keyword">${stickerEmoji(name)} ${esc(name)}${count>1?` · ${count}`:''}</span>`).join('')
+    : '<span class="annual-keyword">♡ 還沒有旅行關鍵字</span>';
+
+  $('annualTotalSpend').textContent=list.length?money(amount):'—';
+  $('annualAvgNight').textContent=totalNights?`${money(avgNight)} / 晚`:'—';
+
+  let closing='這一年還沒有住宿回憶，但我們的下一頁一直都在。';
+  if(list.length){
+    const top=places[0];
+    const favText=favorite?`最想再翻回去看的，是「${favorite.hotel}」那一頁。`:'';
+    const keywordText=keywords.length?`今年的旅行有一點「${keywords.slice(0,3).map(x=>x[0]).join('、')}」的樣子。`:'';
+    closing=`♡ ${y}，我們一起住過 ${totalNights} 個夜晚${top?`，也把 ${top.name} 留成了今年很深的一個足跡`:''}。${favText}${keywordText} 不一定每趟都完美，但一家人一起走過的地方，最後都會變成我們的故事。`;
+  }
+  $('annualClosing').textContent=closing;
+
+  const noteKey=String(y);
+  let notes={};
+  try{notes=JSON.parse(localStorage.getItem(YEAR_NOTE_KEY)||'{}')||{}}catch{}
+  const note=$('annualOwnNote');
+  note.value=notes[noteKey]||'';
+  note.oninput=()=>{
+    let latest={};
+    try{latest=JSON.parse(localStorage.getItem(YEAR_NOTE_KEY)||'{}')||{}}catch{}
+    latest[noteKey]=note.value;
+    localStorage.setItem(YEAR_NOTE_KEY,JSON.stringify(latest));
+    $('annualOwnNoteStatus').textContent=note.value.trim()?`已保存給 ${y} 年的我們 ♡`:'會自動保存在這台裝置。';
+  };
+  $('annualOwnNoteStatus').textContent=note.value.trim()?`已保存給 ${y} 年的我們 ♡`:'會自動保存在這台裝置。';
+};
+
+renderGroups=function(){
+  const stayed=stayedRecords();
+  const groups={};
+  stayed.filter(r=>cleanText(r.hotelGroup)).forEach(r=>{
+    const g=cleanText(r.hotelGroup);
+    if(!groups[g]) groups[g]={count:0,amount:0,nights:0,planned:0};
+    groups[g].count++;groups[g].amount+=Number(r.price||0);groups[g].nights+=nights(r.checkin,r.checkout);
+  });
+  records.filter(r=>stayStage(r)==='planned' && cleanText(r.hotelGroup)).forEach(r=>{
+    const g=cleanText(r.hotelGroup);
+    if(!groups[g]) groups[g]={count:0,amount:0,nights:0,planned:0};
+    groups[g].planned++;
+  });
+  const arr=Object.entries(groups).sort((a,b)=>b[1].count-a[1].count||b[1].nights-a[1].nights||a[0].localeCompare(b[0],'zh-Hant'));
+  $('groupGrid').innerHTML=arr.length?arr.slice(0,8).map(([g,v])=>`
+    <div class="group-card">
+      <b>${esc(g)}</b>
+      <span>${v.count?`${v.count} 次住宿 · ${v.nights} 晚`:'還沒住過'}</span>
+      ${v.count?`<div class="mini-note">${money(v.amount)}</div>`:''}
+      ${v.planned?`<div class="mini-note">✨ 還有 ${v.planned} 個期待中的安排</div>`:''}
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1"><span class="emoji">🏨</span>住過的旅宿家族，會一個一個留在這裡 ♡</div>`;
+};
+
+renderJournal=function(){
+  const y=new Date().getFullYear();
+  $('journalYear').textContent=`${y} FAMILY JOURNAL`;
+  const stayed=stayedRecords().filter(r=>getYear(r.checkin)===y);
+  const nightsCount=sumNights(stayed);
+  const cities=new Set(stayed.map(r=>cleanText(r.city)).filter(Boolean));
+  const groups=new Set(stayed.map(r=>cleanText(r.hotelGroup)).filter(Boolean));
+  $('coverNights').textContent=`今年 ${nightsCount} 晚`;
+  $('coverCities').textContent=`走過 ${cities.size} 個城市`;
+  $('coverGroups').textContent=`${groups.size} 個旅宿品牌`;
+
+  const memory=[...stayed].filter(r=>r.photo||r.memoryLine).sort((a,b)=>(b.checkin||'').localeCompare(a.checkin||''))[0];
+  const hp=$('highlightPhoto');
+  if(memory){
+    if(memory.photo){hp.outerHTML=`<img id="highlightPhoto" src="${memory.photo}" alt="${esc(memory.hotel)}">`}
+    else if(hp.tagName==='IMG') hp.outerHTML='<div class="photo-placeholder" id="highlightPhoto">♡</div>';
+    $('highlightTitle').textContent=memory.hotel;
+    $('highlightText').textContent=memory.memoryLine||`${memory.city||'這趟旅行'}，成為今年手帳裡的一頁。`;
+  }else{
+    if(hp&&hp.tagName==='IMG') hp.outerHTML='<div class="photo-placeholder" id="highlightPhoto">♡</div>';
+    $('highlightTitle').textContent='今年的旅行回憶，等你慢慢收藏';
+    $('highlightText').textContent='照片和一句話，就能把那一天留久一點。';
+  }
+
+  const fp=aggregateRows(stayedRecords(),r=>[r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')
+    .sort((a,b)=>b.nights-a.nights||b.visits-a.visits||a.name.localeCompare(b.name,'zh-Hant'));
+  $('footprintBoard').innerHTML=fp.length?fp.slice(0,10).map((x,i)=>`
+    <div class="footprint-card">
+      <b>${esc(x.name)}</b>
+      <span>${x.nights} 晚 · ${x.visits} 次住宿</span>
+      <div class="stamp">${i%3===0?'✈':i%3===1?'⌂':'♡'}</div>
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1">我們走過的地方，會慢慢留成一家人的足跡。</div>`;
+
+  const tl=[...stayedRecords()].sort((a,b)=>(b.checkin||'').localeCompare(a.checkin||'')).slice(0,12);
+  $('timeline').innerHTML=tl.length?tl.map(r=>`
+    <div class="timeline-item"><div class="timeline-card">
+      ${r.photo?`<img class="timeline-thumb" src="${r.photo}" alt="${esc(r.hotel)}">`:`<div class="timeline-thumb">⌂</div>`}
+      <div><h4>${esc(r.hotel)}</h4>
+      <div class="line">${esc(r.checkin)} · ${esc(locationName(r))}</div>
+      ${r.memoryLine?`<div class="quote">「${esc(r.memoryLine)}」</div>`:''}
+      ${r.stickers?.length?`<div class="meta" style="margin-top:7px">${r.stickers.map(x=>`<span class="chip">${stickerEmoji(x)} ${esc(x)}</span>`).join('')}</div>`:''}
+      </div>
+    </div></div>`).join(''):`<div class="empty">第一段住宿回憶，等你留下來 ♡</div>`;
+};
+
+// Current stay is not "still upcoming".
+renderUpcoming=function(){
+  const active=records.filter(r=>stayStage(r)!=='stayed').sort((a,b)=>(a.checkin||'').localeCompare(b.checkin||''));
+  const upcoming=active.filter(r=>stayStage(r)==='planned');
+  const ongoing=active.filter(r=>stayStage(r)==='ongoing');
+  const list=[...ongoing,...upcoming];
+  const visual=$('nextTripVisual'),primary=$('nextTripPrimary'),edit=$('nextTripEdit');
+  if(list.length){
+    const n=list[0],stage=stayStage(n),d=diffDays(n.checkin),nightCount=nights(n.checkin,n.checkout);
+    $('nextStayName').textContent=n.hotel;
+    $('nextTripLocation').textContent=[n.country,n.city].filter(Boolean).join(' · ')||'下一趟家庭旅行';
+    $('nextStayMeta').textContent=`${n.checkin} → ${n.checkout} · ${nightCount} 晚${n.payment?' · '+n.payment:''}`;
+    $('nextStayCount').textContent=stage==='ongoing'?'正在旅行中 ♡':d===0?'今天入住 ♡':d===1?'明天出發 ♡':`還有 ${d} 天出發 ♡`;
+    visual.classList.remove('next-empty-visual');
+    visual.style.backgroundImage=n.photo?`linear-gradient(to top,rgba(57,40,34,.45),rgba(57,40,34,.04)),url("${n.photo}")`:'';
+    primary.classList.remove('hidden');
+    primary.textContent=list.length>1?`看看全部 ${list.length} 個安排`:'看看這趟';
+    primary.onclick=()=>jumpToSection('upcomingView',document.querySelector('.bottom-nav button[data-tab="trip"]'));
+    edit.classList.remove('hidden');edit.textContent='查看';edit.onclick=()=>openForm(n);
+  }else{
+    $('nextStayName').textContent='下一站，想去哪裡呢？';
+    $('nextTripLocation').textContent='OUR NEXT LITTLE ADVENTURE';
+    $('nextStayMeta').textContent='下一站，等我們一起出發 ♡';
+    $('nextStayCount').textContent='一起期待下一趟 ♡';
+    visual.classList.add('next-empty-visual');visual.style.backgroundImage='';
+    primary.classList.add('hidden');edit.classList.add('hidden');
+  }
+  $('upcomingList').innerHTML=list.length?list.slice(0,6).map(r=>{
+    const stage=stayStage(r),d=diffDays(r.checkin);
+    return `<article class="upcoming-card" onclick="editRecord('${r.id}')" style="cursor:pointer">
+      <span class="status-pill ${stage==='ongoing'?'status-stayed':'status-planned'}">${stage==='ongoing'?'🏨 入住中':'✨ 已安排'}</span>
+      <div class="days">${stage==='ongoing'?'旅行中':d===0?'今天':d===1?'明天':`還有 ${d} 天`}</div>
+      <div class="u-title">${esc(r.hotel)}</div>
+      <div class="u-meta">${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}<br>${esc(r.checkin)} → ${esc(r.checkout)} · ${nights(r.checkin,r.checkout)} 晚</div>
+    </article>`;
+  }).join(''):`<div class="empty"><span class="emoji">🧳</span>下一趟還沒決定<br>沒關係，期待本身也是旅行的一部分 ♡</div>`;
+};
+
+sampleIfEmpty();normalizeRecords();renderAll();announceBackupReceiver();
+</script>
+</body>
+</html>
