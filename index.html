@@ -903,7 +903,7 @@
       .form-group.full{grid-column:auto}
     }
   
-    /* v6.6 · rating, review reminder, insights, cute quick row */
+    /* v6.7 · rating, review reminder, insights, cute quick row */
     #dashboardView,#recordsView{scroll-margin-top:18px}
     .filters{grid-template-columns:repeat(5,minmax(0,1fr))}
     .review-reminder{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:14px 15px;background:linear-gradient(135deg,#fff4dc,#fffaf5);border:1px dashed #e8c98f;border-radius:22px 18px 24px 19px;box-shadow:0 8px 20px rgba(116,83,50,.06)}
@@ -922,7 +922,7 @@
     @keyframes jumpGlow{0%,100%{filter:none}35%{filter:drop-shadow(0 0 12px rgba(217,150,127,.35));transform:translateY(-2px)}}
     @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters #searchInput{grid-column:1/-1}}
 
-    /* === v6.6 年度回顧 / 最愛避雷 / 平均住宿預算 === */
+    /* === v6.7 年度回顧 / 最愛避雷 / 平均住宿預算 === */
     .memory-insight-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:24px}
     .year-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:12px}
     .year-review-card{background:#fffdf9;border:1px solid #eadbd2;border-radius:24px 20px 25px 21px;padding:15px;box-shadow:0 8px 22px rgba(114,86,77,.05)}
@@ -944,7 +944,7 @@
     @media(max-width:520px){.budget-grid{grid-template-columns:1fr}.memory-insight-head{align-items:flex-start;flex-direction:column}.memory-insight-head .mini-stat-filter{width:100%}.memory-insight-head select{width:100%}}
 
 
-    /* v6.6 · next-trip focus + handier quick navigation */
+    /* v6.7 · next-trip focus + handier quick navigation */
     html{scroll-padding-top:18px}
     .next-banner.next-trip-card{
       display:block!important;padding:0;overflow:hidden;transform:none;
@@ -998,7 +998,7 @@
 
 
 /* =========================================================
-   v6.6 · visual polish / spacing normalization
+   v6.7 · visual polish / spacing normalization
    Keep the whole app feeling like one family travel journal.
    ========================================================= */
 :root{
@@ -1172,6 +1172,31 @@ textarea.field{min-height:94px}
 .yearbook-mini-grid b{font-size:13px;color:#765c53}
 @media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
 
+
+/* v6.7 · warm journal, less dashboard */
+.yearbook-card{border:1px solid var(--line);background:linear-gradient(180deg,#fffdfa,#fff7f1);border-radius:28px;padding:22px 20px;box-shadow:0 14px 30px rgba(90,64,53,.07)}
+.yearbook-kicker{font-size:10px;font-weight:900;letter-spacing:.18em;color:#b68d7e;margin-bottom:6px}
+.yearbook-title{font-size:25px;font-weight:900;color:#755a51;margin-bottom:10px}
+.yearbook-lead{font-size:13px;line-height:1.85;color:#7d6a62;margin-bottom:18px}
+.yearbook-highlights{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yearbook-highlight{display:flex;gap:10px;align-items:flex-start;padding:13px 12px;background:rgba(255,255,255,.72);border:1px solid #eee0d8;border-radius:17px}
+.yearbook-highlight>span{font-size:18px;line-height:1}
+.yearbook-highlight b{display:block;font-size:15px;color:#6f554c;line-height:1.35}
+.yearbook-highlight small{display:block;margin-top:4px;font-size:10px;line-height:1.5;color:#a08a80}
+.yearbook-more{margin-top:14px;border-top:1px dashed #e7d5cb;padding-top:12px}
+.yearbook-more summary{cursor:pointer;list-style:none;font-size:12px;font-weight:800;color:#8f6c60;display:flex;justify-content:space-between;align-items:center}
+.yearbook-more summary::-webkit-details-marker{display:none}
+.yearbook-more summary::after{content:"＋";font-size:18px;font-weight:500}
+.yearbook-more[open] summary::after{content:"−"}
+.yearbook-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:12px}
+.yearbook-mini-grid>div{padding:11px;border-radius:14px;background:#fff;border:1px solid #efe3dc}
+.yearbook-mini-grid span{display:block;font-size:9px;color:#aa9186;margin-bottom:4px}
+.yearbook-mini-grid b{font-size:13px;color:#765c53}
+.ranking-card .rank-note,.memory-board .note:empty{display:none}
+.ranking-card h4,.memory-board h4{margin-bottom:10px}
+#favoriteHotel{line-height:1.35}
+@media(max-width:390px){.yearbook-card{padding:19px 16px}.yearbook-highlights{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -1269,7 +1294,7 @@ textarea.field{min-height:94px}
 
 
 <div class="memory-insight-head">
-<div><h3 style="margin:0">桐House 年度旅行回顧</h3><p style="margin:4px 0 0;color:var(--muted);font-size:12px">把一年住過的地方，濃縮成我們家的旅行年鑑 ♡</p></div>
+<div><h3 style="margin:0">桐House 年度旅行回顧</h3><p style="margin:4px 0 0;color:var(--muted);font-size:12px">一年一年，把我們一起走過的地方留在這裡 ♡</p></div>
 <div class="mini-stat-filter"><select class="field" id="annualReviewYear"><option value="">全部年份</option></select></div>
 </div>
 <div class="yearbook-card">
@@ -1292,7 +1317,7 @@ textarea.field{min-height:94px}
     </div>
   </details>
 </div><div class="section-head" style="margin-top:22px">
-<div><h3>我們最常往哪裡走？</h3><p>先看國內外住了幾晚，再看看一家人最常停留的國家與地區</p></div>
+<div><h3>我們最常往哪裡走？</h3><p>這一年，我們把時間留在哪些地方 ♡</p></div>
 <div class="mini-stat-filter">
 <select class="field" id="travelStatYear"><option value="">全部年份</option></select>
 </div>
@@ -1309,40 +1334,40 @@ textarea.field{min-height:94px}
 </div>
 </div><div class="ranking-grid">
 <div class="ranking-card">
-<h4>🌏 去最多的國家</h4>
-<div class="rank-note">依住宿天數排行；同天數並列</div>
+<h4>🌏 國外住最久</h4>
+
 <div class="rank-list" id="countryDaysRank"></div>
 </div>
 <div class="ranking-card">
-<h4>🇹🇼 去最多的國內地區</h4>
-<div class="rank-note">依住宿天數排行；同天數並列</div>
+<h4>🇹🇼 國內住最久</h4>
+
 <div class="rank-list" id="domesticDaysRank"></div>
 </div>
 <div class="ranking-card">
-<h4>💸 國家住宿花費排行</h4>
-<div class="rank-note">依住宿總金額排行</div>
+<h4>💸 國外住宿花費</h4>
+
 <div class="rank-list" id="countrySpendRank"></div>
 </div>
 <div class="ranking-card">
-<h4>🧾 國內地區花費排行</h4>
-<div class="rank-note">依住宿總金額排行</div>
+<h4>🧾 國內住宿花費</h4>
+
 <div class="rank-list" id="domesticSpendRank"></div>
 </div>
 </div><div class="section-head" style="margin-top:22px">
-<div><h3>最愛旅宿・避雷手札</h3><p>高分值得再住，低分也誠實留下來，下一次訂房更有依據</p></div>
+<div><h3>最愛旅宿・避雷手札</h3><p>喜歡的想再回去，不喜歡的也好好記得。</p></div>
 </div><div class="love-avoid-grid">
 <div class="memory-board">
-<h4>♡ 桐House 最愛旅宿 TOP 5</h4>
-<div class="note">優先看評分，再參考「值得再住」</div>
+<h4>♡ 我們最喜歡的幾間</h4>
+
 <div id="favoriteRankList"></div>
 </div>
 <div class="memory-board">
-<h4>⚠️ 低分避雷紀錄</h4>
-<div class="note">1～2 分住宿會自動集中在這裡</div>
+<h4>⚠️ 這些就先記住</h4>
+
 <div id="avoidRankList"></div>
 </div>
 </div><div class="section-head" style="margin-top:22px">
-<div><h3>每晚預算雷達</h3><p>看看我們家平常一晚住多少，以後看到房價更快知道貴不貴</p></div>
+<div><h3>每晚預算雷達</h3><p>每一晚的花費，也是一段旅行的選擇。</p></div>
 </div><div class="budget-grid">
 <div class="budget-card"><small>全部住宿平均</small><b id="budgetOverall">$0 / 晚</b><span id="budgetOverallSub">0 晚</span></div>
 <div class="budget-card"><small>🇹🇼 國內平均</small><b id="budgetDomestic">$0 / 晚</b><span id="budgetDomesticSub">0 晚</span></div>
@@ -1351,7 +1376,7 @@ textarea.field{min-height:94px}
 <div class="budget-line"><span>國外最常住國家平均</span><b id="budgetCountryDetail">—</b></div>
 <div class="budget-line"><span>國內最常住地區平均</span><b id="budgetAreaDetail">—</b></div>
 </div><div class="section-head">
-<div><h3>旅宿小帳本・細看</h3><p>想看花費、入住次數與區間比較時，再慢慢翻到這一頁</p></div>
+<div><h3>旅宿小帳本・細看</h3><p>偶爾翻翻，看看這些年我們把旅行花在哪裡。</p></div>
 <div class="segmented" id="statMode">
 <button class="active" data-mode="year">年</button>
 <button data-mode="quarter">季</button>
@@ -1374,9 +1399,9 @@ textarea.field{min-height:94px}
 <div class="sub" id="nightCount">共 0 晚</div>
 </div>
 <div class="summary-card">
-<div class="label">最常入住城市</div>
+<div class="label">住最久的城市</div>
 <div class="value" id="topCity">—</div>
-<div class="sub">依目前區間計算</div>
+<div class="sub" id="topCitySub">這段時間的住宿晚數</div>
 </div>
 <div class="summary-card wide">
 <div class="label">區間比較</div>
@@ -1385,11 +1410,11 @@ textarea.field{min-height:94px}
 <div class="summary-card wide">
 <div class="label">最常回訪</div>
 <div class="value" id="favoriteHotel" style="font-size:19px">尚未有紀錄</div>
-<div class="sub" id="favoriteHotelSub">入住次數最多的旅宿</div>
+<div class="sub" id="favoriteHotelSub">真的再住過，才算回訪 ♡</div>
 </div>
 </div></section><section id="groupsView">
 <div class="section-head">
-<div><h3>住過的旅宿家族</h3><p>萬豪、寒舍…看看足跡慢慢累積在哪些品牌</p></div>
+<div><h3>住過的旅宿家族</h3><p>那些熟悉的旅宿名字，也慢慢成了家的旅行記憶。</p></div>
 </div>
 <div class="group-grid" id="groupGrid"></div>
 </section><section id="recordsView">
@@ -1839,7 +1864,7 @@ function renderUpcoming(){
   }else{
     $('nextStayName').textContent='下一站，想去哪裡呢？';
     $('nextTripLocation').textContent='OUR NEXT LITTLE ADVENTURE';
-    $('nextStayMeta').textContent='下一趟家庭旅行，等著被安排 ♡ 新增時統一使用下方「＋」。';
+    $('nextStayMeta').textContent='下一站，等我們一起出發 ♡';
     $('nextStayCount').textContent='一起期待下一趟 ♡';
     visual.classList.add('next-empty-visual');
     visual.style.backgroundImage='';
@@ -1854,7 +1879,7 @@ function renderUpcoming(){
       <div class="u-title">${esc(r.hotel)}</div>
       <div class="u-meta">${esc([r.country,r.city].filter(Boolean).join(' · ')||'未填地點')}<br>${esc(r.checkin)} → ${esc(r.checkout)} · ${nights(r.checkin,r.checkout)} 晚${r.hotelGroup?` · ${esc(r.hotelGroup)}`:''}${r.payment?` · ${esc(r.payment)}`:''}</div>
     </article>`;
-  }).join(''):`<div class="empty"><span class="emoji">🧳</span>目前沒有已安排的住宿<br>下一趟旅行決定後，就把期待先放進來吧。</div>`;
+  }).join(''):`<div class="empty"><span class="emoji">🧳</span>下一趟還沒決定<br>沒關係，期待本身也是旅行的一部分 ♡</div>`;
 }
 function renderGroups(){
   const groups={};
@@ -1870,7 +1895,7 @@ function renderGroups(){
       <b>${esc(g)}</b>
       <span>${v.count} 次足跡 · ${money(v.amount)}</span>
       ${v.planned?`<div class="mini-note">✨ 還有 ${v.planned} 趟已安排</div>`:''}
-    </div>`).join(''):`<div class="empty" style="grid-column:1/-1"><span class="emoji">🏨</span>新增集團分類後，這裡會慢慢變成你們家的旅宿版圖。</div>`;
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1"><span class="emoji">🏨</span>住過的旅宿家族，會一個一個留在這裡 ♡</div>`;
 }
 
 
@@ -1898,7 +1923,7 @@ function renderJournal(){
   }else{
     if(hp && hp.tagName==='IMG') hp.outerHTML='<div class="photo-placeholder" id="highlightPhoto">♡</div>';
     $('highlightTitle').textContent='今年的旅行回憶，等你慢慢收藏';
-    $('highlightText').textContent='新增住宿照片與一句回憶後，這裡會像手帳首頁一樣顯示最近的一頁。';
+    $('highlightText').textContent='照片和一句話，就能把那一天留久一點。';
   }
 
   const fp={};
@@ -1912,7 +1937,7 @@ function renderJournal(){
       <b>${esc(k)}</b>
       <span>${v} 次住宿足跡</span>
       <div class="stamp">${i%3===0?'✈':i%3===1?'⌂':'♡'}</div>
-    </div>`).join(''):`<div class="empty" style="grid-column:1/-1">旅行開始後，這裡會慢慢長出一家人的足跡版圖。</div>`;
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1">我們走過的地方，會慢慢留成一家人的足跡。</div>`;
 
   const tl=[...records].filter(r=>r.status==='stayed').sort((a,b)=>b.checkin.localeCompare(a.checkin)).slice(0,12);
   $('timeline').innerHTML=tl.length?tl.map(r=>`
@@ -1964,7 +1989,7 @@ function renderStats(){
   records.filter(r=>r.status==='stayed').forEach(r=>hotelCounts[r.hotel]=(hotelCounts[r.hotel]||0)+1);
   const favorite=Object.entries(hotelCounts).sort((a,b)=>b[1]-a[1])[0];
   $('favoriteHotel').textContent=favorite?.[0]||'尚未有紀錄';
-  $('favoriteHotelSub').textContent=favorite?`累積入住 ${favorite[1]} 次`:'開始新增第一間飯店吧';
+  $('favoriteHotelSub').textContent=favorite?`累積入住 ${favorite[1]} 次`:'第一段住宿回憶，等你留下來 ♡';
 
   const entries=Object.entries(groups).map(([k,v])=>[k,v.reduce((a,r)=>a+Number(r.price||0),0)]).sort((a,b)=>a[0].localeCompare(b[0])).slice(-6);
   const max=Math.max(...entries.map(e=>e[1]),1);
@@ -1973,7 +1998,7 @@ function renderStats(){
       <span>${esc(statMode==='month'?k.slice(2):k)}</span>
       <div class="bar-track"><div class="bar-fill" style="width:${Math.max(4,v/max*100)}%"></div></div>
       <b>${money(v)}</b>
-    </div>`).join(''):`<div style="color:var(--muted);font-size:13px">有住宿紀錄後，這裡會自動長出漂亮的花費比較圖。</div>`;
+    </div>`).join(''):`<div style="color:var(--muted);font-size:13px">旅行多一點，這裡就會留下花費的軌跡。</div>`;
 }
 
 function renderTravelStats(){
@@ -2006,7 +2031,7 @@ function renderTravelStats(){
   };
   const renderRank=(id,rows,metric)=>{
     const el=$(id); if(!el)return;
-    el.innerHTML=rows.length?rows.slice(0,8).map(x=>`<div class="rank-row"><span class="rank-no">${x.rank}</span><span class="rank-name">${esc(x.name)}</span><span class="rank-value">${metric==='days'?`${x.days} 晚`:`${money(x.amount)}`}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px">還沒有足夠的住宿紀錄</div>';
+    el.innerHTML=rows.length?rows.slice(0,8).map(x=>`<div class="rank-row"><span class="rank-no">${x.rank}</span><span class="rank-name">${esc(x.name)}</span><span class="rank-value">${metric==='days'?`${x.days} 晚`:`${money(x.amount)}`}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px">回憶再多一點，這裡就會有答案 ♡</div>';
   };
   renderRank('countryDaysRank',rankWithTies(countries,'days'),'days');
   renderRank('domesticDaysRank',rankWithTies(areas,'days'),'days');
@@ -2055,9 +2080,9 @@ function renderAnnualInsights(){
   const favorites=[...rated].sort((a,b)=>Number(b.rating)-Number(a.rating)||(Number(b.wantReturn)-Number(a.wantReturn))||(b.checkin||'').localeCompare(a.checkin||'')).slice(0,5);
 let favRank=0,favPrevRating=null,favPrevReturn=null;
 const favoriteRows=favorites.map((r,idx)=>{const rr=Number(r.rating),wr=Number(!!r.wantReturn);if(rr!==favPrevRating||wr!==favPrevReturn)favRank=idx+1;favPrevRating=rr;favPrevReturn=wr;return{r,rank:favRank};});
-  $('favoriteRankList').innerHTML=favoriteRows.length?favoriteRows.map(({r,rank})=>`<div class="hotel-rank-row"><span class="hotel-rank-no">${rank}</span><span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}${r.wantReturn?' · ♡ 值得再住':''}</span></span><span class="hotel-rank-score">${'★'.repeat(Number(r.rating))} ${r.rating}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">完成住宿評分後，就會自動產生最愛榜。</div>';
+  $('favoriteRankList').innerHTML=favoriteRows.length?favoriteRows.map(({r,rank})=>`<div class="hotel-rank-row"><span class="hotel-rank-no">${rank}</span><span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}${r.wantReturn?' · ♡ 值得再住':''}</span></span><span class="hotel-rank-score">${'★'.repeat(Number(r.rating))} ${r.rating}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">住過、喜歡過，自然會留下最愛 ♡</div>';
   const avoids=[...rated].filter(r=>Number(r.rating)<=2).sort((a,b)=>Number(a.rating)-Number(b.rating)||(b.checkin||'').localeCompare(a.checkin||''));
-  $('avoidRankList').innerHTML=avoids.length?avoids.slice(0,8).map((r,i)=>`<div class="hotel-rank-row"><span class="hotel-rank-no">${i+1}</span><span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}${r.memo?` · ${esc(String(r.memo).slice(0,24))}${String(r.memo).length>24?'…':''}`:''}</span></span><span class="hotel-rank-score">${'★'.repeat(Number(r.rating))}${'☆'.repeat(5-Number(r.rating))} ${r.rating}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">目前沒有 1～2 分的避雷紀錄，很棒 ♡</div>';
+  $('avoidRankList').innerHTML=avoids.length?avoids.slice(0,8).map((r,i)=>`<div class="hotel-rank-row"><span class="hotel-rank-no">${i+1}</span><span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}${r.memo?` · ${esc(String(r.memo).slice(0,24))}${String(r.memo).length>24?'…':''}`:''}</span></span><span class="hotel-rank-score">${'★'.repeat(Number(r.rating))}${'☆'.repeat(5-Number(r.rating))} ${r.rating}</span></div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">目前沒有踩雷紀錄，真好 ♡</div>';
 
   const calcAvg=arr=>{const ns=arr.reduce((a,r)=>a+nights(r.checkin,r.checkout),0),am=arr.reduce((a,r)=>a+Number(r.price||0),0);return {nights:ns,avg:ns?am/ns:0}};
   const allAvg=calcAvg(list), dAvg=calcAvg(list.filter(r=>inferTripType(r)==='domestic')), iAvg=calcAvg(list.filter(r=>inferTripType(r)==='international'));
@@ -2569,7 +2594,7 @@ $('clearBtn').onclick=()=>{
   }
 }
 
-// v6.6 one-click backup receiver.
+// v6.7 one-click backup receiver.
 // The exported HTML opens this same deployed app and transfers the complete
 // backup (including compressed photos) via postMessage, avoiding URL-size limits.
 window.addEventListener('message',e=>{
@@ -2613,6 +2638,385 @@ function announceBackupReceiver(){
 }
 
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+
+// =========================================================
+// v6.7 · unified statistics + warm journal logic
+// =========================================================
+function cleanText(v){return String(v||'').trim()}
+function stayedRecords(){return records.filter(r=>stayHasEnded(r) || r.status==='stayed')}
+function stayStage(r){
+  if(stayHasEnded(r)) return 'stayed';
+  const today=todayISO();
+  if(r.checkin && r.checkin<=today) return 'ongoing';
+  return 'planned';
+}
+function domesticAreaName(r){
+  const raw=cleanText(r.city);
+  const pairs=[
+    ['臺北','台北'],['台北','台北'],['新北','新北'],['桃園','桃園'],
+    ['新竹','新竹'],['苗栗','苗栗'],['臺中','台中'],['台中','台中'],
+    ['彰化','彰化'],['南投','南投'],['雲林','雲林'],['嘉義','嘉義'],
+    ['臺南','台南'],['台南','台南'],['高雄','高雄'],['屏東','屏東'],
+    ['宜蘭','宜蘭'],['花蓮','花蓮'],['臺東','台東'],['台東','台東'],
+    ['基隆','基隆'],['澎湖','澎湖'],['金門','金門'],['連江','連江'],['馬祖','連江']
+  ];
+  for(const [needle,name] of pairs) if(raw.includes(needle)) return name;
+  return raw || '台灣';
+}
+function locationName(r){return cleanText(r.city)||cleanText(r.country)||'旅行途中'}
+function sumNights(list){return list.reduce((a,r)=>a+nights(r.checkin,r.checkout),0)}
+function sumAmount(list){return list.reduce((a,r)=>a+Number(r.price||0),0)}
+function aggregateRows(list,keyFn){
+  const map={};
+  list.forEach(r=>{
+    const k=cleanText(keyFn(r));
+    if(!k) return;
+    if(!map[k]) map[k]={name:k,nights:0,amount:0,visits:0};
+    map[k].nights+=nights(r.checkin,r.checkout);
+    map[k].amount+=Number(r.price||0);
+    map[k].visits+=1;
+  });
+  return Object.values(map);
+}
+function rankRows(rows,metric){
+  const sorted=[...rows].sort((a,b)=>b[metric]-a[metric]||a.name.localeCompare(b.name,'zh-Hant'));
+  let prev=null,rank=0;
+  return sorted.map((x,i)=>{if(x[metric]!==prev)rank=i+1;prev=x[metric];return {...x,rank}});
+}
+function leaders(rows,metric){
+  if(!rows.length) return [];
+  const ranked=[...rows].sort((a,b)=>b[metric]-a[metric]||a.name.localeCompare(b.name,'zh-Hant'));
+  const max=ranked[0][metric];
+  return ranked.filter(x=>x[metric]===max);
+}
+function joinNames(rows){return rows.map(x=>x.name).join('、')}
+
+normalizeRecords=function(){
+  records=records.map(r=>{
+    const tripType=inferTripType(r);
+    const status=stayHasEnded(r)?'stayed':(r.status||((r.checkin&&r.checkin>todayISO())?'planned':'stayed'));
+    return {
+      ...r,
+      status,
+      country:tripType==='domestic'?(r.country||'台灣'):(r.country||''),
+      hotelGroup:r.hotelGroup||'',
+      companions:r.companions||'',
+      payment:r.payment||'',
+      wantReturn:!!r.wantReturn,
+      photo:r.photo||'',
+      memoryLine:r.memoryLine||'',
+      stickers:Array.isArray(r.stickers)?r.stickers:[],
+      tripType
+    };
+  });
+};
+
+reviewPendingRecords=function(){
+  // Rating is the only required follow-up. Notes remain optional, so the app never nags forever.
+  return records.filter(r=>stayHasEnded(r) && !Number(r.rating))
+    .sort((a,b)=>(b.checkout||'').localeCompare(a.checkout||''));
+};
+renderReviewReminder=function(){
+  const pending=reviewPendingRecords(), box=$('reviewReminder');
+  if(!pending.length){box.classList.add('hidden');return;}
+  const r=pending[0];
+  box.classList.remove('hidden');
+  $('reviewReminderTitle').textContent=pending.length===1?`「${r.hotel}」住完啦 ♡`:`有 ${pending.length} 段回憶還沒留下星星`;
+  $('reviewReminderText').textContent='給這次住宿一個星等，想說的話也可以順手留一句。';
+  $('reviewReminderBtn').textContent='留下回憶';
+  $('reviewReminderBtn').onclick=()=>openForm(r);
+};
+
+renderHero=function(){
+  const y=new Date().getFullYear();
+  const yr=stayedRecords().filter(r=>getYear(r.checkin)===y);
+  $('heroYearAmount').textContent=money(sumAmount(yr));
+  $('heroYearCount').textContent=`${yr.length} 次`;
+  $('heroTotalCount').textContent=`${new Set(stayedRecords().map(r=>cleanText(r.hotel)).filter(Boolean)).size} 間`;
+};
+
+renderStats=function(){
+  const stayed=stayedRecords();
+  const groups={};
+  stayed.forEach(r=>{const k=periodKey(r,statMode);(groups[k]??=[]).push(r)});
+  let current=latestPeriod(statMode);
+  if(!groups[current]) current=Object.keys(groups).sort().slice(-1)[0]||'';
+  const arr=current?(groups[current]||[]):[];
+  const amount=sumAmount(arr), totalNights=sumNights(arr);
+  $('periodAmount').textContent=money(amount);
+  $('periodLabel').textContent=current?labelPeriod(current,statMode):'還沒有已完成的住宿';
+  $('periodCount').textContent=arr.length;
+  $('avgNight').textContent=totalNights?money(amount/totalNights):'—';
+  $('nightCount').textContent=totalNights?`共 ${totalNights} 晚`:'還沒有住宿晚數';
+
+  const cityRows=aggregateRows(arr,r=>cleanText(r.city));
+  const cityLeaders=leaders(cityRows,'nights');
+  if(cityLeaders.length){
+    $('topCity').textContent=joinNames(cityLeaders);
+    const n=cityLeaders[0].nights;
+    $('topCitySub').textContent=cityLeaders.length>1?`並列 · 各 ${n} 晚`:`共住了 ${n} 晚`;
+  }else{
+    $('topCity').textContent='—';
+    $('topCitySub').textContent='這段時間還沒有住宿';
+  }
+
+  const hotelRows=aggregateRows(stayed,r=>cleanText(r.hotel));
+  const realReturns=hotelRows.filter(x=>x.visits>=2);
+  if(realReturns.length){
+    const top=leaders(realReturns,'visits');
+    $('favoriteHotel').textContent=joinNames(top);
+    $('favoriteHotelSub').textContent=top.length>1?`都回訪了 ${top[0].visits} 次`:`回去住了 ${top[0].visits} 次 · 共 ${top[0].nights} 晚`;
+  }else{
+    $('favoriteHotel').textContent='還沒有回訪過的旅宿';
+    $('favoriteHotelSub').textContent='哪天又回到同一間，這裡就會記得 ♡';
+  }
+
+  const entries=Object.entries(groups)
+    .map(([k,v])=>[k,sumAmount(v)])
+    .sort((a,b)=>a[0].localeCompare(b[0])).slice(-6);
+  const max=Math.max(...entries.map(e=>e[1]),1);
+  $('barList').innerHTML=entries.length?entries.map(([k,v])=>`
+    <div class="bar-row">
+      <span>${esc(statMode==='month'?k.slice(2):k)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(4,v/max*100)}%"></div></div>
+      <b>${money(v)}</b>
+    </div>`).join(''):`<div style="color:var(--muted);font-size:13px">旅行多一點，這裡就會留下花費的軌跡。</div>`;
+};
+
+renderTravelStats=function(){
+  const yearSel=$('travelStatYear');
+  if(!yearSel)return;
+  const years=[...new Set(stayedRecords().map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  const old=yearSel.value;
+  yearSel.innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  if(old && years.map(String).includes(old)) yearSel.value=old;
+
+  let list=stayedRecords();
+  if(yearSel.value) list=list.filter(r=>String(getYear(r.checkin))===yearSel.value);
+  const domestic=list.filter(r=>inferTripType(r)==='domestic');
+  const international=list.filter(r=>inferTripType(r)==='international');
+
+  const fillSplit=(prefix,arr)=>{
+    const ns=sumNights(arr), am=sumAmount(arr);
+    $(prefix+'Amount').textContent=money(am);
+    $(prefix+'Meta').textContent=arr.length?`${arr.length} 次住宿 · ${ns} 晚`:'還沒有住宿回憶';
+  };
+  fillSplit('domestic',domestic); fillSplit('international',international);
+
+  const countries=aggregateRows(international,r=>countryName(r));
+  const areas=aggregateRows(domestic,r=>domesticAreaName(r));
+  const renderRank=(id,rows,metric)=>{
+    const el=$(id); if(!el)return;
+    const ranked=rankRows(rows,metric).slice(0,8);
+    el.innerHTML=ranked.length?ranked.map(x=>`
+      <div class="rank-row">
+        <span class="rank-no">${x.rank}</span>
+        <span class="rank-name">${esc(x.name)}</span>
+        <span class="rank-value">${metric==='nights'?`${x.nights} 晚`:money(x.amount)}</span>
+      </div>`).join(''):'<div style="color:var(--muted);font-size:12px">回憶再多一點，這裡就會有答案 ♡</div>';
+  };
+  renderRank('countryDaysRank',countries,'nights');
+  renderRank('domesticDaysRank',areas,'nights');
+  renderRank('countrySpendRank',countries,'amount');
+  renderRank('domesticSpendRank',areas,'amount');
+};
+
+renderAnnualInsights=function(){
+  const sel=$('annualReviewYear'); if(!sel)return;
+  const years=[...new Set(stayedRecords().map(r=>getYear(r.checkin)).filter(Boolean))].sort((a,b)=>b-a);
+  const old=sel.value;
+  sel.innerHTML='<option value="">全部年份</option>'+years.map(y=>`<option value="${y}">${y} 年</option>`).join('');
+  if(old && years.map(String).includes(old)) sel.value=old;
+  else if(!old && years.includes(new Date().getFullYear())) sel.value=String(new Date().getFullYear());
+  else if(!old && years.length) sel.value=String(years[0]);
+
+  const y=sel.value;
+  let list=stayedRecords();
+  if(y) list=list.filter(r=>String(getYear(r.checkin))===y);
+
+  const totalNights=sumNights(list), amount=sumAmount(list);
+  const placeRows=aggregateRows(list,r=>locationName(r));
+  const topPlaces=leaders(placeRows,'nights');
+  const rated=list.filter(r=>Number(r.rating)>=1 && Number(r.rating)<=5);
+  const avgRating=rated.length?rated.reduce((a,r)=>a+Number(r.rating),0)/rated.length:0;
+  const hotelsCount=new Set(list.map(r=>cleanText(r.hotel)).filter(Boolean)).size;
+  const countriesCount=new Set(list.map(r=>countryName(r)).filter(Boolean)).size;
+  const citiesCount=new Set(list.map(r=>cleanText(r.city)).filter(Boolean)).size;
+
+  $('yearbookTitle').textContent=y?`${y} · 桐House一家`:'桐House一家 · 我們的年鑑';
+  $('reviewStayCount').textContent=`${list.length} 次住宿`;
+  $('reviewStaySub').textContent=list.length?`${hotelsCount} 間不同旅宿`:'今年還在等第一段回憶';
+  $('reviewNights').textContent=`${totalNights} 晚`;
+  $('reviewNightSub').textContent=totalNights?'一起住過的夜晚':'旅行的夜晚，慢慢累積';
+  $('reviewAmount').textContent=money(amount);
+  $('reviewAmountSub').textContent=totalNights?`平均 ${money(amount/totalNights)} / 晚`:'這一年留下的住宿花費';
+  $('reviewTopPlace').textContent=topPlaces.length?joinNames(topPlaces):'—';
+  $('reviewTopPlaceSub').textContent=topPlaces.length?(topPlaces.length>1?`並列 · 各 ${topPlaces[0].nights} 晚`:`住了 ${topPlaces[0].nights} 晚`):'我們停留最久的地方';
+
+  $('yearbookPlaces').textContent=list.length?`${countriesCount} 個國家／地區 · ${citiesCount} 個城市`:'—';
+  $('yearbookRating').textContent=rated.length?`${avgRating.toFixed(1)} / 5 · ${rated.length} 筆`:'還沒留下評分';
+  $('yearbookHotels').textContent=list.length?`${hotelsCount} 間`:'—';
+  $('yearbookAvgNight').textContent=totalNights?money(amount/totalNights):'—';
+
+  const label=y?`${y} 年`:'這些年';
+  $('annualReviewStory').innerHTML=list.length
+    ? `<b>${label}，我們留下 ${list.length} 次住宿、${totalNights} 個一起醒來的早晨。</b> `+
+      `${topPlaces.length?`停留最久的是「${topPlaces.map(x=>esc(x.name)).join('、')}」${topPlaces.length>1?`，各 ${topPlaces[0].nights} 晚`:`，住了 ${topPlaces[0].nights} 晚`}。`:''}`+
+      `${rated.length?` ${rated.length} 段回憶有留下星星，平均 ${avgRating.toFixed(1)} 分。`:''}`
+    : '今年的頁面還很空，等下一段旅行慢慢寫進來 ♡';
+
+  // Favorites: rating first; "want to return" breaks only an otherwise equal rating.
+  const favorites=[...rated].sort((a,b)=>Number(b.rating)-Number(a.rating)||Number(!!b.wantReturn)-Number(!!a.wantReturn)||(b.checkin||'').localeCompare(a.checkin||'')).slice(0,5);
+  let lastKey='', rank=0;
+  const favRows=favorites.map((r,i)=>{
+    const key=`${Number(r.rating)}-${Number(!!r.wantReturn)}`;
+    if(key!==lastKey) rank=i+1;
+    lastKey=key;
+    return {r,rank};
+  });
+  $('favoriteRankList').innerHTML=favRows.length?favRows.map(({r,rank})=>`
+    <div class="hotel-rank-row">
+      <span class="hotel-rank-no">${rank}</span>
+      <span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc(locationName(r))}${r.wantReturn?' · ♡ 還想再住':''}</span></span>
+      <span class="hotel-rank-score">${'★'.repeat(Number(r.rating))} ${r.rating}</span>
+    </div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">住過、喜歡過，自然會留下最愛 ♡</div>';
+
+  // Avoid list is a memory list, not a competitive ranking.
+  const avoids=[...rated].filter(r=>Number(r.rating)<=2).sort((a,b)=>Number(a.rating)-Number(b.rating)||(b.checkin||'').localeCompare(a.checkin||''));
+  $('avoidRankList').innerHTML=avoids.length?avoids.slice(0,8).map(r=>`
+    <div class="hotel-rank-row">
+      <span class="hotel-rank-no">!</span>
+      <span class="hotel-rank-name"><b>${esc(r.hotel)}</b><span>${esc(locationName(r))}${r.memoryLine?` · ${esc(r.memoryLine)}`:r.memo?` · ${esc(String(r.memo).slice(0,26))}${String(r.memo).length>26?'…':''}`:''}</span></span>
+      <span class="hotel-rank-score">${'★'.repeat(Number(r.rating))}${'☆'.repeat(5-Number(r.rating))}</span>
+    </div>`).join(''):'<div style="color:var(--muted);font-size:12px;padding:8px 0">目前沒有踩雷紀錄，真好 ♡</div>';
+
+  const calcAvg=arr=>{const ns=sumNights(arr),am=sumAmount(arr);return{nights:ns,avg:ns?am/ns:0}};
+  const domestic=list.filter(r=>inferTripType(r)==='domestic');
+  const international=list.filter(r=>inferTripType(r)==='international');
+  const allAvg=calcAvg(list),dAvg=calcAvg(domestic),iAvg=calcAvg(international);
+  $('budgetOverall').textContent=allAvg.nights?`${money(allAvg.avg)} / 晚`:'—';
+  $('budgetOverallSub').textContent=allAvg.nights?`${allAvg.nights} 晚`:'還沒有已完成住宿';
+  $('budgetDomestic').textContent=dAvg.nights?`${money(dAvg.avg)} / 晚`:'—';
+  $('budgetDomesticSub').textContent=dAvg.nights?`${dAvg.nights} 晚`:'還沒有國內住宿';
+  $('budgetInternational').textContent=iAvg.nights?`${money(iAvg.avg)} / 晚`:'—';
+  $('budgetInternationalSub').textContent=iAvg.nights?`${iAvg.nights} 晚`:'還沒有國外住宿';
+
+  const tiedAvgText=(arr,keyFn)=>{
+    const rows=aggregateRows(arr,keyFn);
+    const top=leaders(rows,'nights');
+    if(!top.length)return '—';
+    return top.map(x=>`${x.name} · ${money(x.amount/x.nights)} / 晚`).join('　');
+  };
+  $('budgetCountryDetail').textContent=tiedAvgText(international,r=>countryName(r));
+  $('budgetAreaDetail').textContent=tiedAvgText(domestic,r=>domesticAreaName(r));
+};
+
+renderGroups=function(){
+  const stayed=stayedRecords();
+  const groups={};
+  stayed.filter(r=>cleanText(r.hotelGroup)).forEach(r=>{
+    const g=cleanText(r.hotelGroup);
+    if(!groups[g]) groups[g]={count:0,amount:0,nights:0,planned:0};
+    groups[g].count++;groups[g].amount+=Number(r.price||0);groups[g].nights+=nights(r.checkin,r.checkout);
+  });
+  records.filter(r=>stayStage(r)==='planned' && cleanText(r.hotelGroup)).forEach(r=>{
+    const g=cleanText(r.hotelGroup);
+    if(!groups[g]) groups[g]={count:0,amount:0,nights:0,planned:0};
+    groups[g].planned++;
+  });
+  const arr=Object.entries(groups).sort((a,b)=>b[1].count-a[1].count||b[1].nights-a[1].nights||a[0].localeCompare(b[0],'zh-Hant'));
+  $('groupGrid').innerHTML=arr.length?arr.slice(0,8).map(([g,v])=>`
+    <div class="group-card">
+      <b>${esc(g)}</b>
+      <span>${v.count?`${v.count} 次住宿 · ${v.nights} 晚`:'還沒住過'}</span>
+      ${v.count?`<div class="mini-note">${money(v.amount)}</div>`:''}
+      ${v.planned?`<div class="mini-note">✨ 還有 ${v.planned} 個期待中的安排</div>`:''}
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1"><span class="emoji">🏨</span>住過的旅宿家族，會一個一個留在這裡 ♡</div>`;
+};
+
+renderJournal=function(){
+  const y=new Date().getFullYear();
+  $('journalYear').textContent=`${y} FAMILY JOURNAL`;
+  const stayed=stayedRecords().filter(r=>getYear(r.checkin)===y);
+  const nightsCount=sumNights(stayed);
+  const cities=new Set(stayed.map(r=>cleanText(r.city)).filter(Boolean));
+  const groups=new Set(stayed.map(r=>cleanText(r.hotelGroup)).filter(Boolean));
+  $('coverNights').textContent=`今年 ${nightsCount} 晚`;
+  $('coverCities').textContent=`走過 ${cities.size} 個城市`;
+  $('coverGroups').textContent=`${groups.size} 個旅宿品牌`;
+
+  const memory=[...stayed].filter(r=>r.photo||r.memoryLine).sort((a,b)=>(b.checkin||'').localeCompare(a.checkin||''))[0];
+  const hp=$('highlightPhoto');
+  if(memory){
+    if(memory.photo){hp.outerHTML=`<img id="highlightPhoto" src="${memory.photo}" alt="${esc(memory.hotel)}">`}
+    else if(hp.tagName==='IMG') hp.outerHTML='<div class="photo-placeholder" id="highlightPhoto">♡</div>';
+    $('highlightTitle').textContent=memory.hotel;
+    $('highlightText').textContent=memory.memoryLine||`${memory.city||'這趟旅行'}，成為今年手帳裡的一頁。`;
+  }else{
+    if(hp&&hp.tagName==='IMG') hp.outerHTML='<div class="photo-placeholder" id="highlightPhoto">♡</div>';
+    $('highlightTitle').textContent='今年的旅行回憶，等你慢慢收藏';
+    $('highlightText').textContent='照片和一句話，就能把那一天留久一點。';
+  }
+
+  const fp=aggregateRows(stayedRecords(),r=>[r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')
+    .sort((a,b)=>b.nights-a.nights||b.visits-a.visits||a.name.localeCompare(b.name,'zh-Hant'));
+  $('footprintBoard').innerHTML=fp.length?fp.slice(0,10).map((x,i)=>`
+    <div class="footprint-card">
+      <b>${esc(x.name)}</b>
+      <span>${x.nights} 晚 · ${x.visits} 次住宿</span>
+      <div class="stamp">${i%3===0?'✈':i%3===1?'⌂':'♡'}</div>
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1">我們走過的地方，會慢慢留成一家人的足跡。</div>`;
+
+  const tl=[...stayedRecords()].sort((a,b)=>(b.checkin||'').localeCompare(a.checkin||'')).slice(0,12);
+  $('timeline').innerHTML=tl.length?tl.map(r=>`
+    <div class="timeline-item"><div class="timeline-card">
+      ${r.photo?`<img class="timeline-thumb" src="${r.photo}" alt="${esc(r.hotel)}">`:`<div class="timeline-thumb">⌂</div>`}
+      <div><h4>${esc(r.hotel)}</h4>
+      <div class="line">${esc(r.checkin)} · ${esc(locationName(r))}</div>
+      ${r.memoryLine?`<div class="quote">「${esc(r.memoryLine)}」</div>`:''}
+      ${r.stickers?.length?`<div class="meta" style="margin-top:7px">${r.stickers.map(x=>`<span class="chip">${stickerEmoji(x)} ${esc(x)}</span>`).join('')}</div>`:''}
+      </div>
+    </div></div>`).join(''):`<div class="empty">第一段住宿回憶，等你留下來 ♡</div>`;
+};
+
+// Current stay is not "still upcoming".
+renderUpcoming=function(){
+  const active=records.filter(r=>stayStage(r)!=='stayed').sort((a,b)=>(a.checkin||'').localeCompare(b.checkin||''));
+  const upcoming=active.filter(r=>stayStage(r)==='planned');
+  const ongoing=active.filter(r=>stayStage(r)==='ongoing');
+  const list=[...ongoing,...upcoming];
+  const visual=$('nextTripVisual'),primary=$('nextTripPrimary'),edit=$('nextTripEdit');
+  if(list.length){
+    const n=list[0],stage=stayStage(n),d=diffDays(n.checkin),nightCount=nights(n.checkin,n.checkout);
+    $('nextStayName').textContent=n.hotel;
+    $('nextTripLocation').textContent=[n.country,n.city].filter(Boolean).join(' · ')||'下一趟家庭旅行';
+    $('nextStayMeta').textContent=`${n.checkin} → ${n.checkout} · ${nightCount} 晚${n.payment?' · '+n.payment:''}`;
+    $('nextStayCount').textContent=stage==='ongoing'?'正在旅行中 ♡':d===0?'今天入住 ♡':d===1?'明天出發 ♡':`還有 ${d} 天出發 ♡`;
+    visual.classList.remove('next-empty-visual');
+    visual.style.backgroundImage=n.photo?`linear-gradient(to top,rgba(57,40,34,.45),rgba(57,40,34,.04)),url("${n.photo}")`:'';
+    primary.classList.remove('hidden');
+    primary.textContent=list.length>1?`看看全部 ${list.length} 個安排`:'看看這趟';
+    primary.onclick=()=>jumpToSection('upcomingView',document.querySelector('.bottom-nav button[data-tab="trip"]'));
+    edit.classList.remove('hidden');edit.textContent='查看';edit.onclick=()=>openForm(n);
+  }else{
+    $('nextStayName').textContent='下一站，想去哪裡呢？';
+    $('nextTripLocation').textContent='OUR NEXT LITTLE ADVENTURE';
+    $('nextStayMeta').textContent='下一站，等我們一起出發 ♡';
+    $('nextStayCount').textContent='一起期待下一趟 ♡';
+    visual.classList.add('next-empty-visual');visual.style.backgroundImage='';
+    primary.classList.add('hidden');edit.classList.add('hidden');
+  }
+  $('upcomingList').innerHTML=list.length?list.slice(0,6).map(r=>{
+    const stage=stayStage(r),d=diffDays(r.checkin);
+    return `<article class="upcoming-card" onclick="editRecord('${r.id}')" style="cursor:pointer">
+      <span class="status-pill ${stage==='ongoing'?'status-stayed':'status-planned'}">${stage==='ongoing'?'🏨 入住中':'✨ 已安排'}</span>
+      <div class="days">${stage==='ongoing'?'旅行中':d===0?'今天':d===1?'明天':`還有 ${d} 天`}</div>
+      <div class="u-title">${esc(r.hotel)}</div>
+      <div class="u-meta">${esc([r.country,r.city].filter(Boolean).join(' · ')||'旅行途中')}<br>${esc(r.checkin)} → ${esc(r.checkout)} · ${nights(r.checkin,r.checkout)} 晚</div>
+    </article>`;
+  }).join(''):`<div class="empty"><span class="emoji">🧳</span>下一趟還沒決定<br>沒關係，期待本身也是旅行的一部分 ♡</div>`;
+};
+
 sampleIfEmpty();normalizeRecords();renderAll();announceBackupReceiver();
 </script>
 </body>

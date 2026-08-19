@@ -1,4 +1,4 @@
-const CACHE='tong-house-family-journal-v6.6-1';
+const CACHE='tong-house-family-journal-v6.7-1';
 const ASSETS=['./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];
 
 self.addEventListener('install',event=>{
