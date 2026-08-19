@@ -903,7 +903,7 @@
       .form-group.full{grid-column:auto}
     }
   
-    /* v6.1 · rating, review reminder, insights, cute quick row */
+    /* v6.2 · rating, review reminder, insights, cute quick row */
     #dashboardView,#recordsView{scroll-margin-top:18px}
     .filters{grid-template-columns:repeat(5,minmax(0,1fr))}
     .review-reminder{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:14px 15px;background:linear-gradient(135deg,#fff4dc,#fffaf5);border:1px dashed #e8c98f;border-radius:22px 18px 24px 19px;box-shadow:0 8px 20px rgba(116,83,50,.06)}
@@ -922,7 +922,7 @@
     @keyframes jumpGlow{0%,100%{filter:none}35%{filter:drop-shadow(0 0 12px rgba(217,150,127,.35));transform:translateY(-2px)}}
     @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters #searchInput{grid-column:1/-1}}
 
-    /* === v6.1 年度回顧 / 最愛避雷 / 平均住宿預算 === */
+    /* === v6.2 年度回顧 / 最愛避雷 / 平均住宿預算 === */
     .memory-insight-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:24px}
     .year-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:12px}
     .year-review-card{background:#fffdf9;border:1px solid #eadbd2;border-radius:24px 20px 25px 21px;padding:15px;box-shadow:0 8px 22px rgba(114,86,77,.05)}
@@ -944,7 +944,7 @@
     @media(max-width:520px){.budget-grid{grid-template-columns:1fr}.memory-insight-head{align-items:flex-start;flex-direction:column}.memory-insight-head .mini-stat-filter{width:100%}.memory-insight-head select{width:100%}}
 
 
-    /* v6.1 · next-trip focus + handier quick navigation */
+    /* v6.2 · next-trip focus + handier quick navigation */
     html{scroll-padding-top:18px}
     .next-banner.next-trip-card{
       display:block!important;padding:0;overflow:hidden;transform:none;
@@ -1478,9 +1478,10 @@
 <h3>資料工具</h3>
 <button class="close" data-close="toolsDialog">×</button>
 </div>
-<p style="color:var(--muted);font-size:13px;line-height:1.6">完整備份會把目前整本手札一起打包：住宿紀錄、日期、金額、評分、備註、貼紙與照片都會保留。換手機時直接開啟備份檔即可搬回。LINE 快速分享則不含照片。</p>
+<p style="color:var(--muted);font-size:13px;line-height:1.6">「搬出手札」會把住宿紀錄、日期、金額、評分、備註、貼紙與照片全部打包成一個 .tonghouse 檔。AirDrop 到新 iPhone 後，在新手機的桐House按「搬入手札」選取它即可。</p>
 <div class="tools">
-<button class="tool-btn" id="exportBtn">📦 完整備份・搬家</button>
+<button class="tool-btn" id="exportBtn">📤 搬出手札</button>
+<button class="tool-btn" id="moveInBtn">📥 搬入手札</button>
 <button class="tool-btn" id="shareBackupBtn">↗ LINE 快速分享（不含照片）</button>
 <button class="tool-btn" id="importBtn">⇧ 舊備份匯入</button>
 <div style="margin-top:12px;padding:12px;border-radius:16px;background:#fff8f3;border:1px dashed #e6d2c7">
@@ -1489,7 +1490,8 @@
   <button class="tool-btn" id="restoreCodeBtn" style="margin-top:8px">貼上備份碼還原</button>
 </div>
 </div>
-<input accept="application/json,.json" class="hidden" id="importFile" type="file">
+<input accept="application/json,.json,.tonghouse" class="hidden" id="importFile" type="file">
+<input accept=".tonghouse,application/json" class="hidden" id="moveInFile" type="file">
 <button class="tool-btn danger" id="clearBtn" style="width:100%;margin-top:10px">清除全部紀錄</button>
 </input></div>
 </dialog>
@@ -2244,84 +2246,77 @@ $('shareBackupBtn').onclick=async()=>{
     }
   }
 }
-$('exportBtn').onclick=()=>{
+$('exportBtn').onclick=async()=>{
   const backup={
     app:'桐House一家家庭旅行手帳',
     format:'tonghouse-full-backup',
-    version:3,
+    version:4,
     exportedAt:new Date().toISOString(),
     photoCount:records.filter(r=>!!r.photo).length,
     records
   };
-  const appUrl=location.href.split('#')[0].split('?')[0];
-  // Escape < so user-entered text can never prematurely close the script tag.
-  const backupJson=JSON.stringify(backup).replace(/</g,'\\u003c');
-  const appUrlJson=JSON.stringify(appUrl).replace(/</g,'\\u003c');
-  const backupHtml=`<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>桐House一家・旅行手帳備份</title>
-<style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#fff8f3;color:#745e55;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;padding:24px}
-.card{width:min(92vw,420px);background:#fff;border:1px solid #eadbd3;border-radius:28px;padding:28px 22px;text-align:center;box-shadow:0 18px 48px rgba(92,66,56,.12)}
-.icon{font-size:48px}.eyebrow{font-size:11px;letter-spacing:.15em;color:#b38c7c;font-weight:800;margin-top:8px}
-h1{font-size:24px;margin:8px 0 8px}.meta{font-size:13px;line-height:1.8;color:#927d73}.status{margin:18px 0 0;padding:12px;border-radius:16px;background:#fff5ef;font-size:13px;line-height:1.65}
-button{width:100%;border:0;border-radius:17px;padding:13px 16px;margin-top:14px;background:#d99886;color:#fff;font-size:15px;font-weight:800}
-.small{font-size:11px;color:#ad9a91;margin-top:12px;line-height:1.6}
-</style>
-</head>
-<body>
-<main class="card">
-<div class="icon">🧳</div>
-<div class="eyebrow">TONG HOUSE BACKUP</div>
-<h1>桐House一家・旅行手帳備份</h1>
-<div class="meta" id="meta"></div>
-<div class="status" id="status">這是一份完整搬家備份，包含住宿資料與手帳內保存的照片。打開後會詢問是否搬回桐House。</div>
-<button id="restoreBtn">📱 完整搬回桐House一家</button>
-<div class="small">搬入前會再次顯示目前資料與備份資料筆數，確認後才會取代，不會偷偷覆蓋。</div>
-</main>
-<script>
-const BACKUP=${backupJson};
-const APP_URL=${appUrlJson};
-const meta=document.getElementById('meta');
-const statusEl=document.getElementById('status');
-meta.textContent='備份日期：'+new Date(BACKUP.exportedAt).toLocaleString('zh-TW')+' · '+BACKUP.records.length+' 筆住宿 · '+(BACKUP.photoCount||0)+' 張照片';
-let targetWindow=null, sent=false;
-function beginRestore(){
-  if(!confirm('找到 '+BACKUP.records.length+' 筆桐House住宿紀錄。\\n\\n要開啟家庭旅行手帳並準備匯入嗎？')) return;
-  statusEl.textContent='正在開啟桐House一家…';
-  targetWindow=window.open(APP_URL+'#backup-receiver','_blank');
-  if(!targetWindow){
-    statusEl.textContent='瀏覽器阻擋了開啟動作，請按下方按鈕再試一次。';
-    return;
+  const text=JSON.stringify(backup);
+  const fileName=`桐House一家_完整搬家_${new Date().toISOString().slice(0,10)}.tonghouse`;
+  const blob=new Blob([text],{type:'application/json'});
+  const file=new File([blob],fileName,{type:'application/json'});
+  // On iPhone/PWA, native share sheet is the most convenient way to AirDrop the real data file.
+  try{
+    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({
+        title:'桐House一家・完整搬家',
+        text:`${records.length} 筆住宿 · ${backup.photoCount} 張照片`,
+        files:[file]
+      });
+      toast('完整手札已準備搬出 ♡');
+      return;
+    }
+  }catch(err){
+    if(err?.name==='AbortError') return;
   }
-}
-window.addEventListener('message',e=>{
-  if(!targetWindow || e.source!==targetWindow) return;
-  if(e.data && e.data.type==='tonghouse-backup-ready'){
-    targetWindow.postMessage({type:'tonghouse-backup-data',backup:BACKUP},'*');
-    sent=true;
-    statusEl.textContent='備份已送到手帳，請到剛開啟的桐House頁面確認匯入。';
-  }
-  if(e.data && e.data.type==='tonghouse-backup-done'){
-    statusEl.textContent='✓ 備份已成功還原到桐House一家';
-  }
-});
-document.getElementById('restoreBtn').onclick=beginRestore;
-setTimeout(beginRestore,180);
-<\/script>
-</body>
-</html>`;
-  const blob=new Blob([backupHtml],{type:'text/html;charset=utf-8'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download=`桐House一家_完整搬家備份_${new Date().toISOString().slice(0,10)}.html`;
+  a.download=fileName;
   a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),1500);
-  toast('完整搬家備份已建立：照片也有保存 ♡');
+  toast('完整搬家檔已下載，可用 AirDrop 傳送');
 }
+
+$('moveInBtn').onclick=()=>$('moveInFile').click();
+$('moveInFile').onchange=async e=>{
+  const f=e.target.files?.[0];
+  if(!f) return;
+  try{
+    const data=JSON.parse(await f.text());
+    const incoming=Array.isArray(data)?data:data?.records;
+    if(!Array.isArray(incoming)) throw new Error('invalid');
+    const photos=data?.photoCount ?? incoming.filter(r=>!!r.photo).length;
+    const exportedAt=data?.exportedAt?new Date(data.exportedAt).toLocaleString('zh-TW'):'未知日期';
+    const choice=confirm(
+      `準備搬入桐House ♡\n\n`+
+      `備份日期：${exportedAt}\n`+
+      `搬入住宿：${incoming.length} 筆\n`+
+      `包含照片：${photos} 張\n`+
+      `目前手機：${records.length} 筆\n\n`+
+      `按「確定」＝合併兩邊資料（推薦）\n`+
+      `按「取消」＝先不搬入\n\n`+
+      `合併時相同 ID 的住宿會以搬入檔版本更新，不會重複建立。`
+    );
+    if(!choice){e.target.value='';return;}
+    const byId=new Map(records.map(r=>[r.id,r]));
+    incoming.forEach(r=>byId.set(r.id,r));
+    records=[...byId.values()];
+    normalizeRecords();
+    localStorage.setItem(KEY,JSON.stringify(records));
+    renderAll();
+    $('toolsDialog').close();
+    toast(`搬家完成 ♡ 現在共有 ${records.length} 筆住宿`);
+  }catch(err){
+    toast('這個檔案不是有效的桐House搬家備份');
+  }finally{
+    e.target.value='';
+  }
+}
+
 $('importBtn').onclick=()=>$('importFile').click();
 $('importFile').onchange=async e=>{
   const file=e.target.files?.[0]; if(!file)return;
@@ -2380,7 +2375,7 @@ $('clearBtn').onclick=()=>{
   }
 }
 
-// v6.1 one-click backup receiver.
+// v6.2 one-click backup receiver.
 // The exported HTML opens this same deployed app and transfers the complete
 // backup (including compressed photos) via postMessage, avoiding URL-size limits.
 window.addEventListener('message',e=>{
