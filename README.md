@@ -1,19 +1,21 @@
-# 桐House一家・家庭旅行手帳 PWA v6.3
+# 桐House一家・家庭旅行手帳 PWA v6.4
 
-## 這版修正：GitHub Pages 更新後 iPhone 還看到舊版
-v6.2 的 Service Worker 對 `index.html` 採 cache-first，因此 iPhone 已加入主畫面的 PWA 可能一直顯示舊版。
+## iPhone 搬家檔相容性修正
+v6.3 使用 `.tonghouse` 自訂副檔名。iPhone「檔案」App 雖然看得到，但 Safari/PWA 的檔案選擇器可能不把它視為可選檔案。
 
-v6.3 改為：
-- 網頁 / `index.html`：network-first，先抓 GitHub Pages 最新版。
-- 離線時：才退回快取版。
-- 圖示 / manifest 等靜態資源：仍可使用快取。
-- 新 Service Worker 安裝後 `skipWaiting()` + `clients.claim()`，較快接管舊版本。
-- 保留 v6.2 的「📤 搬出手札 / 📥 搬入手札」完整搬家功能。
+v6.4 改成標準 `.json`：
+- 檔名：`桐House一家_完整搬家_YYYY-MM-DD.json`
+- MIME：`application/json`
+- iPhone Safari / PWA 檔案選擇器可正常辨識。
+- 備份內容與 v6.3 一樣完整，照片仍以 Base64 存在 JSON 內，不會因改成 `.json` 而遺失。
+- 搬入仍採安全合併：相同住宿 ID 更新，不同 ID 都保留。
 
-## 第一次從舊版升級
-若手機仍被舊 Service Worker 卡住：
-1. 先用 Safari 直接開 GitHub Pages 網址，不要從主畫面 App 開。
-2. 重新整理頁面一次。
-3. 關掉 Safari 與主畫面 App，再重新開啟。
-4. 若仍沒變，iPhone：設定 → Safari → 進階 → 網站資料 → 找到 github.io / 對應網站，刪除網站資料後再開。
-   注意：刪除網站資料也會清掉 localStorage，所以請先在舊版用「搬出手札」做完整備份。
+## 建議測試
+1. 舊 iPhone 使用 v6.4 → 工具 → 📤 搬出手札。
+2. AirDrop 新產生的 `.json` 到新 iPhone。
+3. 新 iPhone 開桐House v6.4 → 工具 → 📥 搬入手札。
+4. 在「檔案」App 選 AirDrop 收到的 `桐House一家_完整搬家_日期.json`。
+5. 確認住宿筆數、備註與照片。
+
+## 舊 `.tonghouse`
+iOS 可能無法從網頁檔案選擇器選取。請在舊手機重新用 v6.4 匯出一份 `.json`，不要再使用舊 `.tonghouse` 檔。
